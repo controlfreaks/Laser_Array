@@ -38,12 +38,12 @@ void PortInit(void) {
 
     //AD1PCFG = 0xFF;     // set entire PORT digital
 
-    _PCFG0 = 1; // 0 = analog, 1 = digital
-    _PCFG1 = 0; // 0 = analog, 1 = digital
+    _PCFG0 = 0; // 0 = analog, 1 = digital
+    _PCFG1 = 1; // 0 = analog, 1 = digital
     _PCFG2 = 1; // 0 = analog, 1 = digital
     _PCFG3 = 1; // 0 = analog, 1 = digital
     _PCFG4 = 1; // 0 = analog, 1 = digital
-    _PCFG5 = 0; // 0 = analog, 1 = digital
+    _PCFG5 = 1; // 0 = analog, 1 = digital
     _PCFG6 = 1; // 0 = analog, 1 = digital
     _PCFG7 = 1; // 0 = analog, 1 = digital
     _PCFG8 = 1; // 0 = analog, 1 = digital
@@ -68,17 +68,17 @@ void PortInit(void) {
 
     //TRISA = 0x00;      // Set entire PORT
 
-    _TRISA0 = 0; // 0 = output, 1 = input 
-    _TRISA1 = 0; // 0 = output, 1 = input
+    _TRISA0 = 1; // 0 = output, 1 = input   // AN0
+    _TRISA1 = 0; // 0 = output, 1 = input   // Power LED
     _TRISA2 = 0; // 0 = output, 1 = input
     _TRISA3 = 0; // 0 = output, 1 = input 
     _TRISA4 = 0; // 0 = output, 1 = input
     // NO _TRISA5
     // NO _TRISA6
     _TRISA7 = 0; // 0 = output, 1 = input
-    _TRISA8 = 0; // 0 = output, 1 = input
+    _TRISA8 = 0; // 0 = output, 1 = input    
     _TRISA9 = 0; // 0 = output, 1 = input
-    _TRISA10 = 0; // 0 = output, 1 = input
+    _TRISA10 = 0; // 0 = output, 1 = input  // SPI-CS output.
 
 
     // *** Open Drain Configuration ***
@@ -137,22 +137,22 @@ void PortInit(void) {
 
     // Note: Must be set for analog inputs for A/D.
 
-    _TRISB0 = 0; // 0 = output, 1 = input 
-    _TRISB1 = 1; // 0 = output, 1 = input
-    _TRISB2 = 1; // 0 = output, 1 = input
-    _TRISB3 = 1; // 0 = output, 1 = input 
+    _TRISB0 = 1; // 0 = output, 1 = input   // PCEC1
+    _TRISB1 = 1; // 0 = output, 1 = input   // PCEG1
+    _TRISB2 = 1; // 0 = output, 1 = input   // ENCOD-2
+    _TRISB3 = 1; // 0 = output, 1 = input   // ENCOD-A
     _TRISB4 = 1; // 0 = output, 1 = input
     _TRISB5 = 1; // 0 = output, 1 = input
     _TRISB6 = 0; // 0 = output, 1 = input
     _TRISB7 = 0; // 0 = output, 1 = input
-    _TRISB8 = 0; // 0 = output, 1 = input
-    _TRISA9 = 0; // 0 = output, 1 = input
+    _TRISB8 = 0; // 0 = output, 1 = input   // I2C-SCL1
+    _TRISA9 = 0; // 0 = output, 1 = input   // I2C-SDA1
     _TRISA10 = 0; // 0 = output, 1 = input
     _TRISB11 = 0; // 0 = output, 1 = input
-    _TRISB12 = 0; // 0 = output, 1 = input
+    _TRISB12 = 0; // 0 = output, 1 = input  // SPI-DC
     _TRISB13 = 0; // 0 = output, 1 = input
-    _TRISB14 = 0; // 0 = output, 1 = input
-    _TRISB15 = 0; // 0 = output, 1 = input
+    _TRISB14 = 0; // 0 = output, 1 = input  // SPI-RST
+    _TRISB15 = 0; // 0 = output, 1 = input  // Re-mapped to INT1
 
     // *** Open Drain Configuration ***
 
@@ -207,16 +207,16 @@ void PortInit(void) {
 
     //TRISC = 0x00;         // Set entire PORT
 
-    _TRISC0 = 0; // 0 = output, 1 = input
+    _TRISC0 = 0; // 0 = output, 1 = input   
     _TRISC1 = 0; // 0 = output, 1 = input
     _TRISC2 = 0; // 0 = output, 1 = input
     _TRISC3 = 0; // 0 = output, 1 = input 
     _TRISC4 = 0; // 0 = output, 1 = input
-    _TRISC5 = 0; // 0 = output, 1 = input
+    _TRISC5 = 0; // 0 = output, 1 = input   // EXT_FAN
     _TRISC6 = 0; // 0 = output, 1 = input
     _TRISC7 = 0; // 0 = output, 1 = input 
-    _TRISC8 = 0; // 0 = output, 1 = input
-    _TRISC9 = 0; // 0 = output, 1 = input
+    _TRISC8 = 0; // 0 = output, 1 = input   // LAS_RLY
+    _TRISC9 = 1; // 0 = output, 1 = input   // POW-SW
     // no _TRISC10
     // no _TRISC11
     // no _TRISC12
