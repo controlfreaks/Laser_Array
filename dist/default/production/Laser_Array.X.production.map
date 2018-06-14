@@ -50,6 +50,24 @@ c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30-elf.
                               c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o) (__data_init_standard)
 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30-elf.a(crt_start_mode_normal.Leo)
                               (__crt_start_mode_normal)
+c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(fixsfsi.eo)
+                              build/default/production/Laser_Array_Main.o (_(float, int, long long, short, float, short, int))
+c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(floatsisf.eo)
+                              build/default/production/Laser_Array_Main.o (___floatsisf)
+c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(funpack.eo)
+                              c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(fixsfsi.eo) (__funpack)
+c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(mulsf3.eo)
+                              build/default/production/Laser_Array_Main.o (___mulsf3)
+c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(floatdisf.eo)
+                              c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(floatsisf.eo) (___floatdisf)
+c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(floatundisf.eo)
+                              c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(floatdisf.eo) (___floatundisf)
+c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(fpack.eo)
+                              c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(mulsf3.eo) (__fpack)
+c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(funpack2.eo)
+                              c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(mulsf3.eo) (__funpack2)
+c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(futil.eo)
+                              c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(mulsf3.eo) (__fPropagateNaN)
 
 
 xc16-ld 1.34 (A)
@@ -58,10 +76,10 @@ xc16-ld 1.34 (A)
 
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
-.text                        0x200                0xce           0x135  (309)
-.text                        0x2ce                 0xa             0xf  (15)
+.text                        0x200               0x2a2           0x3f3  (1011)
+.text                        0x4a2               0x15c           0x20a  (522)
 
-                 Total "program" memory used (bytes):          0x144  (324) <1%
+                 Total "program" memory used (bytes):          0x5fd  (1533) 2%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x2000]
@@ -89,16 +107,44 @@ External Symbols in Program Memory (by address):
                   0x000252                  __data_init_standard
                   0x000252                  __data_init
                   0x0002c8                  __DefaultInterrupt
-                  0x0002ce                  _main
+                  0x0002ce                  ___fixsfsi
+                  0x000310                  ___floatsisf
+                  0x000316                  __funpack
+                  0x000340                  ___mulsf3
+                  0x0003a8                  ___floatdisf
+                  0x0003c8                  ___floatundisf
+                  0x000426                  __fpack
+                  0x000472                  __funpack2
+                  0x000482                  __fPropagateNaN
+                  0x000494                  __fbopExit
+                  0x00049c                  __fbopReturnNaN
+                  0x0004a2                  _PortInit
+                  0x000578                  _DelayMs
+                  0x0005ca                  _DelayUs
+                  0x0005ec                  _main
 
 External Symbols in Program Memory (by name):
 
+                  0x000578                  _DelayMs
+                  0x0005ca                  _DelayUs
+                  0x0004a2                  _PortInit
                   0x0002c8                  __DefaultInterrupt
+                  0x0002ce                  ___fixsfsi
+                  0x0003a8                  ___floatdisf
+                  0x000310                  ___floatsisf
+                  0x0003c8                  ___floatundisf
+                  0x000340                  ___mulsf3
                   0x000252                  __data_init
                   0x000252                  __data_init_standard
+                  0x000482                  __fPropagateNaN
+                  0x000494                  __fbopExit
+                  0x00049c                  __fbopReturnNaN
+                  0x000426                  __fpack
+                  0x000316                  __funpack
+                  0x000472                  __funpack2
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
-                  0x0002ce                  _main
+                  0x0005ec                  _main
 
 Memory Configuration
 
@@ -135,7 +181,7 @@ LOAD c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libfx-elf.a
                   0x000002          0x2 SHORT 0x0 ((ABSOLUTE (__reset) >> 0x10) & 0x7f)
                   0x000003          0x2 SHORT 0x0
 
-.text             0x000200         0xce
+.text             0x000200        0x2a2
  *(.init)
  .init            0x000200         0x4c c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
                   0x000200                  __resetPRI
@@ -157,6 +203,35 @@ LOAD c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libfx-elf.a
                   0x0002cc          0x2 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30-elf.a(crt_start_mode_normal.Leo)
                   0x0002cc                  __crt_start_mode
                   0x0002cc                  __crt_start_mode_normal
+ .libm.fixsfsi    0x0002ce         0x42 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(fixsfsi.eo)
+                  0x0002ce                  _(float, int, long long, short, float, short, int)
+ .libm.floatsisf
+                  0x000310          0x6 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(floatsisf.eo)
+                  0x000310                  ___floatsisf
+ .libm.funpack    0x000316         0x2a c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(funpack.eo)
+                  0x000316                  __funpack
+ .libm.mulsf3     0x000340         0x68 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(mulsf3.eo)
+                  0x000340                  ___mulsf3
+ .libm.floatdisf
+                  0x0003a8         0x20 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(floatdisf.eo)
+                  0x0003a8                  ___floatdisf
+ .libm.floatundisf
+                  0x0003c8         0x5e c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(floatundisf.eo)
+                  0x0003c8                  ___floatundisf
+ .libm.fpack      0x000426         0x4c c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(fpack.eo)
+                  0x000426                  __fpack
+ .libm.funpack2
+                  0x000472         0x10 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(funpack2.eo)
+                  0x000472                  __funpack2
+ .libm.fPropagateNaN
+                  0x000482         0x12 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(futil.eo)
+                  0x000482                  __fPropagateNaN
+ .libm.fbobExit
+                  0x000494          0x8 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(futil.eo)
+                  0x000494                  __fbopExit
+ .libm.fbopReturnNaN
+                  0x00049c          0x6 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(futil.eo)
+                  0x00049c                  __fbopReturnNaN
 
 usercode
  *(usercode)
@@ -170,22 +245,26 @@ __CONFIG1
 .comment
  *(.comment)
 
-.debug_info       0x000000        0x16b
+.debug_info       0x000000        0xff2
  *(.debug_info)
- .debug_info      0x000000        0x16b build/default/production/Laser_Array_Main.o
+ .debug_info      0x000000        0xff2 build/default/production/Laser_Array_Main.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000         0x50
+.debug_abbrev     0x000000        0x140
  *(.debug_abbrev)
- .debug_abbrev    0x000000         0x50 build/default/production/Laser_Array_Main.o
+ .debug_abbrev    0x000000        0x140 build/default/production/Laser_Array_Main.o
 
-.debug_line       0x000000         0x41
+.debug_line       0x000000        0x1ad
  *(.debug_line)
- .debug_line      0x000000         0x41 build/default/production/Laser_Array_Main.o
+ .debug_line      0x000000        0x1ad build/default/production/Laser_Array_Main.o
 
-.debug_frame      0x000000         0x30
+.debug_frame      0x000000         0x8a
  *(.debug_frame)
- .debug_frame     0x000000         0x30 build/default/production/Laser_Array_Main.o
+ .debug_frame     0x000000         0x8a build/default/production/Laser_Array_Main.o
+
+.debug_str        0x000000         0x6a
+ *(.debug_str)
+ .debug_str       0x000000         0x6a build/default/production/Laser_Array_Main.o
 
 .debug_loc
  *(.debug_loc)
@@ -194,10 +273,10 @@ __CONFIG1
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000         0x1b
+                  0x000000         0x40
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000         0x1b build/default/production/Laser_Array_Main.o
+                  0x000000         0x40 build/default/production/Laser_Array_Main.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -818,18 +897,36 @@ OUTPUT(dist/default/production/Laser_Array.X.production.elf elf32-pic30)
 LOAD default_isr
 
 .debug_pubtypes
-                  0x000018         0x12
+                  0x000018        0x16c
  .debug_pubtypes
-                  0x000018         0x12 build/default/production/Laser_Array_Main.o
+                  0x000018        0x16c build/default/production/Laser_Array_Main.o
 
 __c30_signature
-                  0x00002a         0x12
+                  0x000184         0x48
  __c30_signature
-                  0x00002a          0x6 build/default/production/Laser_Array_Main.o
+                  0x000184          0x6 build/default/production/Laser_Array_Main.o
  __c30_signature
-                  0x000030          0x6 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
+                  0x00018a          0x6 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
  __c30_signature
-                  0x000036          0x6 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
+                  0x000190          0x6 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
+ __c30_signature
+                  0x000196          0x6 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(fixsfsi.eo)
+ __c30_signature
+                  0x00019c          0x6 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(floatsisf.eo)
+ __c30_signature
+                  0x0001a2          0x6 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(funpack.eo)
+ __c30_signature
+                  0x0001a8          0x6 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(mulsf3.eo)
+ __c30_signature
+                  0x0001ae          0x6 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(floatdisf.eo)
+ __c30_signature
+                  0x0001b4          0x6 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(floatundisf.eo)
+ __c30_signature
+                  0x0001ba          0x6 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(fpack.eo)
+ __c30_signature
+                  0x0001c0          0x6 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(funpack2.eo)
+ __c30_signature
+                  0x0001c6          0x6 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(futil.eo)
 
 .config_JTAGEN    0x00abfe          0x2
  .config_JTAGEN
@@ -838,6 +935,9 @@ __c30_signature
 .config_IESO      0x00abfc          0x2
  .config_IESO     0x00abfc          0x2 build/default/production/Laser_Array_Main.o
 
-.text             0x0002ce          0xa
- .text            0x0002ce          0xa build/default/production/Laser_Array_Main.o
-                  0x0002ce                  _main
+.text             0x0004a2        0x15c
+ .text            0x0004a2        0x15c build/default/production/Laser_Array_Main.o
+                  0x0004a2                  _PortInit
+                  0x000578                  _DelayMs
+                  0x0005ca                  _DelayUs
+                  0x0005ec                  _main

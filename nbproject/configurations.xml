@@ -6,6 +6,7 @@
                    projectFiles="true">
       <itemPath>../../../../Program Files (x86)/Microchip/xc16/v1.34/support/PIC24F/h/p24FJ64GA004.h</itemPath>
       <itemPath>PortInit.h</itemPath>
+      <itemPath>MyFunctions.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"

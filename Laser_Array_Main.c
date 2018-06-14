@@ -29,7 +29,12 @@
 // *****************************************************************************
 // *****************************************************************************
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <p24FJ64GA004.h>
 #include <xc.h>
+#include "PortInit.h"
+#include "MyFunctions.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -84,6 +89,15 @@
 
 int main(int argc, char** argv) {
 
-     //DelayMs(1000);
-    }
+    PortInit();
 
+
+
+    while (1) {
+        Laser_LED1 = 1;
+        Laser_LED2 = 0;
+        Laser_LED3 = 0;
+        Laser_LED5 = 0;
+    }
+    return (EXIT_SUCCESS);
+} // End of main program loop.

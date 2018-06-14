@@ -28,6 +28,16 @@ void PortInit(void);
 
 void PortInit(void) {
 
+    // ****************************
+    // *** Redefine PORT MACROS ***
+    // ****************************
+
+    // *** OUTPUTS ***
+#define Laser_LED1 _LATC0
+#define Laser_LED2 _LATC1
+#define Laser_LED3 _LATC2
+#define Laser_LED5 _LATC4
+
     //************************
     //************************
     //*         ADC          *
@@ -54,6 +64,10 @@ void PortInit(void) {
     // no _PCFG13.
     // no _PCFG13.
     _PCFG15 = 1; // 0 = analog, 1 = digital
+
+
+    //*** INPUTS ***
+    //#define ENCDR_SW PORTAbits.RA14
 
 
     //*** All PORTS are inputs at POR ***
@@ -114,16 +128,6 @@ void PortInit(void) {
     _LATA9 = 0; // 0 = low(0v), 1 = high(+3.3V)
     _LATA10 = 0; // 0 = low(0v), 1 = high(+3.3V)
 
-    // ****************************
-    // *** Redefine PORT MACROS ***
-    // ****************************
-
-    // *** OUTPUTS ***
-    //#define RESET_LED _LATA0
-
-
-    //*** INPUTS ***
-    //#define ENCDR_SW PORTAbits.RA14
 
     //***********************
     //***********************
