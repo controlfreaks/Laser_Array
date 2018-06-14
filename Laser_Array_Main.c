@@ -1,8 +1,25 @@
 /* 
- * File:   Dutch_Dozen_V5.0.c
- * Author: James_Vlasblom
+ * File:        Laser_Array
+ * Author:      James_Vlasblom
+ * Date:        June 14, 2018. 
  *
- * C
+ * Comments:
+ *  This file controls the Laser Array device consisting of 12 x 100mW 
+ * class IIIb, 532nm lasers. The MCU monitors 12 external temperature sensors
+ * and 1 local temperature sensor via I2C. A TCA9548A 8-channel I2C switch is
+ * incorporated to deal with all the temperature sensors having the same factory
+ * preset address. When the laser head temperature exceeds a determined set 
+ * point, the laser output LED will flash alerting the user to switch to 
+ * another laser.
+ * 
+ *  There are 12 general I/O pins controlling the laser output LEDS, 2 general
+ * I/O pins controlling an external cooling fan and a laser output relay. 
+ * 
+ * There is one analog I/O measuring the battery voltage and keeping track of 
+ * the charging.
+ * 
+ * Revision History:
+ * 
  */
 
 
