@@ -286,9 +286,9 @@ void DrawPixel_ILI9341(int x, int y, int colour) {
 
     SPI_DC = DATA; // Write Command, leave low
     SPI_CS = 0; // Activate ~CS   
-    SPI1BUF = colour_hi;
+    SPI2BUF = colour_hi;
     Nop(), Nop(), Nop(), Nop(), Nop(), Nop();
-    SPI1BUF = colour_low;
+    SPI2BUF = colour_low;
     Nop(), Nop(), Nop(), Nop(), Nop(), Nop(), Nop(), Nop();
     SPI_CS = 1; // deactivate ~CS.
 
@@ -319,9 +319,9 @@ void FillRec_ILI9341(long int x, long int y, long int w, long int h, long int co
 
     for (y = h; y > 0; y--) {
         for (x = w; x > 0; x--) {
-            SPI1BUF = colour_hi;
+            SPI2BUF = colour_hi;
             Nop(), Nop(), Nop();
-            SPI1BUF = colour_low;
+            SPI2BUF = colour_low;
         }
     }
     SPI_CS = 1; // deactivate ~CS.
@@ -465,7 +465,7 @@ void WriteCommand_ILI9341(unsigned char Command) {
     //Original delay of 12 NOPs approx 1.5uS.
     SPI_CS = 0; // Activate ~CS
     //Original delay of 15 NOPs approx 1.9uS.
-    SPI1BUF = Command;
+    SPI2BUF = Command;
     //Original delay of 23 NOPs approx 2.8uS.
     Nop(), Nop(), Nop(), Nop(), Nop(), Nop(), Nop(), Nop();
     Nop(), Nop();
@@ -485,7 +485,7 @@ void WriteData_ILI9341(unsigned char Data) {
     //Original delay of 12 NOPs approx 1.5uS.
     SPI_CS = 0; // Activate ~CS
     //Original delay of 15 NOPs approx 1.9uS.
-    SPI1BUF = Data;
+    SPI2BUF = Data;
 
     //Original delay of 23 NOPs approx 2.8uS.
     Nop(), Nop(), Nop(), Nop(), Nop(), Nop(), Nop(), Nop();

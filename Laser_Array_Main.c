@@ -69,7 +69,7 @@
 #pragma config IOL1WAY = OFF            // IOLOCK Protection (IOLOCK may be changed via unlocking seq)
 #pragma config OSCIOFNC = OFF           // Primary Oscillator Output Function (OSC2/CLKO/RC15 functions as CLKO (FOSC/2))
 #pragma config FCKSM = CSDCMD           // Clock Switching and Monitor (Clock switching and Fail-Safe Clock Monitor are disabled)
-#pragma config FNOSC = FRCPLL           // Oscillator Select (Fast RC Oscillator with PLL module (FRCPLL))
+#pragma config FNOSC = FRCDIV           // Oscillator Select (Fast RC Oscillator with Postscaler (FRCDIV))
 #pragma config SOSCSEL = SOSC           // Sec Oscillator Select (Default Secondary Oscillator (SOSC))
 #pragma config WUTSEL = LEG             // Wake-up timer Select (Legacy Wake-up Timer)
 #pragma config IESO = ON                // Internal External Switch Over Mode (IESO mode (Two-Speed Start-up) enabled)
@@ -83,6 +83,7 @@
 #pragma config GWRP = OFF               // General Code Segment Write Protect (Writes to program memory are allowed)
 #pragma config GCP = OFF                // General Code Segment Code Protect (Code protection is disabled)
 #pragma config JTAGEN = OFF             // JTAG Port Enable (JTAG port is disabled)
+
 
 // #pragma config statements should precede project file includes.
 // Use project enums instead of #define for ON and OFF.
@@ -102,11 +103,12 @@ int main(int argc, char** argv) {
 
     // *** Initialize SPI ***
     SPIInit();
+    
+    // *** Initialization TFT_ILI9341 *** 
+    Initialize_TFT_ILI9341(); 
 
     while (1) {
-        SPI_RES = 0;
-        SPI_CS = 0;
-        SPI_DC = 1;
+        SPI2BUF = 0x91;
     }
     return (EXIT_SUCCESS);
 } // End of main program loop.

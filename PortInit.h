@@ -279,7 +279,7 @@ void PortInit(void) {
     // RC0 and RC1 are re-mapped for SCI_SDO1 and SCLKo1 respectively. This is
     // done writing to the RPOP8 register.
     
-    RPOR8 = 0x0708; // re-map SPI1 module to RP16, RP17 (RC0, RC1).
+    RPOR8 = 0x0B0A; // re-map SPI1 module to RP16, RP17 (RC0, RC1).
 
 }
 

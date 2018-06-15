@@ -287,9 +287,9 @@ __CONFIG1
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x1bd build/default/production/Laser_Array_Main.o
 
-.debug_line       0x000000        0x304
+.debug_line       0x000000        0x302
  *(.debug_line)
- .debug_line      0x000000        0x304 build/default/production/Laser_Array_Main.o
+ .debug_line      0x000000        0x302 build/default/production/Laser_Array_Main.o
 
 .debug_frame      0x000000        0x1ae
  *(.debug_frame)

@@ -53,7 +53,9 @@ void SPIInit(void) {
 
 
 IFS2bits.SPI2IF = 0;        // Clear Interrupt flag
+  //IFS0bits.SPI1IF = 0;        // Clear Interrupt flag
 IEC2bits.SPI2IE = 0;        // Disable SPI2 interrupts
+  //IEC0bits.SPI1IE = 0;
 
 // *** Control Register ****
 
