@@ -33,8 +33,16 @@
 #include <stdlib.h>
 #include <p24FJ64GA004.h>
 #include <xc.h>
-#include "PortInit.h"
+//#include "ADCInit.h"
+#include "Fonts.h"
+//#include "INTInit.h"
+#include "Misc_Macro.h"
 #include "MyFunctions.h"
+#include "PortInit.h"
+#include "SPIInit.h"
+#include "String.h"
+//#include "TimerInit.h"
+#include "TFT_ILI9341.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -88,16 +96,17 @@
 // *****************************************************************************
 
 int main(int argc, char** argv) {
-
+    
+    // **** Initialize PORTS ****
     PortInit();
 
-
+    // *** Initialize SPI ***
+    SPIInit();
 
     while (1) {
-        Laser_LED1 = 1;
-        Laser_LED2 = 0;
-        Laser_LED3 = 0;
-        Laser_LED5 = 0;
+        SPI_RES = 0;
+        SPI_CS = 0;
+        SPI_DC = 1;
     }
     return (EXIT_SUCCESS);
 } // End of main program loop.

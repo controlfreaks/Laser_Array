@@ -33,8 +33,8 @@ void PortInit(void) {
     // ****************************
 
     // *** OUTPUTS ***
-#define Laser_LED1 _LATC0
-#define Laser_LED2 _LATC1
+#define Laser_LED1 _LATA9
+#define Laser_LED2 _LATA8
 #define Laser_LED3 _LATC2
 #define Laser_LED5 _LATC4
 
@@ -211,8 +211,8 @@ void PortInit(void) {
 
     //TRISC = 0x00;         // Set entire PORT
 
-    _TRISC0 = 0; // 0 = output, 1 = input   
-    _TRISC1 = 0; // 0 = output, 1 = input
+    _TRISC0 = 0; // 0 = output, 1 = input  // re-mapped for RP16 (SPI-SDO1) 
+    _TRISC1 = 0; // 0 = output, 1 = input   // re-mapped for RP17 (SPI-SCLKO1)
     _TRISC2 = 0; // 0 = output, 1 = input
     _TRISC3 = 0; // 0 = output, 1 = input 
     _TRISC4 = 0; // 0 = output, 1 = input
@@ -269,6 +269,18 @@ void PortInit(void) {
     // no _RC13
     // no _RC14
     // no _RC15
+
+    //************************
+    //************************
+    //* PortC re-mapping     *
+    //************************
+    //************************
+    
+    // RC0 and RC1 are re-mapped for SCI_SDO1 and SCLKo1 respectively. This is
+    // done writing to the RPOP8 register.
+    
+    RPOR8 = 0x0708; // re-map SPI1 module to RP16, RP17 (RC0, RC1).
+
 }
 
 #ifdef	__cplusplus

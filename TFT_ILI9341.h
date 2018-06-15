@@ -29,11 +29,11 @@
 #define DATA 1
 
 // #define statements for serial connection to the display.
-#define CS _LATG9            // Chip select for OLED - Serial Mode, initialized as 1.
-#define RES _LATG1           // Reset for OLED - Serial Mode.
-#define DC _LATG0            // Data / Command for OLED (LATG0 for pictail) - Serial Mode.
-#define SCLK _LATG6          // Clock for OLED - Serial Mode.
-#define MOSI _LATG8          // Master out, serial in for OLED - Serial Mode.
+#define SPI_CS _LATA10            // Chip select for OLED - Serial Mode, initialized as 1.
+#define SPI_RES _LATB14          // Reset for OLED - Serial Mode.
+#define SPI_DC _LATB12            // Data / Command for OLED (LATG0 for pictail) - Serial Mode.
+// Note: SCLK _LATC0          // Clock for OLED - Serial Mode.
+// Note: MOSI _LATC1          // Master out, serial in for OLED - Serial Mode.
 
 #define ILI9341_TFTWIDTH  320
 #define ILI9341_TFTHEIGHT 240
@@ -152,9 +152,9 @@ void WriteData_ILI9341(unsigned char Data);
 // ****  Insert code here. *****
 
 void Initialize_TFT_ILI9341(void) {
-    RES = 0; // Reset the TFT.
+    SPI_RES = 0; // Reset the TFT.
     DelayMs(120);
-    RES = 1; // Take TFT out of reset.
+    SPI_RES = 1; // Take TFT out of reset.
 
     WriteCommand_ILI9341(ILI9341_SWRESET);
     DelayMs(10);
@@ -284,13 +284,13 @@ void DrawPixel_ILI9341(int x, int y, int colour) {
     IEC0bits.INT0IE = 0; // disable INT0 ISR
     Nop(); // Added for interrupt disable timing.
 
-    DC = DATA; // Write Command, leave low
-    CS = 0; // Activate ~CS   
-    SPI2BUF = colour_hi;
+    SPI_DC = DATA; // Write Command, leave low
+    SPI_CS = 0; // Activate ~CS   
+    SPI1BUF = colour_hi;
     Nop(), Nop(), Nop(), Nop(), Nop(), Nop();
-    SPI2BUF = colour_low;
+    SPI1BUF = colour_low;
     Nop(), Nop(), Nop(), Nop(), Nop(), Nop(), Nop(), Nop();
-    CS = 1; // deactivate ~CS.
+    SPI_CS = 1; // deactivate ~CS.
 
     IEC0bits.INT0IE = 1; // enable INT0 ISR
 }
@@ -314,17 +314,17 @@ void FillRec_ILI9341(long int x, long int y, long int w, long int h, long int co
     IEC0bits.INT0IE = 0; // disable INT0 ISR
     Nop(); // Added for interrupt disable timing.
 
-    DC = DATA; // Write Command, leave low
-    CS = 0; // Activate ~CS   
+    SPI_DC = DATA; // Write Command, leave low
+    SPI_CS = 0; // Activate ~CS   
 
     for (y = h; y > 0; y--) {
         for (x = w; x > 0; x--) {
-            SPI2BUF = colour_hi;
+            SPI1BUF = colour_hi;
             Nop(), Nop(), Nop();
-            SPI2BUF = colour_low;
+            SPI1BUF = colour_low;
         }
     }
-    CS = 1; // deactivate ~CS.
+    SPI_CS = 1; // deactivate ~CS.
 
     IEC0bits.INT0IE = 1; // enable INT0 ISR
 }
@@ -461,15 +461,15 @@ void WriteCommand_ILI9341(unsigned char Command) {
     IEC0bits.INT0IE = 0; // disable INT0 ISR
     Nop(); // Added for interrupt disable timing.
 
-    DC = COMMAND; // Write Command, leave low
+    SPI_DC = COMMAND; // Write Command, leave low
     //Original delay of 12 NOPs approx 1.5uS.
-    CS = 0; // Activate ~CS
+    SPI_CS = 0; // Activate ~CS
     //Original delay of 15 NOPs approx 1.9uS.
-    SPI2BUF = Command;
+    SPI1BUF = Command;
     //Original delay of 23 NOPs approx 2.8uS.
     Nop(), Nop(), Nop(), Nop(), Nop(), Nop(), Nop(), Nop();
     Nop(), Nop();
-    CS = 1; // deactivate ~CS.
+    SPI_CS = 1; // deactivate ~CS.
 
     IEC0bits.INT0IE = 1; // enable INT0 ISR
 }
@@ -481,16 +481,16 @@ void WriteData_ILI9341(unsigned char Data) {
     IEC0bits.INT0IE = 0; // disable INT0 ISR
     Nop(); // Added for interrupt disable timing.
 
-    DC = DATA; // Write Command, leave low
+    SPI_DC = DATA; // Write Command, leave low
     //Original delay of 12 NOPs approx 1.5uS.
-    CS = 0; // Activate ~CS
+    SPI_CS = 0; // Activate ~CS
     //Original delay of 15 NOPs approx 1.9uS.
-    SPI2BUF = Data;
+    SPI1BUF = Data;
 
     //Original delay of 23 NOPs approx 2.8uS.
     Nop(), Nop(), Nop(), Nop(), Nop(), Nop(), Nop(), Nop();
     Nop(), Nop();
-    CS = 1; // deactivate ~CS.
+    SPI_CS = 1; // deactivate ~CS.
 
     IEC0bits.INT0IE = 1; // enable INT0 ISR
 }
