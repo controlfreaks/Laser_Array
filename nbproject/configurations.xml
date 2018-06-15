@@ -8,6 +8,7 @@
       <itemPath>PortInit.h</itemPath>
       <itemPath>MyFunctions.h</itemPath>
       <itemPath>Misc_Macro.h</itemPath>
+      <itemPath>SPIInit.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
