@@ -77,11 +77,11 @@ xc16-ld 1.34 (A)
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x2a2           0x3f3  (1011)
-.const                       0x4a2              0x4970          0x6e28  (28200)
-.text                       0x4e12               0x6c8           0xa2c  (2604)
-.dinit                      0x54da                 0x8             0xc  (12)
+.const                       0x4a2              0x4980          0x6e40  (28224)
+.text                       0x4e22               0x6d4           0xa3e  (2622)
+.dinit                      0x54f6                 0x8             0xc  (12)
 
-                 Total "program" memory used (bytes):         0x7c53  (31827) 48%
+                 Total "program" memory used (bytes):         0x7c7d  (31869) 48%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x2000]
@@ -131,36 +131,36 @@ External Symbols in Program Memory (by address):
                   0x000482                  __fPropagateNaN
                   0x000494                  __fbopExit
                   0x00049c                  __fbopReturnNaN
-                  0x004e12                  _DelayMs
-                  0x004e64                  _DelayUs
-                  0x004e86                  _PortInit
-                  0x004f60                  _SPIInit
-                  0x004f98                  _Initialize_TFT_ILI9341
-                  0x005116                  _DrawPixel_ILI9341
-                  0x005192                  _FillRec_ILI9341
-                  0x0052aa                  _FillScreen_ILI9341
-                  0x0052c8                  _SetAddrWindow_ILI9341
-                  0x00531a                  _CharWrite_XY_ILI9341_16x25
-                  0x00540a                  _LineWrite_XY_ILI9341_16x25
-                  0x005470                  _WriteCommand_ILI9341
-                  0x00549c                  _WriteData_ILI9341
-                  0x0054c8                  _main
+                  0x004e22                  _DelayMs
+                  0x004e74                  _DelayUs
+                  0x004e96                  _PortInit
+                  0x004f70                  _SPIInit
+                  0x004fa8                  _Initialize_TFT_ILI9341
+                  0x005126                  _DrawPixel_ILI9341
+                  0x0051a2                  _FillRec_ILI9341
+                  0x0052ba                  _FillScreen_ILI9341
+                  0x0052d8                  _SetAddrWindow_ILI9341
+                  0x00532a                  _CharWrite_XY_ILI9341_16x25
+                  0x00541a                  _LineWrite_XY_ILI9341_16x25
+                  0x005480                  _WriteCommand_ILI9341
+                  0x0054ac                  _WriteData_ILI9341
+                  0x0054d8                  _main
 
 External Symbols in Program Memory (by name):
 
-                  0x00531a                  _CharWrite_XY_ILI9341_16x25
-                  0x004e12                  _DelayMs
-                  0x004e64                  _DelayUs
-                  0x005116                  _DrawPixel_ILI9341
-                  0x005192                  _FillRec_ILI9341
-                  0x0052aa                  _FillScreen_ILI9341
-                  0x004f98                  _Initialize_TFT_ILI9341
-                  0x00540a                  _LineWrite_XY_ILI9341_16x25
-                  0x004e86                  _PortInit
-                  0x004f60                  _SPIInit
-                  0x0052c8                  _SetAddrWindow_ILI9341
-                  0x005470                  _WriteCommand_ILI9341
-                  0x00549c                  _WriteData_ILI9341
+                  0x00532a                  _CharWrite_XY_ILI9341_16x25
+                  0x004e22                  _DelayMs
+                  0x004e74                  _DelayUs
+                  0x005126                  _DrawPixel_ILI9341
+                  0x0051a2                  _FillRec_ILI9341
+                  0x0052ba                  _FillScreen_ILI9341
+                  0x004fa8                  _Initialize_TFT_ILI9341
+                  0x00541a                  _LineWrite_XY_ILI9341_16x25
+                  0x004e96                  _PortInit
+                  0x004f70                  _SPIInit
+                  0x0052d8                  _SetAddrWindow_ILI9341
+                  0x005480                  _WriteCommand_ILI9341
+                  0x0054ac                  _WriteData_ILI9341
                   0x0002c8                  __DefaultInterrupt
                   0x0002ce                  ___fixsfsi
                   0x0003a8                  ___floatdisf
@@ -177,7 +177,7 @@ External Symbols in Program Memory (by name):
                   0x000472                  __funpack2
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
-                  0x0054c8                  _main
+                  0x0054d8                  _main
 
 Memory Configuration
 
@@ -287,9 +287,9 @@ __CONFIG1
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x1bd build/default/production/Laser_Array_Main.o
 
-.debug_line       0x000000        0x302
+.debug_line       0x000000        0x303
  *(.debug_line)
- .debug_line      0x000000        0x302 build/default/production/Laser_Array_Main.o
+ .debug_line      0x000000        0x303 build/default/production/Laser_Array_Main.o
 
 .debug_frame      0x000000        0x1ae
  *(.debug_frame)
@@ -974,25 +974,25 @@ __c30_signature
 .config_IESO      0x00abfc          0x2
  .config_IESO     0x00abfc          0x2 build/default/production/Laser_Array_Main.o
 
-.const              0x84a2       0x4970 load address 0x0004a2  
- .const             0x84a2       0x4970 build/default/production/Laser_Array_Main.o
+.const              0x84a2       0x4980 load address 0x0004a2  
+ .const             0x84a2       0x4980 build/default/production/Laser_Array_Main.o
 
-.text             0x004e12        0x6c8
- .text            0x004e12        0x6c8 build/default/production/Laser_Array_Main.o
-                  0x004e12                  _DelayMs
-                  0x004e64                  _DelayUs
-                  0x004e86                  _PortInit
-                  0x004f60                  _SPIInit
-                  0x004f98                  _Initialize_TFT_ILI9341
-                  0x005116                  _DrawPixel_ILI9341
-                  0x005192                  _FillRec_ILI9341
-                  0x0052aa                  _FillScreen_ILI9341
-                  0x0052c8                  _SetAddrWindow_ILI9341
-                  0x00531a                  _CharWrite_XY_ILI9341_16x25
-                  0x00540a                  _LineWrite_XY_ILI9341_16x25
-                  0x005470                  _WriteCommand_ILI9341
-                  0x00549c                  _WriteData_ILI9341
-                  0x0054c8                  _main
+.text             0x004e22        0x6d4
+ .text            0x004e22        0x6d4 build/default/production/Laser_Array_Main.o
+                  0x004e22                  _DelayMs
+                  0x004e74                  _DelayUs
+                  0x004e96                  _PortInit
+                  0x004f70                  _SPIInit
+                  0x004fa8                  _Initialize_TFT_ILI9341
+                  0x005126                  _DrawPixel_ILI9341
+                  0x0051a2                  _FillRec_ILI9341
+                  0x0052ba                  _FillScreen_ILI9341
+                  0x0052d8                  _SetAddrWindow_ILI9341
+                  0x00532a                  _CharWrite_XY_ILI9341_16x25
+                  0x00541a                  _LineWrite_XY_ILI9341_16x25
+                  0x005480                  _WriteCommand_ILI9341
+                  0x0054ac                  _WriteData_ILI9341
+                  0x0054d8                  _main
 
-.dinit            0x0054da          0x8
- .dinit           0x0054da          0x8 data_init
+.dinit            0x0054f6          0x8
+ .dinit           0x0054f6          0x8 data_init
