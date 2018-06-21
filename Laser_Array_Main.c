@@ -112,8 +112,7 @@ int main(int argc, char** argv) {
     I2CInit();
 
     FillScreen_ILI9341(ILI9341_BLACK);
-    LineWrite_XY_ILI9341_16x25("TEMP", 0, Line3, ILI9341_WHITE, ILI9341_BLACK);
-    LineWrite_XY_ILI9341_16x25("TFB=A", 0, Line5, ILI9341_WHITE, ILI9341_BLACK);
+    LineWrite_XY_ILI9341_16x25("TEMP", 0, Line1, ILI9341_WHITE, ILI9341_BLACK);
     
     I2CWrite_Config(NORMAL); // Set Temperature to normal mode.
     
