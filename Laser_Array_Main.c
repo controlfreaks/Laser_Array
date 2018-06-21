@@ -35,6 +35,7 @@
 #include <xc.h>
 //#include "ADCInit.h"
 #include "Fonts.h"
+#include "I2CInit.h"
 //#include "INTInit.h"
 #include "Misc_Macro.h"
 #include "MyFunctions.h"
@@ -62,6 +63,7 @@
 // PIC24FJ64GA004 Configuration Bit Settings
 
 // 'C' source line config statements
+
 
 // CONFIG2
 #pragma config POSCMOD = NONE           // Primary Oscillator Select (Primary oscillator disabled)
@@ -105,10 +107,21 @@ int main(int argc, char** argv) {
 
     // *** Initialization TFT_ILI9341 *** 
     Initialize_TFT_ILI9341();
+
+    // *** Initialize SPI ***
+    I2CInit();
+
     FillScreen_ILI9341(ILI9341_BLACK);
-    LineWrite_XY_ILI9341_16x25("TEMP SENSOR: #1", 0, Line3, ILI9341_WHITE, ILI9341_BLACK);
+    LineWrite_XY_ILI9341_16x25("TEMP", 0, Line3, ILI9341_WHITE, ILI9341_BLACK);
+    LineWrite_XY_ILI9341_16x25("TFB=A", 0, Line5, ILI9341_WHITE, ILI9341_BLACK);
+    
+    I2CWrite_Config(NORMAL); // Set Temperature to normal mode.
+    
     while (1) {
         
+
+        //DelayMs(1);        
+
     }
     return (EXIT_SUCCESS);
 } // End of main program loop.

@@ -143,8 +143,8 @@ void PortInit(void) {
 
     _TRISB0 = 1; // 0 = output, 1 = input   // PCEC1
     _TRISB1 = 1; // 0 = output, 1 = input   // PCEG1
-    _TRISB2 = 1; // 0 = output, 1 = input   // ENCOD-2
-    _TRISB3 = 1; // 0 = output, 1 = input   // ENCOD-A
+    _TRISB2 = 0; // 0 = output, 1 = input   // ENCOD-2
+    _TRISB3 = 0; // 0 = output, 1 = input   // ENCOD-A
     _TRISB4 = 1; // 0 = output, 1 = input
     _TRISB5 = 1; // 0 = output, 1 = input
     _TRISB6 = 0; // 0 = output, 1 = input
@@ -185,8 +185,8 @@ void PortInit(void) {
 
     //_LATB0 = 0;        // 0 = low(0v), 1 = high(+3.3V)
     //_LATB1 = 0;        // 0 = low(0v), 1 = high(+3.3V)
-    //_LATB2 = 0;        // 0 = low(0v), 1 = high(+3.3V)
-    //_LATB3 = 0;        // 0 = low(0v), 1 = high(+3.3V)
+    _LATB2 = 1;        // 0 = low(0v), 1 = high(+3.3V)  //  temp SDA2
+    _LATB3 = 0;        // 0 = low(0v), 1 = high(+3.3V) // temp SCL2
     //_LATB4 = 0;        // 0 = low(0v), 1 = high(+3.3V)
     //_LATB5 = 0;        // 0 = low(0v), 1 = high(+3.3V)
     //_LATB6 = 0;        // 0 = low(0v), 1 = high(+3.3V)
