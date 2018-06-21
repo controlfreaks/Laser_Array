@@ -20,11 +20,11 @@
 #define ON 1
 #define OFF 0
 #define TEMPSENSE_READ 0x9B     // Temperature slave address with R/!W = 1
-#define TEMPSENSE_WRITE 0x8A    // Temperature slave address with R/!W = 0
+#define TEMPSENSE_WRITE 0x9A    // Temperature slave address with R/!W = 0
 #define NORMAL 0x00
 #define STANDBY 0x80
 #define RTR 0x00    // Read Temperature (TEMP)
-#define RWCR 0x0A   // Read/Write Configuration Register (CONFIG) 
+#define RWCR 0x01   // Read/Write Configuration Register (CONFIG) 
 
 #include <xc.h> // include processor files - each processor file is guarded. 
 
@@ -58,37 +58,51 @@ int I2CRead_Temp(void) {
 
 void I2CWrite_Config(int command) {
     I2C2CONbits.SEN = 1; // Start bit.
-
-    while (I2C2CONbits.SEN) {
-    } // wait for Start bit to clear.
+    while (I2C2CONbits.SEN) { // Wait for Start bit to clear.
+    }
 
     I2C2TRN = TEMPSENSE_WRITE; // Write to slaved address.
 
-    while (I2C2STATbits.TBF) { // Waiting for transmit to finish.
-        //   Nop(), Nop(), Nop();
-        //LineWrite_XY_ILI9341_16x25("ACK=1", 0, Line5, ILI9341_WHITE, ILI9341_BLACK);
-    }
-    DelayUs(5);
+   // while (I2C2STATbits.TBF) { // Waiting for transmit to finish
+   // } // before testing the ACKSTAT bit.
 
-    //I2C2TRN = RWCR; // write command register
+    //DelayUs(5); // Necessary delay for ACKSTAT to settle.
 
     while (I2C2STATbits.ACKSTAT) { // Waiting for !ACK from slave.
-        // Nop(), Nop(), Nop();
-        LineWrite_XY_ILI9341_16x25("ACK = 1", 0, Line5, ILI9341_WHITE, ILI9341_BLACK);
+        LineWrite_XY_ILI9341_16x25("ACK1 = 1", 0, Line4, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
     }
-    //Nop(), Nop(), Nop();
-    LineWrite_XY_ILI9341_16x25("ACK = 0", 0, Line5, ILI9341_WHITE, ILI9341_BLACK);
-    //I2C2TRN = command; // One of two commands, NORMAL or STANDBY
 
-    //while (I2C2STATbits.ACKSTAT) { // Waiting for !ACK from slave.
-    //}
-    DelayUs(10);
-    //LineWrite_XY_ILI9341_16x25("Start cleared", 0, Line5, ILI9341_WHITE, ILI9341_BLACK);
+    LineWrite_XY_ILI9341_16x25("ACK1 = 0", 0, Line4, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
+
+    I2C2TRN = RWCR; // write command register
+
+   // while (I2C2STATbits.TBF) { // Waiting for transmit to finish
+   // } // before testing the ACKSTAT bit.
+
+    //DelayUs(5); // Necessary delay for ACKSTAT to settle.
+
+    while (I2C2STATbits.ACKSTAT) { // Waiting for !ACK from slave.
+        LineWrite_XY_ILI9341_16x25("ACK2 = 1", 0, Line5, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
+    }
+
+    LineWrite_XY_ILI9341_16x25("ACK2 = 0", 0, Line5, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
+    
+    I2C2TRN = command; // One of two DATA commands, NORMAL or STANDBY
+
+    //while (I2C2STATbits.TBF) { // Waiting for transmit to finish
+    //} // before testing the ACKSTAT bit.
+
+    //DelayUs(5); // Necessary delay for ACKSTAT to settle.
+
+    while (I2C2STATbits.ACKSTAT) { // Waiting for !ACK from slave.
+        LineWrite_XY_ILI9341_16x25("ACK3 = 1", 0, Line6, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
+    }
+
+    LineWrite_XY_ILI9341_16x25("ACK3 = 0", 0, Line6, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
+    
     I2C2CONbits.PEN = 1; // Generate stop bit.
-    //  while (I2C2STATbits.P) {
-    // } // wait for Start bit to clear.
-    // LineWrite_XY_ILI9341_16x25("Stop cleared  ", 0, Line5, ILI9341_WHITE, ILI9341_BLACK);
-    // I2C2CONbits.I2CEN = OFF; // Turn on I2C module #1.
+        while (I2C2CONbits.PEN) { // Wait for Start bit to clear.
+    }
 }
 
 
