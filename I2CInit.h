@@ -106,7 +106,6 @@ int I2CRead_Temp(void) {
     I2C2CONbits.PEN = 1; // Generate stop bit.
     while (I2C2CONbits.PEN) { // Wait for Start bit to clear.
     }
-
     return I2C2RCV; // return the contents of the RCV Register.
 }
 

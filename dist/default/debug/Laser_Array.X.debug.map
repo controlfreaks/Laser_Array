@@ -4,9 +4,14 @@ Tool Name:
   c:\program files (x86)\microchip\xc16\v1.34\bin\bin\..\bin/elf-ld.exe
 
 Command:
+  -TC:\\Users\\james\\AppData\\Local\\Temp\\tmp00001ec4.00 \
+  -TC:\\Users\\james\\AppData\\Local\\Temp\\tmp00001ec4.01 \
+  -TC:\\Users\\james\\AppData\\Local\\Temp\\tmp00001ec4.02 \
+  -TC:\\Users\\james\\AppData\\Local\\Temp\\tmp00001ec4.03 \
+  -TC:\\Users\\james\\AppData\\Local\\Temp\\tmp00001ec4.04 \
   -p24FJ64GA004 \
   -o \
-  dist/default/production/Laser_Array.X.production.elf \
+  dist/default/debug/Laser_Array.X.debug.elf \
   -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/.. \
   -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib \
   -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../support/PIC24E/gld \
@@ -16,9 +21,12 @@ Command:
   -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../support/dsPIC33C/gld \
   -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../support/dsPIC33E/gld \
   -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../support/dsPIC33F/gld \
-  build/default/production/Laser_Array_Main.o \
+  build/default/debug/Laser_Array_Main.o \
   --defsym=__MPLAB_BUILD=1 \
-  -Tp24FJ64GA004.gld.00 \
+  --defsym=__MPLAB_DEBUG=1 \
+  --defsym=__DEBUG=1 \
+  --defsym=__MPLAB_DEBUGGER_ICD3=1 \
+  -Tp24FJ64GA004.gld.05 \
   --stack=16 \
   --check-sections \
   --data-init \
@@ -30,10 +38,10 @@ Command:
   --stackguard=16 \
   --no-force-link \
   --smart-io \
-  -Map=dist/default/production/Laser_Array.X.production.map \
+  -Map=dist/default/debug/Laser_Array.X.debug.map \
   --report-mem \
   --memorysummary \
-  dist/default/production/memoryfile.xml \
+  dist/default/debug/memoryfile.xml \
   -start-group \
   --library=lega-pic30-elf \
   --library=m-elf \
@@ -51,13 +59,13 @@ c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30-elf.
 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30-elf.a(crt_start_mode_normal.Leo)
                               (__crt_start_mode_normal)
 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(fixsfsi.eo)
-                              build/default/production/Laser_Array_Main.o (_(float, int, long long, short, float, short, int))
+                              build/default/debug/Laser_Array_Main.o (_(float, int, long long, short, float, short, int))
 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(floatsisf.eo)
-                              build/default/production/Laser_Array_Main.o (___floatsisf)
+                              build/default/debug/Laser_Array_Main.o (___floatsisf)
 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(funpack.eo)
                               c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(fixsfsi.eo) (__funpack)
 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(mulsf3.eo)
-                              build/default/production/Laser_Array_Main.o (___mulsf3)
+                              build/default/debug/Laser_Array_Main.o (___mulsf3)
 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(floatdisf.eo)
                               c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(floatsisf.eo) (___floatdisf)
 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(floatundisf.eo)
@@ -88,9 +96,14 @@ section                    address   length (PC units)   length (bytes) (dec)
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-.nbss                        0x800                   0             0x4  (4)
+reserve_data_0x800           0x800                0x20            0x20  (32)
+reserve_data_0x820           0x820                 0x2             0x2  (2)
+reserve_data_0x822           0x822                 0x2             0x2  (2)
+reserve_data_0x824           0x824                 0x2             0x2  (2)
+reserve_data_0x826           0x826                0x2a            0x2a  (42)
+.nbss                        0x850                   0             0x4  (4)
 
-                 Total "data" memory used (bytes):            0x4  (4) <1%
+                 Total "data" memory used (bytes):           0x54  (84) 1%
 
 
 Dynamic Memory Usage
@@ -98,20 +111,20 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0x804                              0x1ffc  (8188)
+stack                        0x854                              0x1fac  (8108)
 
-                 Maximum dynamic memory (bytes):         0x1ffc  (8188)
+                 Maximum dynamic memory (bytes):         0x1fac  (8108)
 
 
 External Symbols in Data Memory (by address):
 
-                    0x0800                  _FLAGBITS_A
-                    0x0802                  _FLAGBITS_B
+                    0x0850                  _FLAGBITS_A
+                    0x0852                  _FLAGBITS_B
 
 External Symbols in Data Memory (by name):
 
-                    0x0800                  _FLAGBITS_A
-                    0x0802                  _FLAGBITS_B
+                    0x0850                  _FLAGBITS_A
+                    0x0852                  _FLAGBITS_B
 
 External Symbols in Program Memory (by address):
 
@@ -200,8 +213,36 @@ CONFIG1          0x00abfe           0x000002
 
 Linker script and memory map
 
-LOAD build/default/production/Laser_Array_Main.o
+
+reserve_data_0x800
+                    0x0800         0x20
+                    0x0820                  . = 0x20
+ *fill*             0x0800         0x2000
+
+reserve_data_0x820
+                    0x0820          0x2
+                    0x0822                  . = 0x2
+ *fill*             0x0820          0x200
+
+reserve_data_0x822
+                    0x0822          0x2
+                    0x0824                  . = 0x2
+ *fill*             0x0822          0x200
+
+reserve_data_0x824
+                    0x0824          0x2
+                    0x0826                  . = 0x2
+ *fill*             0x0824          0x200
+
+reserve_data_0x826
+                    0x0826         0x2a
+                    0x0850                  . = 0x2a
+ *fill*             0x0826         0x2a00
+LOAD build/default/debug/Laser_Array_Main.o
                     0x0001                  __MPLAB_BUILD = 0x1
+                    0x0001                  __MPLAB_DEBUG = 0x1
+                    0x0001                  __DEBUG = 0x1
+                    0x0001                  __MPLAB_DEBUGGER_ICD3 = 0x1
 LOAD pPIC24Fxxx
 LOAD c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libfx-elf.a
                     0xabfc                  __CONFIG2 = 0xabfc
@@ -286,24 +327,24 @@ __CONFIG1
 
 .debug_info       0x000000       0x2469
  *(.debug_info)
- .debug_info      0x000000       0x2469 build/default/production/Laser_Array_Main.o
+ .debug_info      0x000000       0x2469 build/default/debug/Laser_Array_Main.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x1d4
  *(.debug_abbrev)
- .debug_abbrev    0x000000        0x1d4 build/default/production/Laser_Array_Main.o
+ .debug_abbrev    0x000000        0x1d4 build/default/debug/Laser_Array_Main.o
 
 .debug_line       0x000000        0x350
  *(.debug_line)
- .debug_line      0x000000        0x350 build/default/production/Laser_Array_Main.o
+ .debug_line      0x000000        0x350 build/default/debug/Laser_Array_Main.o
 
 .debug_frame      0x000000        0x202
  *(.debug_frame)
- .debug_frame     0x000000        0x202 build/default/production/Laser_Array_Main.o
+ .debug_frame     0x000000        0x202 build/default/debug/Laser_Array_Main.o
 
 .debug_str        0x000000        0x102
  *(.debug_str)
- .debug_str       0x000000        0x102 build/default/production/Laser_Array_Main.o
+ .debug_str       0x000000        0x102 build/default/debug/Laser_Array_Main.o
 
 .debug_loc
  *(.debug_loc)
@@ -315,7 +356,7 @@ __CONFIG1
                   0x000000        0x17e
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000        0x17e build/default/production/Laser_Array_Main.o
+                  0x000000        0x17e build/default/debug/Laser_Array_Main.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -323,7 +364,7 @@ __CONFIG1
 .debug_aranges    0x000000         0x18
  *(.debug_aranges)
  .debug_aranges
-                  0x000000         0x18 build/default/production/Laser_Array_Main.o
+                  0x000000         0x18 build/default/debug/Laser_Array_Main.o
                     0x0000                  WREG0 = 0x0
                     0x0000                  _WREG0 = 0x0
                     0x0002                  WREG1 = 0x2
@@ -932,19 +973,19 @@ LOAD c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30
 LOAD c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a
 LOAD c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-c-elf.a
 END GROUP
-OUTPUT(dist/default/production/Laser_Array.X.production.elf elf32-pic30)
+OUTPUT(dist/default/debug/Laser_Array.X.debug.elf elf32-pic30)
 LOAD default_isr
 LOAD data_init
 
 .debug_pubtypes
                   0x000018        0x2b5
  .debug_pubtypes
-                  0x000018        0x2b5 build/default/production/Laser_Array_Main.o
+                  0x000018        0x2b5 build/default/debug/Laser_Array_Main.o
 
 __c30_signature
                   0x0002cd         0x48
  __c30_signature
-                  0x0002cd          0x6 build/default/production/Laser_Array_Main.o
+                  0x0002cd          0x6 build/default/debug/Laser_Array_Main.o
  __c30_signature
                   0x0002d3          0x6 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
  __c30_signature
@@ -968,23 +1009,23 @@ __c30_signature
  __c30_signature
                   0x00030f          0x6 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(futil.eo)
 
-.nbss               0x0800          0x4
- .nbss              0x0800          0x4 build/default/production/Laser_Array_Main.o
-                    0x0800                  _FLAGBITS_A
-                    0x0802                  _FLAGBITS_B
+.nbss               0x0850          0x4
+ .nbss              0x0850          0x4 build/default/debug/Laser_Array_Main.o
+                    0x0850                  _FLAGBITS_A
+                    0x0852                  _FLAGBITS_B
 
 .config_JTAGEN    0x00abfe          0x2
  .config_JTAGEN
-                  0x00abfe          0x2 build/default/production/Laser_Array_Main.o
+                  0x00abfe          0x2 build/default/debug/Laser_Array_Main.o
 
 .config_IESO      0x00abfc          0x2
- .config_IESO     0x00abfc          0x2 build/default/production/Laser_Array_Main.o
+ .config_IESO     0x00abfc          0x2 build/default/debug/Laser_Array_Main.o
 
 .const              0x84a2       0x49ac load address 0x0004a2  
- .const             0x84a2       0x49ac build/default/production/Laser_Array_Main.o
+ .const             0x84a2       0x49ac build/default/debug/Laser_Array_Main.o
 
 .text             0x004e4e        0x83a
- .text            0x004e4e        0x83a build/default/production/Laser_Array_Main.o
+ .text            0x004e4e        0x83a build/default/debug/Laser_Array_Main.o
                   0x004e4e                  _DelayMs
                   0x004ea0                  _DelayUs
                   0x004ec2                  _Initialize_TFT_ILI9341

@@ -98,6 +98,7 @@
 // *****************************************************************************
 
 int main(int argc, char** argv) {
+    int Temp = 0;
 
     // **** Initialize PORTS ****
     PortInit();
@@ -114,13 +115,10 @@ int main(int argc, char** argv) {
     FillScreen_ILI9341(ILI9341_BLACK);
     LineWrite_XY_ILI9341_16x25("TEMP", 0, Line1, ILI9341_WHITE, ILI9341_BLACK);
     
-    I2CWrite_Config(NORMAL); // Set Temperature to normal mode.
-    
+    //I2CWrite_Config(NORMAL); // Set Temperature to normal mode.
+
     while (1) {
-        
-
-        //DelayMs(1);        
-
+          Temp =I2CRead_Temp(); 
     }
     return (EXIT_SUCCESS);
 } // End of main program loop.

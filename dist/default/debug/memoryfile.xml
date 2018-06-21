@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project>
-  <executable name="dist/default/production/Laser_Array.X.production.elf">
+  <executable name="dist/default/debug/Laser_Array.X.debug.elf">
     <memory name="data">
       <units>bytes</units>
       <length>8192</length>
-      <used>4</used>
-      <free>8188</free>
+      <used>84</used>
+      <free>8108</free>
     </memory>
     <memory name="program">
       <units>bytes</units>
