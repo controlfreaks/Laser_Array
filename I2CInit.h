@@ -20,7 +20,7 @@
 #define ON 1
 #define OFF 0
 #define TEMPSENSE_READ 0x9B     // Temperature slave address with R/!W = 1
-#define TEMPSENSE_WRITE 0x9A    // Temperature slave address with R/!W = 0
+#define TEMPSENSE_WRITE 0x8A    // Temperature slave address with R/!W = 0
 #define NORMAL 0x00
 #define STANDBY 0x80
 #define RTR 0x00    // Read Temperature (TEMP)
@@ -58,33 +58,33 @@ int I2CRead_Temp(void) {
 
 void I2CWrite_Config(int command) {
     I2C2CONbits.SEN = 1; // Start bit.
-    
+
     while (I2C2CONbits.SEN) {
     } // wait for Start bit to clear.
-    
+
     I2C2TRN = TEMPSENSE_WRITE; // Write to slaved address.
-    
+
     while (I2C2STATbits.TBF) { // Waiting for transmit to finish.
-     //   Nop(), Nop(), Nop();
-      //  LineWrite_XY_ILI9341_16x25("TFB = 0", 0, Line5, ILI9341_WHITE, ILI9341_BLACK);
+        //   Nop(), Nop(), Nop();
+        //LineWrite_XY_ILI9341_16x25("ACK=1", 0, Line5, ILI9341_WHITE, ILI9341_BLACK);
     }
-    //DelayMs(10);
-   // Nop(), Nop(), Nop();
+    DelayUs(5);
+
     //I2C2TRN = RWCR; // write command register
 
-    //while (I2C2STATbits.ACKSTAT) { // Waiting for !ACK from slave.
-    // Nop(), Nop(), Nop();
-   // LineWrite_XY_ILI9341_16x25("TFB = 1", 0, Line5, ILI9341_WHITE, ILI9341_BLACK);
-    // }
+    while (I2C2STATbits.ACKSTAT) { // Waiting for !ACK from slave.
+        // Nop(), Nop(), Nop();
+        LineWrite_XY_ILI9341_16x25("ACK = 1", 0, Line5, ILI9341_WHITE, ILI9341_BLACK);
+    }
     //Nop(), Nop(), Nop();
-    //LineWrite_XY_ILI9341_16x25("C", 0, Line5, ILI9341_WHITE, ILI9341_BLACK);
+    LineWrite_XY_ILI9341_16x25("ACK = 0", 0, Line5, ILI9341_WHITE, ILI9341_BLACK);
     //I2C2TRN = command; // One of two commands, NORMAL or STANDBY
 
     //while (I2C2STATbits.ACKSTAT) { // Waiting for !ACK from slave.
     //}
-    //DelayUs(10);
+    DelayUs(10);
     //LineWrite_XY_ILI9341_16x25("Start cleared", 0, Line5, ILI9341_WHITE, ILI9341_BLACK);
-    //I2C2CONbits.PEN = 1; // Generate stop bit.
+    I2C2CONbits.PEN = 1; // Generate stop bit.
     //  while (I2C2STATbits.P) {
     // } // wait for Start bit to clear.
     // LineWrite_XY_ILI9341_16x25("Stop cleared  ", 0, Line5, ILI9341_WHITE, ILI9341_BLACK);
