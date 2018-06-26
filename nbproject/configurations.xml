@@ -12,6 +12,7 @@
       <itemPath>TFT_ILI9341.h</itemPath>
       <itemPath>Fonts.h</itemPath>
       <itemPath>I2CInit.h</itemPath>
+      <itemPath>Temp_TC74_Init.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"

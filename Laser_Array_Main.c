@@ -42,6 +42,7 @@
 #include "PortInit.h"
 #include "SPIInit.h"
 #include "String.h"
+#include "Temp_TC74_Init.h"
 //#include "TimerInit.h"
 #include "TFT_ILI9341.h"
 
@@ -108,17 +109,19 @@ int main(int argc, char** argv) {
 
     // *** Initialization TFT_ILI9341 *** 
     Initialize_TFT_ILI9341();
-
+ 
     // *** Initialize SPI ***
     I2CInit();
 
     FillScreen_ILI9341(ILI9341_BLACK);
     LineWrite_XY_ILI9341_16x25("TEMP", 0, Line1, ILI9341_WHITE, ILI9341_BLACK);
     
-    //I2CWrite_Config(NORMAL); // Set Temperature to normal mode.
+    //Write_Config_TC74(NORMAL); // Set Temperature to normal mode.
 
     while (1) {
-          Temp =I2CRead_Temp(); 
-    }
+          Temp = Read_Temp_TC74(); 
+          Nop(), Nop();
+         // LineWrite_XY_ILI9341_16x25(I2C2RCV, 100, Line1, ILI9341_WHITE, ILI9341_BLACK);
+     }
     return (EXIT_SUCCESS);
 } // End of main program loop.
