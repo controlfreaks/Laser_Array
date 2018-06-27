@@ -54,28 +54,28 @@ void Write_Config_TC74(int command); // Accepts either 'NORMAL' or 'STANDBY'.
 void Temp_TC74_Display(int temp, int sensor_no) {
 
     // Buffer for Int to ASCII conversion, ADC channel 1.
-    char Temp_buf [20] = "";
+    char Temp_buf [25] = "";
 
     // **** Convert Hex to Dec ASCII
     // Always a 5 digit string because of how the buffer is defined.
     // Format: char *  itoa ( int value, char * str, int base );
 
-    sprintf(Temp_buf, "TEMP 30mW: %d C ", temp); // Convert Temp value to string.
+    //sprintf(Temp_buf, "TEMP 30mW: %d C ", temp); // Convert Temp value to string.
 
     switch (sensor_no) {
 
         case SENSOR_1:
-            //sprintf(Temp_buf, "TEMP 30mW: %d C ", temp); // Convert Temp value to string.
+            sprintf(Temp_buf, "TEMP  30mW: %d C ", temp); // Convert Temp value to string.
             LineWrite_XY_ILI9341_16x25(Temp_buf, 1, Line1, ILI9341_WHITE, ILI9341_BLACK);
             break;
 
         case SENSOR_2:
-            //sprintf(Temp_buf, "TEMP 50mW: %d C ", temp); // Convert Temp value to string.
+            sprintf(Temp_buf, "TEMP  50mW: %d C ", temp); // Convert Temp value to string.
             LineWrite_XY_ILI9341_16x25(Temp_buf, 1, Line2, ILI9341_WHITE, ILI9341_BLACK);
             break;
 
         case SENSOR_3:
-            //sprintf(Temp_buf, "TEMP 100mW: %d C ", temp); // Convert Temp value to string.
+            sprintf(Temp_buf, "TEMP 100mW: %d C ", temp); // Convert Temp value to string.
             LineWrite_XY_ILI9341_16x25(Temp_buf, 1, Line3, ILI9341_WHITE, ILI9341_BLACK);
             break;
 
