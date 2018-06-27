@@ -181,11 +181,11 @@ void PortInit(void) {
 
     // *** Initial Port settings, entire of individual ***
 
-    LATB = 0x00; // Set entire PORT
+    //LATB = 0x00; // Set entire PORT
 
     //_LATB0 = 0;        // 0 = low(0v), 1 = high(+3.3V)
     //_LATB1 = 0;        // 0 = low(0v), 1 = high(+3.3V)
-    _LATB2 = 1;        // 0 = low(0v), 1 = high(+3.3V)  //  temp SDA2
+    _LATB2 = 0;        // 0 = low(0v), 1 = high(+3.3V)  //  temp SDA2
     _LATB3 = 0;        // 0 = low(0v), 1 = high(+3.3V) // temp SCL2
     //_LATB4 = 0;        // 0 = low(0v), 1 = high(+3.3V)
     //_LATB5 = 0;        // 0 = low(0v), 1 = high(+3.3V)
@@ -198,7 +198,7 @@ void PortInit(void) {
     //_LATB12 = 0;       // 0 = low(0v), 1 = high(+3.3V)
     //_LATB13 = 0;       // 0 = low(0v), 1 = high(+3.3V)
     //_LATB14 = 0;       // 0 = low(0v), 1 = high(+3.3V)
-    //_LATB15 = 0;       // 0 = low(0v), 1 = high(+3.3V)
+    _LATB15 = 0;       // 0 = low(0v), 1 = high(+3.3V)
 
     //************************
     //************************
