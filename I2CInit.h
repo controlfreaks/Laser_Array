@@ -19,15 +19,8 @@
 
 #define ON 1
 #define OFF 0
-#define TEMPSENSE_READ 0x9B     // Temperature slave address with R/!W = 1
-#define TEMPSENSE_WRITE 0x9A    // Temperature slave address with R/!W = 0
-#define NORMAL 0x00
-#define STANDBY 0x80
-#define RTR 0x00    // Read Temperature (TEMP)
-#define RWCR 0x01   // Read/Write Configuration Register (CONFIG) 
 
 #include <xc.h> // include processor files - each processor file is guarded. 
-
 
 
 void I2CInit(void); // I2C initialization routine.
