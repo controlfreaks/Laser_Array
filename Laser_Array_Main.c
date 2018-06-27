@@ -42,9 +42,13 @@
 #include "PortInit.h"
 #include "SPIInit.h"
 #include "String.h"
+#include "TCA9548A_I2CSwitch_Init.h"
 #include "Temp_TC74_Init.h"
 //#include "TimerInit.h"
 #include "TFT_ILI9341.h"
+
+
+
 
 // *****************************************************************************
 // *****************************************************************************
@@ -100,7 +104,6 @@
 
 int main(int argc, char** argv) {
     int Temp = 0;
-    int Sense_no = 0;
 
     // **** Initialize PORTS ****
     PortInit();
@@ -110,21 +113,41 @@ int main(int argc, char** argv) {
 
     // *** Initialization TFT_ILI9341 *** 
     Initialize_TFT_ILI9341();
- 
+
+    FillScreen_ILI9341(ILI9341_BLACK);
+
     // *** Initialize SPI ***
     I2CInit();
 
-    FillScreen_ILI9341(ILI9341_BLACK);
-    
+    // *** Initialize I2C Switch ***
+    TCA9548A_I2CSwitch_Reset = 1; // Take TCA9548A out of reset.
+    TCA9548A_I2CSwitch_Open(SENSOR_1, TCA9548A_I2CSwitch_0);
+
     //Write_Config_TC74(NORMAL); // Set Temperature to normal mode.
 
     while (1) {
-        int count = 0;
-          Temp = Read_Temp_TC74(); 
-          Temp_TC74_Display(Temp,Sense_no);
-          
-          Nop(), Nop();
-         
-     }
+        // void TCA9548A_I2CSwitch_Open(int con_Reg, int address)
+        // Display temperature of sensor #1
+        TCA9548A_I2CSwitch_Open(SENSOR_1, TCA9548A_I2CSwitch_0);
+        Temp = Read_Temp_TC74();
+        Temp_TC74_Display(Temp, SENSOR_1);
+
+        //DelayMs(2000);
+
+        // Display temperature of sensor #2
+        TCA9548A_I2CSwitch_Open(SENSOR_2, TCA9548A_I2CSwitch_0);
+        Temp = Read_Temp_TC74();
+        Temp_TC74_Display(Temp, SENSOR_2);
+
+        //DelayMs(2000);
+
+        // Display temperature of sensor #3
+        TCA9548A_I2CSwitch_Open(SENSOR_3, TCA9548A_I2CSwitch_0);
+        Temp = Read_Temp_TC74();
+        Temp_TC74_Display(Temp, SENSOR_3);
+
+        //Nop(), Nop();   // Time for display to settle.
+
+    }
     return (EXIT_SUCCESS);
 } // End of main program loop.
