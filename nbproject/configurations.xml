@@ -4,7 +4,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>../../../../Program Files (x86)/Microchip/xc16/v1.34/support/PIC24F/h/p24FJ64GA004.h</itemPath>
       <itemPath>PortInit.h</itemPath>
       <itemPath>MyFunctions.h</itemPath>
       <itemPath>Misc_Macro.h</itemPath>
@@ -14,6 +13,7 @@
       <itemPath>I2CInit.h</itemPath>
       <itemPath>TCA9548A_I2CSwitch_Init.h</itemPath>
       <itemPath>Temp_TC74_Init.h</itemPath>
+      <itemPath>../../../../../../Program Files (x86)/Microchip/xc16/v1.34/support/PIC24F/h/p24FJ64GA004.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -33,6 +33,7 @@
   <sourceRootList>
     <Elem>../../../../Program Files (x86)/Microchip/xc16/v1.34/support/PIC24F/h</Elem>
     <Elem>.</Elem>
+    <Elem>../../../../../../Program Files (x86)/Microchip/xc16/v1.34/support/PIC24F/h</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>

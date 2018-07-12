@@ -143,14 +143,14 @@ void PortInit(void) {
 
     _TRISB0 = 1; // 0 = output, 1 = input   // PCEC1
     _TRISB1 = 1; // 0 = output, 1 = input   // PCEG1
-    _TRISB2 = 0; // 0 = output, 1 = input   // ENCOD-2
-    _TRISB3 = 0; // 0 = output, 1 = input   // ENCOD-A
+    _TRISB2 = 1; // 0 = output, 1 = input   // ENCOD-2
+    _TRISB3 = 1; // 0 = output, 1 = input   // ENCOD-A
     _TRISB4 = 1; // 0 = output, 1 = input
     _TRISB5 = 1; // 0 = output, 1 = input
     _TRISB6 = 0; // 0 = output, 1 = input
     _TRISB7 = 0; // 0 = output, 1 = input
-    _TRISB8 = 0; // 0 = output, 1 = input   // I2C-SCL1
-    _TRISA9 = 0; // 0 = output, 1 = input   // I2C-SDA1
+    _TRISB8 = 1; // 0 = output, 1 = input   // I2C-SCL1
+    _TRISA9 = 1; // 0 = output, 1 = input   // I2C-SDA1
     _TRISA10 = 0; // 0 = output, 1 = input
     _TRISB11 = 0; // 0 = output, 1 = input
     _TRISB12 = 0; // 0 = output, 1 = input  // SPI-DC

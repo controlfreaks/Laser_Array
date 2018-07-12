@@ -135,16 +135,16 @@ int main(int argc, char** argv) {
         //DelayMs(2000);
 
         // Display temperature of sensor #2
-        TCA9548A_I2CSwitch_Open(SENSOR_2, TCA9548A_I2CSwitch_0);
-        Temp = Read_Temp_TC74();
-        Temp_TC74_Display(Temp, SENSOR_2);
+       // TCA9548A_I2CSwitch_Open(SENSOR_2, TCA9548A_I2CSwitch_0);
+        //Temp = Read_Temp_TC74();
+       // Temp_TC74_Display(Temp, SENSOR_2);
 
         //DelayMs(2000);
 
         // Display temperature of sensor #3
-        TCA9548A_I2CSwitch_Open(SENSOR_3, TCA9548A_I2CSwitch_0);
-        Temp = Read_Temp_TC74();
-        Temp_TC74_Display(Temp, SENSOR_3);
+       // TCA9548A_I2CSwitch_Open(SENSOR_3, TCA9548A_I2CSwitch_0);
+       // Temp = Read_Temp_TC74();
+        //Temp_TC74_Display(Temp, SENSOR_3);
 
         //Nop(), Nop();   // Time for display to settle.
 

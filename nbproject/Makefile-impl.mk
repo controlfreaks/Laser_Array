@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=Laser_Array.X
+PROJECTNAME=Laser_Array
 
 # Active Configuration
 DEFAULTCONF=default

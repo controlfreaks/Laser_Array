@@ -6,7 +6,7 @@ Tool Name:
 Command:
   -p24FJ64GA004 \
   -o \
-  dist/default/production/Laser_Array.X.production.elf \
+  dist/default/production/Laser_Array.production.elf \
   -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/.. \
   -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib \
   -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../support/PIC24E/gld \
@@ -30,7 +30,7 @@ Command:
   --stackguard=16 \
   --no-force-link \
   --smart-io \
-  -Map=dist/default/production/Laser_Array.X.production.map \
+  -Map=dist/default/production/Laser_Array.production.map \
   --report-mem \
   --memorysummary \
   dist/default/production/memoryfile.xml \
@@ -102,10 +102,10 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0xca2          0x12f3  (4851)
 .const                       0xea2              0x49b8          0x6e94  (28308)
-.text                       0x585a               0x91a           0xda7  (3495)
-.dinit                      0x6174                0x3e            0x5d  (93)
+.text                       0x585a               0x8fa           0xd77  (3447)
+.dinit                      0x6154                0x3e            0x5d  (93)
 
-                 Total "program" memory used (bytes):         0x8f8b  (36747) 56%
+                 Total "program" memory used (bytes):         0x8f5b  (36699) 56%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x2000]
@@ -393,18 +393,18 @@ __CONFIG1
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x250b
+.debug_info       0x000000       0x2521
  *(.debug_info)
- .debug_info      0x000000       0x250b build/default/production/Laser_Array_Main.o
+ .debug_info      0x000000       0x2521 build/default/production/Laser_Array_Main.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x1dd
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x1dd build/default/production/Laser_Array_Main.o
 
-.debug_line       0x000000        0x3aa
+.debug_line       0x000000        0x3a6
  *(.debug_line)
- .debug_line      0x000000        0x3aa build/default/production/Laser_Array_Main.o
+ .debug_line      0x000000        0x3a6 build/default/production/Laser_Array_Main.o
 
 .debug_frame      0x000000        0x264
  *(.debug_frame)
@@ -1041,7 +1041,7 @@ LOAD c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30
 LOAD c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a
 LOAD c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-c-elf.a
 END GROUP
-OUTPUT(dist/default/production/Laser_Array.X.production.elf elf32-pic30)
+OUTPUT(dist/default/production/Laser_Array.production.elf elf32-pic30)
 LOAD jump_table
 LOAD default_isr
 LOAD data_init
@@ -1121,8 +1121,8 @@ __c30_signature
 .const              0x8ea2       0x49b8 load address 0x000ea2  
  .const             0x8ea2       0x49b8 build/default/production/Laser_Array_Main.o
 
-.text             0x00585a        0x91a
- .text            0x00585a        0x91a build/default/production/Laser_Array_Main.o
+.text             0x00585a        0x8fa
+ .text            0x00585a        0x8fa build/default/production/Laser_Array_Main.o
                   0x00585a                  _I2CInit
                   0x00586a                  _DelayMs
                   0x0058bc                  _DelayUs
@@ -1143,5 +1143,5 @@ __c30_signature
                   0x0060c4                  _Write_Config_TC74
                   0x006124                  _main
 
-.dinit            0x006174         0x3e
- .dinit           0x006174         0x3e data_init
+.dinit            0x006154         0x3e
+ .dinit           0x006154         0x3e data_init
