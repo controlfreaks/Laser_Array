@@ -145,7 +145,7 @@ void PortInit(void) {
     _TRISB1 = 1; // 0 = output, 1 = input   // PCEG1
     _TRISB2 = 1; // 0 = output, 1 = input   // ENCOD-2
     _TRISB3 = 1; // 0 = output, 1 = input   // ENCOD-A
-    _TRISB4 = 1; // 0 = output, 1 = input
+    _TRISB4 = 0; // 0 = output, 1 = input
     _TRISB5 = 1; // 0 = output, 1 = input
     _TRISB6 = 0; // 0 = output, 1 = input
     _TRISB7 = 0; // 0 = output, 1 = input

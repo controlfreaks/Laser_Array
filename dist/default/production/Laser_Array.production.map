@@ -102,10 +102,10 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0xca2          0x12f3  (4851)
 .const                       0xea2              0x49b8          0x6e94  (28308)
-.text                       0x585a               0x8fa           0xd77  (3447)
-.dinit                      0x6154                0x3e            0x5d  (93)
+.text                       0x585a               0x91a           0xda7  (3495)
+.dinit                      0x6174                0x3e            0x5d  (93)
 
-                 Total "program" memory used (bytes):         0x8f5b  (36699) 56%
+                 Total "program" memory used (bytes):         0x8f8b  (36747) 56%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x2000]
@@ -188,10 +188,10 @@ External Symbols in Program Memory (by address):
                   0x005ecc                  _WriteCommand_ILI9341
                   0x005ef8                  _WriteData_ILI9341
                   0x005f24                  _TCA9548A_I2CSwitch_Open
-                  0x005f92                  _Temp_TC74_Display
-                  0x006016                  _Read_Temp_TC74
-                  0x0060c4                  _Write_Config_TC74
-                  0x006124                  _main
+                  0x005faa                  _Temp_TC74_Display
+                  0x00602e                  _Read_Temp_TC74
+                  0x0060dc                  _Write_Config_TC74
+                  0x00613c                  _main
 
 External Symbols in Program Memory (by name):
 
@@ -205,14 +205,14 @@ External Symbols in Program Memory (by name):
                   0x0059f4                  _Initialize_TFT_ILI9341
                   0x005e66                  _LineWrite_XY_ILI9341_16x25
                   0x0058de                  _PortInit
-                  0x006016                  _Read_Temp_TC74
+                  0x00602e                  _Read_Temp_TC74
                   0x0059bc                  _SPIInit
                   0x005d24                  _SetAddrWindow_ILI9341
                   0x005f24                  _TCA9548A_I2CSwitch_Open
-                  0x005f92                  _Temp_TC74_Display
+                  0x005faa                  _Temp_TC74_Display
                   0x005ecc                  _WriteCommand_ILI9341
                   0x005ef8                  _WriteData_ILI9341
-                  0x0060c4                  _Write_Config_TC74
+                  0x0060dc                  _Write_Config_TC74
                   0x0002cc                  __DefaultInterrupt
                   0x0009fc                  __Litob
                   0x00065c                  __Puttxt
@@ -243,7 +243,7 @@ External Symbols in Program Memory (by name):
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
                   0x0004b4                  __sprintf_cdnopuxX
-                  0x006124                  _main
+                  0x00613c                  _main
                   0x000636                  _memcpy
                   0x000644                  _strchr
                   0x0004a6                  sprintf_cdnopuxX.XXeo:_prout
@@ -402,9 +402,9 @@ __CONFIG1
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x1dd build/default/production/Laser_Array_Main.o
 
-.debug_line       0x000000        0x3a6
+.debug_line       0x000000        0x3ae
  *(.debug_line)
- .debug_line      0x000000        0x3a6 build/default/production/Laser_Array_Main.o
+ .debug_line      0x000000        0x3ae build/default/production/Laser_Array_Main.o
 
 .debug_frame      0x000000        0x264
  *(.debug_frame)
@@ -1121,8 +1121,8 @@ __c30_signature
 .const              0x8ea2       0x49b8 load address 0x000ea2  
  .const             0x8ea2       0x49b8 build/default/production/Laser_Array_Main.o
 
-.text             0x00585a        0x8fa
- .text            0x00585a        0x8fa build/default/production/Laser_Array_Main.o
+.text             0x00585a        0x91a
+ .text            0x00585a        0x91a build/default/production/Laser_Array_Main.o
                   0x00585a                  _I2CInit
                   0x00586a                  _DelayMs
                   0x0058bc                  _DelayUs
@@ -1138,10 +1138,10 @@ __c30_signature
                   0x005ecc                  _WriteCommand_ILI9341
                   0x005ef8                  _WriteData_ILI9341
                   0x005f24                  _TCA9548A_I2CSwitch_Open
-                  0x005f92                  _Temp_TC74_Display
-                  0x006016                  _Read_Temp_TC74
-                  0x0060c4                  _Write_Config_TC74
-                  0x006124                  _main
+                  0x005faa                  _Temp_TC74_Display
+                  0x00602e                  _Read_Temp_TC74
+                  0x0060dc                  _Write_Config_TC74
+                  0x00613c                  _main
 
-.dinit            0x006154         0x3e
- .dinit           0x006154         0x3e data_init
+.dinit            0x006174         0x3e
+ .dinit           0x006174         0x3e data_init

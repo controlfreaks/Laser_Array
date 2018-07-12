@@ -19,7 +19,8 @@
 #include <xc.h> // include processor files - each processor file is guarded. 
 #include "TFT_ILI9341.h"
 
-#define TCA9548A_I2CSwitch_Reset _LATB15 // Set the reset pin  for the TCA9548A
+#define TCA9548A_I2CSwitch_Reset _LATA8 // Set the reset pin  for the TCA9548A.
+#define TCA9548A_I2CSwitch_A0 _LATB4    // A0 address pin for the TCA9548A.
 #define TCA9548A_Write 0xE0
 #define TCA9548A_I2CSwitch_0 0xE0
 #define TCA9548A_I2CSwitch_1 0xE2
@@ -31,10 +32,16 @@ void TCA9548A_I2CSwitch_Open(int con_Reg, int address);
 
 void TCA9548A_I2CSwitch_Open(int con_Reg, int address) {
 
-   // TCA9548A_I2CSwitch_Reset = 0; // Reset TCA9548A.
-   // DelayUs(1);
-  //  TCA9548A_I2CSwitch_Reset = 1; // Take TCA9548A out of reset.
-   // DelayUs(1);
+    if (address == TCA9548A_I2CSwitch_0) {
+        TCA9548A_I2CSwitch_A0 = 0;
+    } else if (address == TCA9548A_I2CSwitch_1) {
+        TCA9548A_I2CSwitch_A0 = 1;
+    }
+
+    //TCA9548A_I2CSwitch_Reset = 0; // Reset TCA9548A.
+    // DelayUs(1);
+      TCA9548A_I2CSwitch_Reset = 1; // Take TCA9548A out of reset.
+    // DelayUs(1);
 
     I2C2CONbits.SEN = 1; // Start bit.
     while (I2C2CONbits.SEN) { // Wait for Start bit to clear.
@@ -68,7 +75,7 @@ void TCA9548A_I2CSwitch_Open(int con_Reg, int address) {
     }
 
     //LineWrite_XY_ILI9341_16x25("SACK2 = 0", 0, Line5, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
-    
+
     DelayUs(5); // Necessary delay for ACKSTAT to settle.
 
     I2C2CONbits.PEN = 1; // Generate stop bit.

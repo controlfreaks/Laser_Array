@@ -120,8 +120,9 @@ int main(int argc, char** argv) {
     I2CInit();
 
     // *** Initialize I2C Switch ***
-    TCA9548A_I2CSwitch_Reset = 1; // Take TCA9548A out of reset.
-    TCA9548A_I2CSwitch_Open(SENSOR_1, TCA9548A_I2CSwitch_0);
+    //TCA9548A_I2CSwitch_Reset = 1;   // Take TCA9548A out of reset.
+    //TCA9548A_I2CSwitch_A0 = 0;           
+    //TCA9548A_I2CSwitch_Open(SENSOR_1, TCA9548A_I2CSwitch_0);
 
     //Write_Config_TC74(NORMAL); // Set Temperature to normal mode.
 
@@ -135,9 +136,9 @@ int main(int argc, char** argv) {
         //DelayMs(2000);
 
         // Display temperature of sensor #2
-       // TCA9548A_I2CSwitch_Open(SENSOR_2, TCA9548A_I2CSwitch_0);
-        //Temp = Read_Temp_TC74();
-       // Temp_TC74_Display(Temp, SENSOR_2);
+        TCA9548A_I2CSwitch_Open(SENSOR_2, TCA9548A_I2CSwitch_0);
+        Temp = Read_Temp_TC74();
+        Temp_TC74_Display(Temp, SENSOR_2);
 
         //DelayMs(2000);
 
