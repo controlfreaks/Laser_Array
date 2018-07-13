@@ -124,27 +124,38 @@ int main(int argc, char** argv) {
     //TCA9548A_I2CSwitch_A0 = 0;           
     //TCA9548A_I2CSwitch_Open(SENSOR_1, TCA9548A_I2CSwitch_0);
 
-    //Write_Config_TC74(NORMAL); // Set Temperature to normal mode.
+    //Write_Config_TC74_Local(NORMAL); // Set Temperature to normal mode.
+    //TCA9548A_I2CSwitch_Open(SENSOR_1, TCA9548A_I2CSwitch_0);
+    // Write_Config_TC74_Remote(NORMAL); // Set Temperature to normal mode.
 
+    //TCA9548A_I2CSwitch_Open(SENSOR_CLEAR, TCA9548A_I2CSwitch_1);
     while (1) {
+
+        Temp = Read_Temp_TC74_Local();
+        Temp_TC74_Display(Temp, SENSOR_DIS_LOCAL);
+
         // void TCA9548A_I2CSwitch_Open(int con_Reg, int address)
         // Display temperature of sensor #1
-        TCA9548A_I2CSwitch_Open(SENSOR_1, TCA9548A_I2CSwitch_0);
-        Temp = Read_Temp_TC74();
-        Temp_TC74_Display(Temp, SENSOR_1);
-
-        //DelayMs(2000);
+        TCA9548A_I2CSwitch_Open(SENSOR_ADD_1, TCA9548A_I2CSwitch_0);
+        Temp = Read_Temp_TC74_Remote();
+        Temp_TC74_Display(Temp, SENSOR_DIS_1);
+        TCA9548A_I2CSwitch_Open(SENSOR_CLOSE, TCA9548A_I2CSwitch_0);
+        
+        // ***Note: Closing the switch down is only necessary when moving
+        // from one switch to another.
 
         // Display temperature of sensor #2
-        TCA9548A_I2CSwitch_Open(SENSOR_2, TCA9548A_I2CSwitch_0);
-        Temp = Read_Temp_TC74();
-        Temp_TC74_Display(Temp, SENSOR_2);
+        TCA9548A_I2CSwitch_Open(SENSOR_ADD_10, TCA9548A_I2CSwitch_1);
+        Temp = Read_Temp_TC74_Remote();
+        Temp_TC74_Display(Temp, SENSOR_DIS_10);
+        TCA9548A_I2CSwitch_Open(SENSOR_CLOSE, TCA9548A_I2CSwitch_1);
+
 
         //DelayMs(2000);
 
         // Display temperature of sensor #3
-       // TCA9548A_I2CSwitch_Open(SENSOR_3, TCA9548A_I2CSwitch_0);
-       // Temp = Read_Temp_TC74();
+        // TCA9548A_I2CSwitch_Open(SENSOR_3, TCA9548A_I2CSwitch_0);
+        // Temp = Read_Temp_TC74();
         //Temp_TC74_Display(Temp, SENSOR_3);
 
         //Nop(), Nop();   // Time for display to settle.
