@@ -48,7 +48,8 @@
 #include "TFT_ILI9341.h"
 
 
-
+#define ON 1
+#define OFF 0
 
 // *****************************************************************************
 // *****************************************************************************
@@ -129,6 +130,12 @@ int main(int argc, char** argv) {
     // Write_Config_TC74_Remote(NORMAL); // Set Temperature to normal mode.
 
     //TCA9548A_I2CSwitch_Open(SENSOR_CLEAR, TCA9548A_I2CSwitch_1);
+
+    ExtFan = ON;
+    LineWrite_XY_ILI9341_16x25("FAN ON ", 1, Line6, ILI9341_GREEN, ILI9341_BLACK);
+    DelayMs(2000);
+    ExtFan = OFF;
+    LineWrite_XY_ILI9341_16x25("FAN OFF ", 1, Line6, ILI9341_RED, ILI9341_BLACK);
     while (1) {
 
         Temp = Read_Temp_TC74_Local();
@@ -140,7 +147,7 @@ int main(int argc, char** argv) {
         Temp = Read_Temp_TC74_Remote();
         Temp_TC74_Display(Temp, SENSOR_DIS_1);
         TCA9548A_I2CSwitch_Open(SENSOR_CLOSE, TCA9548A_I2CSwitch_0);
-        
+
         // ***Note: Closing the switch down is only necessary when moving
         // from one switch to another.
 
