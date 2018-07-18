@@ -29,24 +29,27 @@
 #define RTR 0x00    // Read Temperature (TEMP)
 #define RWCR 0x01   // Read/Write Configuration Register (CONFIG) 
 
-#define SENSOR_1 0x01
-#define SENSOR_2 0x02
-#define SENSOR_3 0x04
-#define SENSOR_4 0x08
-#define SENSOR_5 0x10
-#define SENSOR_6 0x20
-#define SENSOR_7 0x40
-#define SENSOR_8 0x80
-#define SENSOR_9 0x01
-#define SENSOR_10 0x02
-#define SENSOR_11 0x04
-#define SENSOR_12 0x08
-#define SENSOR_13 0x10
+
+#define SENSOR_DIS_1 0x01
+#define SENSOR_DIS_2 0x02
+#define SENSOR_DIS_3 0x03
+#define SENSOR_DIS_4 0x04
+#define SENSOR_DIS_5 0x05
+#define SENSOR_DIS_6 0x06
+#define SENSOR_DIS_7 0x07
+#define SENSOR_DIS_8 0x08
+#define SENSOR_DIS_9 0x09
+#define SENSOR_DIS_10 0x0A
+#define SENSOR_DIS_11 0x0B
+#define SENSOR_DIS_12 0x0C
+#define SENSOR_DIS_LOCAL 0x00
 
 
 void Temp_TC74_Display(int temp, int sensor_pos); // Displays sensor temperature 
-int Read_Temp_TC74(void); // Read Temperature sensor.
-void Write_Config_TC74(int command); // Accepts either 'NORMAL' or 'STANDBY'.
+int Read_Temp_TC74_Remote(void); // Read remote Temperature sensor.
+int Read_Temp_TC74_Local(void); // Read local Temperature sensor.
+void Write_Config_TC74_Remote(int command); // Accepts either 'NORMAL' or 'STANDBY'.
+void Write_Config_TC74_Local(int command); // Accepts either 'NORMAL' or 'STANDBY'.
 
 // This function displays the temperature of given sensor, in one of 12 
 // positions.
@@ -63,33 +66,110 @@ void Temp_TC74_Display(int temp, int sensor_no) {
     //sprintf(Temp_buf, "TEMP 30mW: %d C ", temp); // Convert Temp value to string.
 
     switch (sensor_no) {
+        case SENSOR_DIS_LOCAL:
+            sprintf(Temp_buf, "Local Sensor: %d C ", temp); // Convert Temp value to string.
+            LineWrite_XY_ILI9341_16x25(Temp_buf, 1, Line0, ILI9341_WHITE, ILI9341_BLACK);
+            break;
 
-        case SENSOR_1:
-            sprintf(Temp_buf, "TEMP  30mW: %d C ", temp); // Convert Temp value to string.
+        case SENSOR_DIS_1:
+            sprintf(Temp_buf, "Switch 0 #1: %d C ", temp); // Convert Temp value to string.
             LineWrite_XY_ILI9341_16x25(Temp_buf, 1, Line1, ILI9341_WHITE, ILI9341_BLACK);
             break;
 
-        case SENSOR_2:
+        case SENSOR_DIS_2:
             sprintf(Temp_buf, "TEMP  50mW: %d C ", temp); // Convert Temp value to string.
             LineWrite_XY_ILI9341_16x25(Temp_buf, 1, Line2, ILI9341_WHITE, ILI9341_BLACK);
             break;
 
-        case SENSOR_3:
-            sprintf(Temp_buf, "TEMP 100mW: %d C ", temp); // Convert Temp value to string.
+        case SENSOR_DIS_9:
+            sprintf(Temp_buf, "switch 1: %d C ", temp); // Convert Temp value to string.
             LineWrite_XY_ILI9341_16x25(Temp_buf, 1, Line3, ILI9341_WHITE, ILI9341_BLACK);
             break;
 
+        case SENSOR_DIS_10:
+            sprintf(Temp_buf, "switch 1: %d C ", temp); // Convert Temp value to string.
+            LineWrite_XY_ILI9341_16x25(Temp_buf, 1, Line3, ILI9341_WHITE, ILI9341_BLACK);
+            break;
+            
         default:
             LineWrite_XY_ILI9341_16x25("No sensor found.", 1, Line0, ILI9341_WHITE, ILI9341_BLACK);
 
     }
 
 
-
-
 }
 
-int Read_Temp_TC74(void) {
+int Read_Temp_TC74_Local(void) {
+    // I2C1RCV = 0;    // *** Clear the register for testing
+
+    I2C1CONbits.SEN = 1; // Start bit.
+    while (I2C1CONbits.SEN) { // Wait for Start bit to clear.
+    }
+
+    I2C1TRN = TEMPSENSE_WRITE; // Write to slaved address with WRITE request.
+
+    while (I2C1STATbits.TBF) { // Waiting for transmit to finish
+    } // before testing the ACKSTAT bit.
+
+    DelayUs(5); // Necessary delay for ACKSTAT to settle.
+
+    while (I2C1STATbits.ACKSTAT) { // Waiting for !ACK from slave.
+        //LineWrite_XY_ILI9341_16x25("TACK1 = 1", 0, Line6, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
+    }
+
+    //LineWrite_XY_ILI9341_16x25("TACK1 = 0", 0, Line6, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
+
+    DelayUs(5); // Necessary delay for ACKSTAT to settle.
+    // DelayMs(3000);
+
+    I2C1TRN = RTR; // write command register
+
+    while (I2C1STATbits.TBF) { // Waiting for transmit to finish
+    } // before testing the ACKSTAT bit.
+
+    DelayUs(5); // Necessary delay for ACKSTAT to settle.
+
+    while (I2C1STATbits.ACKSTAT) { // Waiting for !ACK from slave.
+        //LineWrite_XY_ILI9341_16x25("TACK2 = 1", 0, Line7, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
+    }
+
+    //LineWrite_XY_ILI9341_16x25("TACK2 = 0", 0, Line7, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
+
+    DelayUs(5); // Necessary delay for ACKSTAT to settle.
+
+    I2C1CONbits.RSEN = 1; // Sending a restart to change direction of bus.
+    while (I2C1CONbits.RSEN) { // Wait for Start bit to clear.
+    }
+
+
+    DelayUs(5); // Necessary delay for ACKSTAT to settle.
+
+    I2C1TRN = TEMPSENSE_READ; // Write to slaved address with READ request
+
+    while (I2C1STATbits.TBF) { // Waiting for transmit to finish
+    } // before testing the ACKSTAT bit.
+
+    DelayUs(5); // Necessary delay for ACKSTAT to settle.
+
+    while (I2C1STATbits.ACKSTAT) { // Waiting for !ACK from slave.
+        //LineWrite_XY_ILI9341_16x25("ACK3 = 1", 0, Line6, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
+    }
+
+    //LineWrite_XY_ILI9341_16x25("ACK3 = 0", 0, Line6, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
+
+    DelayUs(5); // Necessary delay for ACKSTAT to settle.
+
+    I2C1CONbits.RCEN = 1; // Receiving DATA from of bus.
+    while (I2C1CONbits.RCEN) { // Wait for Start bit to clear.
+    }
+
+    I2C1CONbits.PEN = 1; // Generate stop bit.
+    while (I2C1CONbits.PEN) { // Wait for Start bit to clear.
+    }
+    return I2C1RCV; // return the contents of the RCV Register.
+}
+
+int Read_Temp_TC74_Remote(void) {
     // I2C2RCV = 0;    // *** Clear the register for testing
 
     I2C2CONbits.SEN = 1; // Start bit.
@@ -157,10 +237,59 @@ int Read_Temp_TC74(void) {
     while (I2C2CONbits.PEN) { // Wait for Start bit to clear.
     }
     return I2C2RCV; // return the contents of the RCV Register.
-
 }
 
-void Write_Config_TC74(int command) {
+void Write_Config_TC74_Local(int command) {
+    I2C1CONbits.SEN = 1; // Start bit.
+    while (I2C1CONbits.SEN) { // Wait for Start bit to clear.
+    }
+
+    I2C1TRN = TEMPSENSE_WRITE; // Write to slaved address with WRITE request.
+
+    while (I2C1STATbits.TBF) { // Waiting for transmit to finish
+    } // before testing the ACKSTAT bit.
+
+    DelayUs(5); // Necessary delay for ACKSTAT to settle.
+
+    while (I2C1STATbits.ACKSTAT) { // Waiting for !ACK from slave.
+        //LineWrite_XY_ILI9341_16x25("ACK1 = 1", 0, Line4, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
+    }
+
+    DelayUs(5); // Necessary delay for ACKSTAT to settle.
+    // LineWrite_XY_ILI9341_16x25("ACK1 = 0", 0, Line4, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
+
+    I2C1TRN = RWCR; // write command register
+
+    while (I2C1STATbits.TBF) { // Waiting for transmit to finish
+    } // before testing the ACKSTAT bit.
+
+    DelayUs(5); // Necessary delay for ACKSTAT to settle.
+
+    while (I2C1STATbits.ACKSTAT) { // Waiting for !ACK from slave.
+        // LineWrite_XY_ILI9341_16x25("ACK2 = 1", 0, Line5, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
+    }
+    DelayUs(5); // Necessary delay for ACKSTAT to settle.
+    // LineWrite_XY_ILI9341_16x25("ACK2 = 0", 0, Line5, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
+
+    I2C1TRN = command; // One of two DATA commands, NORMAL or STANDBY
+
+    while (I2C1STATbits.TBF) { // Waiting for transmit to finish
+    } // before testing the ACKSTAT bit.
+
+    DelayUs(5); // Necessary delay for ACKSTAT to settle.
+
+    while (I2C1STATbits.ACKSTAT) { // Waiting for !ACK from slave.
+        // LineWrite_XY_ILI9341_16x25("ACK3 = 1", 0, Line6, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
+    }
+    DelayUs(5); // Necessary delay for ACKSTAT to settle.
+    // LineWrite_XY_ILI9341_16x25("ACK3 = 0", 0, Line6, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
+
+    I2C1CONbits.PEN = 1; // Generate stop bit.
+    while (I2C1CONbits.PEN) { // Wait for Start bit to clear.
+    }
+}
+
+void Write_Config_TC74_Remote(int command) {
     I2C2CONbits.SEN = 1; // Start bit.
     while (I2C2CONbits.SEN) { // Wait for Start bit to clear.
     }
@@ -176,32 +305,33 @@ void Write_Config_TC74(int command) {
         //LineWrite_XY_ILI9341_16x25("ACK1 = 1", 0, Line4, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
     }
 
+    DelayUs(5); // Necessary delay for ACKSTAT to settle.
     // LineWrite_XY_ILI9341_16x25("ACK1 = 0", 0, Line4, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
 
     I2C2TRN = RWCR; // write command register
 
-    // while (I2C2STATbits.TBF) { // Waiting for transmit to finish
-    // } // before testing the ACKSTAT bit.
+    while (I2C2STATbits.TBF) { // Waiting for transmit to finish
+    } // before testing the ACKSTAT bit.
 
-    //DelayUs(5); // Necessary delay for ACKSTAT to settle.
+    DelayUs(5); // Necessary delay for ACKSTAT to settle.
 
     while (I2C2STATbits.ACKSTAT) { // Waiting for !ACK from slave.
         // LineWrite_XY_ILI9341_16x25("ACK2 = 1", 0, Line5, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
     }
-
+    DelayUs(5); // Necessary delay for ACKSTAT to settle.
     // LineWrite_XY_ILI9341_16x25("ACK2 = 0", 0, Line5, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
 
     I2C2TRN = command; // One of two DATA commands, NORMAL or STANDBY
 
-    //while (I2C2STATbits.TBF) { // Waiting for transmit to finish
-    //} // before testing the ACKSTAT bit.
+    while (I2C2STATbits.TBF) { // Waiting for transmit to finish
+    } // before testing the ACKSTAT bit.
 
-    //DelayUs(5); // Necessary delay for ACKSTAT to settle.
+    DelayUs(5); // Necessary delay for ACKSTAT to settle.
 
     while (I2C2STATbits.ACKSTAT) { // Waiting for !ACK from slave.
         // LineWrite_XY_ILI9341_16x25("ACK3 = 1", 0, Line6, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
     }
-
+    DelayUs(5); // Necessary delay for ACKSTAT to settle.
     // LineWrite_XY_ILI9341_16x25("ACK3 = 0", 0, Line6, ILI9341_WHITE, ILI9341_BLACK); // ***test line ***
 
     I2C2CONbits.PEN = 1; // Generate stop bit.

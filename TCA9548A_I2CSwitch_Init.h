@@ -20,11 +20,22 @@
 #include "TFT_ILI9341.h"
 
 #define TCA9548A_I2CSwitch_Reset _LATA8 // Set the reset pin  for the TCA9548A.
-#define TCA9548A_I2CSwitch_A0 _LATB4    // A0 address pin for the TCA9548A.
-#define TCA9548A_Write 0xE0
 #define TCA9548A_I2CSwitch_0 0xE0
 #define TCA9548A_I2CSwitch_1 0xE2
 
+#define SENSOR_CLOSE 0x00
+#define SENSOR_ADD_1 0x01
+#define SENSOR_ADD_2 0x02
+#define SENSOR_ADD_3 0x04
+#define SENSOR_ADD_4 0x08
+#define SENSOR_ADD_5 0x10
+#define SENSOR_ADD_6 0x20
+#define SENSOR_ADD_7 0x40
+#define SENSOR_ADD_8 0x80
+#define SENSOR_ADD_9 0x01
+#define SENSOR_ADD_10 0x02
+#define SENSOR_ADD_11 0x04
+#define SENSOR_ADD_12 0x08
 // Opens communication with the switch and sets the channels to open. The 
 // 'control' is an 8-bit work with each of the 8 bits representing 1 of 8 
 // I2C channels.
@@ -32,11 +43,6 @@ void TCA9548A_I2CSwitch_Open(int con_Reg, int address);
 
 void TCA9548A_I2CSwitch_Open(int con_Reg, int address) {
 
-    if (address == TCA9548A_I2CSwitch_0) {
-        TCA9548A_I2CSwitch_A0 = 0;
-    } else if (address == TCA9548A_I2CSwitch_1) {
-        TCA9548A_I2CSwitch_A0 = 1;
-    }
 
     //TCA9548A_I2CSwitch_Reset = 0; // Reset TCA9548A.
     // DelayUs(1);

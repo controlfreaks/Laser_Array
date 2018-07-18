@@ -33,10 +33,13 @@ void PortInit(void) {
     // ****************************
 
     // *** OUTPUTS ***
+#define SCREEN _LATA4   // TFT screen.
 #define Laser_LED1 _LATA9
 #define Laser_LED2 _LATA8
 #define Laser_LED3 _LATC2
 #define Laser_LED5 _LATC4
+#define ExtFan _LATC5   // External fan
+#define LasRly _LATC8   // Laser relay.
 
     //************************
     //************************
@@ -90,7 +93,7 @@ void PortInit(void) {
     // NO _TRISA5
     // NO _TRISA6
     _TRISA7 = 0; // 0 = output, 1 = input
-    _TRISA8 = 0; // 0 = output, 1 = input    
+    _TRISA8 = 0; // 0 = output, 1 = input   // !RESET for TCA9548A I2C switch. 
     _TRISA9 = 0; // 0 = output, 1 = input
     _TRISA10 = 0; // 0 = output, 1 = input  // SPI-CS output.
 
@@ -120,7 +123,7 @@ void PortInit(void) {
     _LATA1 = 0; // 0 = low(0v), 1 = high(+3.3V)
     _LATA2 = 0; // 0 = low(0v), 1 = high(+3.3V)
     _LATA3 = 0; // 0 = low(0v), 1 = high(+3.3V)
-    _LATA4 = 0; // 0 = low(0v), 1 = high(+3.3V)
+    _LATA4 = 0; // 0 = low(0v), 1 = high(+3.3V) // Screen.
     // no _LATA5
     // no _LATA6
     _LATA7 = 0; // 0 = low(0v), 1 = high(+3.3V)
@@ -140,17 +143,18 @@ void PortInit(void) {
     //TRISB = 0x00;      // Set entire PORT
 
     // Note: Must be set for analog inputs for A/D.
+    // **Note: Set as INPUTS for I2C modules.
 
     _TRISB0 = 1; // 0 = output, 1 = input   // PCEC1
     _TRISB1 = 1; // 0 = output, 1 = input   // PCEG1
-    _TRISB2 = 1; // 0 = output, 1 = input   // ENCOD-2
-    _TRISB3 = 1; // 0 = output, 1 = input   // ENCOD-A
+    _TRISB2 = 1; // 0 = output, 1 = input   // I2C-SDA2 for remote temp sensors.
+    _TRISB3 = 1; // 0 = output, 1 = input   // I2C-SCL2 for remote temp sensors.
     _TRISB4 = 0; // 0 = output, 1 = input
     _TRISB5 = 1; // 0 = output, 1 = input
     _TRISB6 = 0; // 0 = output, 1 = input
     _TRISB7 = 0; // 0 = output, 1 = input
-    _TRISB8 = 1; // 0 = output, 1 = input   // I2C-SCL1
-    _TRISA9 = 1; // 0 = output, 1 = input   // I2C-SDA1
+    _TRISB8 = 1; // 0 = output, 1 = input   // I2C-SCL1 for local temp sensor.
+    _TRISA9 = 1; // 0 = output, 1 = input   // I2C-SDA1 for local temp sensor.
     _TRISA10 = 0; // 0 = output, 1 = input
     _TRISB11 = 0; // 0 = output, 1 = input
     _TRISB12 = 0; // 0 = output, 1 = input  // SPI-DC
@@ -185,9 +189,9 @@ void PortInit(void) {
 
     //_LATB0 = 0;        // 0 = low(0v), 1 = high(+3.3V)
     //_LATB1 = 0;        // 0 = low(0v), 1 = high(+3.3V)
-    _LATB2 = 0;        // 0 = low(0v), 1 = high(+3.3V)  //  temp SDA2
-    _LATB3 = 0;        // 0 = low(0v), 1 = high(+3.3V) // temp SCL2
-    //_LATB4 = 0;        // 0 = low(0v), 1 = high(+3.3V)
+    _LATB2 = 0;        // 0 = low(0v), 1 = high(+3.3V)  //  I2C-SDA2
+    _LATB3 = 0;        // 0 = low(0v), 1 = high(+3.3V)  // I2C-SCL2
+    _LATB4 = 0;        // 0 = low(0v), 1 = high(+3.3V)
     //_LATB5 = 0;        // 0 = low(0v), 1 = high(+3.3V)
     //_LATB6 = 0;        // 0 = low(0v), 1 = high(+3.3V)
     //_LATB7 = 0;        // 0 = low(0v), 1 = high(+3.3V)
@@ -269,6 +273,8 @@ void PortInit(void) {
     // no _RC13
     // no _RC14
     // no _RC15
+    
+    
 
     //************************
     //************************

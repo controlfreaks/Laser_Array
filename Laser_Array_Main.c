@@ -31,8 +31,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+//#include "p24FJ64GA004.inc"
 #include <p24FJ64GA004.h>
 #include <xc.h>
+//#include <xc.inc>
 //#include "ADCInit.h"
 #include "Fonts.h"
 #include "I2CInit.h"
@@ -113,6 +115,7 @@ int main(int argc, char** argv) {
     SPIInit();
 
     // *** Initialization TFT_ILI9341 *** 
+    SCREEN = ON; // turn power to screen on.
     Initialize_TFT_ILI9341();
 
     FillScreen_ILI9341(ILI9341_BLACK);
@@ -132,40 +135,67 @@ int main(int argc, char** argv) {
     //TCA9548A_I2CSwitch_Open(SENSOR_CLEAR, TCA9548A_I2CSwitch_1);
 
     ExtFan = ON;
+    LasRly = ON;
     LineWrite_XY_ILI9341_16x25("FAN ON ", 1, Line6, ILI9341_GREEN, ILI9341_BLACK);
+    LineWrite_XY_ILI9341_16x25("LASER ON ", 1, Line5, ILI9341_GREEN, ILI9341_BLACK);
     DelayMs(2000);
     ExtFan = OFF;
+    LasRly = OFF;
     LineWrite_XY_ILI9341_16x25("FAN OFF ", 1, Line6, ILI9341_RED, ILI9341_BLACK);
+    LineWrite_XY_ILI9341_16x25("LASER OFF ", 1, Line5, ILI9341_RED, ILI9341_BLACK);
+
+
+    // DelayMs(10);
+
+
+
     while (1) {
 
-        Temp = Read_Temp_TC74_Local();
-        Temp_TC74_Display(Temp, SENSOR_DIS_LOCAL);
+        //Temp = Read_Temp_TC74_Local();
+        //Temp_TC74_Display(Temp, SENSOR_DIS_LOCAL);
 
         // void TCA9548A_I2CSwitch_Open(int con_Reg, int address)
         // Display temperature of sensor #1
-        TCA9548A_I2CSwitch_Open(SENSOR_ADD_1, TCA9548A_I2CSwitch_0);
-        Temp = Read_Temp_TC74_Remote();
-        Temp_TC74_Display(Temp, SENSOR_DIS_1);
-        TCA9548A_I2CSwitch_Open(SENSOR_CLOSE, TCA9548A_I2CSwitch_0);
+       // TCA9548A_I2CSwitch_Open(SENSOR_ADD_1, TCA9548A_I2CSwitch_0);
+        //Temp = Read_Temp_TC74_Remote();
+        //Temp_TC74_Display(Temp, SENSOR_DIS_1);
+        //TCA9548A_I2CSwitch_Open(SENSOR_CLOSE, TCA9548A_I2CSwitch_0);
 
         // ***Note: Closing the switch down is only necessary when moving
         // from one switch to another.
 
         // Display temperature of sensor #2
-        TCA9548A_I2CSwitch_Open(SENSOR_ADD_10, TCA9548A_I2CSwitch_1);
-        Temp = Read_Temp_TC74_Remote();
-        Temp_TC74_Display(Temp, SENSOR_DIS_10);
-        TCA9548A_I2CSwitch_Open(SENSOR_CLOSE, TCA9548A_I2CSwitch_1);
+        //TCA9548A_I2CSwitch_Open(SENSOR_ADD_10, TCA9548A_I2CSwitch_1);
+        // Temp = Read_Temp_TC74_Remote();
+        // Temp_TC74_Display(Temp, SENSOR_DIS_10);
+        // TCA9548A_I2CSwitch_Open(SENSOR_CLOSE, TCA9548A_I2CSwitch_1);
 
 
-        //DelayMs(2000);
-
+        DelayMs(3000);
         // Display temperature of sensor #3
         // TCA9548A_I2CSwitch_Open(SENSOR_3, TCA9548A_I2CSwitch_0);
         // Temp = Read_Temp_TC74();
         //Temp_TC74_Display(Temp, SENSOR_3);
 
         //Nop(), Nop();   // Time for display to settle.
+
+        WriteCommand_ILI9341(ILI9341_DISPOFF);
+        DelayMs(10);
+        WriteCommand_ILI9341(ILI9341_SLPIN);
+        DelayMs(10);
+        WriteCommand_ILI9341(ILI9341_SLPOUT); //VCM control 
+        WriteCommand_ILI9341(ILI9341_DISPON);
+        
+        // Change SPI pins, either high or OD 
+        _ODC0 = 1;
+        _ODC1 = 1;
+        _ODA10 = 1;
+        _ODB12 = 1;
+        _LATA8 = 1;
+        
+        SCREEN = OFF;
+        DelayMs(3000);
+        Sleep(); // PWRSAV #SLEEP_MODE
 
     }
     return (EXIT_SUCCESS);

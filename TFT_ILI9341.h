@@ -43,8 +43,8 @@
 #define ILI9341_RDDID   0x04
 #define ILI9341_RDDST   0x09
 
-#define ILI9341_SLPIN   0x10
-#define ILI9341_SLPOUT  0x11
+#define ILI9341_SLPIN   0x10    // Enter sleep mode
+#define ILI9341_SLPOUT  0x11    // Sleep out.
 #define ILI9341_PTLON   0x12
 #define ILI9341_NORON   0x13
 
@@ -157,7 +157,7 @@ void Initialize_TFT_ILI9341(void) {
     SPI_RES = 1; // Take TFT out of reset.
 
     WriteCommand_ILI9341(ILI9341_SWRESET);
-    DelayMs(10);
+    DelayMs(50);    // Necessary delay for FTF to settle.
 
 
     WriteCommand_ILI9341(0xEF);
