@@ -110,15 +110,24 @@ int main(int argc, char** argv) {
 
     // **** Initialize PORTS ****
     PortInit();
-
+    SCREEN = ON; // turn power to screen on.
+    DelayMs(1000);
     // *** Initialize SPI ***
     SPIInit();
-
     // *** Initialization TFT_ILI9341 *** 
-    SCREEN = ON; // turn power to screen on.
+
+   //SCREEN = OFF;
+   
+  
+  //  DelayMs(100);
+   // SCREEN = ON; // turn power to screen on.
+  // DelayMs(100);
+  //  SCREEN = OFF;
+   // DelayMs(100);
+  //  SCREEN = ON;
     Initialize_TFT_ILI9341();
 
-    FillScreen_ILI9341(ILI9341_BLACK);
+    FillScreen_ILI9341(ILI9341_MAGENTA);
 
     // *** Initialize SPI ***
     I2CInit();
@@ -134,15 +143,15 @@ int main(int argc, char** argv) {
 
     //TCA9548A_I2CSwitch_Open(SENSOR_CLEAR, TCA9548A_I2CSwitch_1);
 
-    ExtFan = ON;
-    LasRly = ON;
-    LineWrite_XY_ILI9341_16x25("FAN ON ", 1, Line6, ILI9341_GREEN, ILI9341_BLACK);
-    LineWrite_XY_ILI9341_16x25("LASER ON ", 1, Line5, ILI9341_GREEN, ILI9341_BLACK);
-    DelayMs(2000);
-    ExtFan = OFF;
-    LasRly = OFF;
-    LineWrite_XY_ILI9341_16x25("FAN OFF ", 1, Line6, ILI9341_RED, ILI9341_BLACK);
-    LineWrite_XY_ILI9341_16x25("LASER OFF ", 1, Line5, ILI9341_RED, ILI9341_BLACK);
+    // ExtFan = ON;
+    // LasRly = ON;
+    // LineWrite_XY_ILI9341_16x25("FAN ON ", 1, Line6, ILI9341_GREEN, ILI9341_BLACK);
+    // LineWrite_XY_ILI9341_16x25("LASER ON ", 1, Line5, ILI9341_GREEN, ILI9341_BLACK);
+    // DelayMs(2000);
+    //  ExtFan = OFF;
+    //  LasRly = OFF;
+    //  LineWrite_XY_ILI9341_16x25("FAN OFF ", 1, Line6, ILI9341_RED, ILI9341_BLACK);
+    //  LineWrite_XY_ILI9341_16x25("LASER OFF ", 1, Line5, ILI9341_RED, ILI9341_BLACK);
 
 
     // DelayMs(10);
@@ -150,15 +159,14 @@ int main(int argc, char** argv) {
 
 
     while (1) {
-
-        //Temp = Read_Temp_TC74_Local();
-        //Temp_TC74_Display(Temp, SENSOR_DIS_LOCAL);
+        Temp = Read_Temp_TC74_Local();
+        Temp_TC74_Display(Temp, SENSOR_DIS_LOCAL);
 
         // void TCA9548A_I2CSwitch_Open(int con_Reg, int address)
         // Display temperature of sensor #1
-       // TCA9548A_I2CSwitch_Open(SENSOR_ADD_1, TCA9548A_I2CSwitch_0);
-        //Temp = Read_Temp_TC74_Remote();
-        //Temp_TC74_Display(Temp, SENSOR_DIS_1);
+        TCA9548A_I2CSwitch_Open(LD_0, TCA9548A_I2CSwitch_3);
+        Temp = Read_Temp_TC74_Remote();
+        Temp_TC74_Display(Temp, SENSOR_DIS_1);
         //TCA9548A_I2CSwitch_Open(SENSOR_CLOSE, TCA9548A_I2CSwitch_0);
 
         // ***Note: Closing the switch down is only necessary when moving
@@ -171,7 +179,7 @@ int main(int argc, char** argv) {
         // TCA9548A_I2CSwitch_Open(SENSOR_CLOSE, TCA9548A_I2CSwitch_1);
 
 
-        DelayMs(3000);
+        // DelayMs(3000);
         // Display temperature of sensor #3
         // TCA9548A_I2CSwitch_Open(SENSOR_3, TCA9548A_I2CSwitch_0);
         // Temp = Read_Temp_TC74();
@@ -179,23 +187,23 @@ int main(int argc, char** argv) {
 
         //Nop(), Nop();   // Time for display to settle.
 
-        WriteCommand_ILI9341(ILI9341_DISPOFF);
-        DelayMs(10);
-        WriteCommand_ILI9341(ILI9341_SLPIN);
-        DelayMs(10);
-        WriteCommand_ILI9341(ILI9341_SLPOUT); //VCM control 
-        WriteCommand_ILI9341(ILI9341_DISPON);
-        
+        // WriteCommand_ILI9341(ILI9341_DISPOFF);
+        //  DelayMs(10);
+        // WriteCommand_ILI9341(ILI9341_SLPIN);
+        // DelayMs(10);
+        // WriteCommand_ILI9341(ILI9341_SLPOUT); //VCM control 
+        // WriteCommand_ILI9341(ILI9341_DISPON);
+
         // Change SPI pins, either high or OD 
-        _ODC0 = 1;
-        _ODC1 = 1;
-        _ODA10 = 1;
-        _ODB12 = 1;
-        _LATA8 = 1;
-        
-        SCREEN = OFF;
-        DelayMs(3000);
-        Sleep(); // PWRSAV #SLEEP_MODE
+        //  _ODC0 = 1;
+        //  _ODC1 = 1;
+        //  _ODA10 = 1;
+        //  _ODB12 = 1;
+        //   _LATA8 = 1;
+
+        //   SCREEN = OFF;
+        //   DelayMs(3000);
+        //  Sleep(); // PWRSAV #SLEEP_MODE
 
     }
     return (EXIT_SUCCESS);
