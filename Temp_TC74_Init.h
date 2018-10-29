@@ -29,7 +29,11 @@
 #define RTR 0x00    // Read Temperature (TEMP)
 #define RWCR 0x01   // Read/Write Configuration Register (CONFIG) 
 
+#define Col_L 01
+#define Col_M 85
+#define Col_R 170
 
+#define SENSOR_DIS_0 0x00
 #define SENSOR_DIS_1 0x01
 #define SENSOR_DIS_2 0x02
 #define SENSOR_DIS_3 0x03
@@ -42,7 +46,7 @@
 #define SENSOR_DIS_10 0x0A
 #define SENSOR_DIS_11 0x0B
 #define SENSOR_DIS_12 0x0C
-#define SENSOR_DIS_LOCAL 0x00
+#define SENSOR_DIS_LOCAL 0xD
 
 
 void Temp_TC74_Display(int temp, int sensor_pos); // Displays sensor temperature 
@@ -67,30 +71,70 @@ void Temp_TC74_Display(int temp, int sensor_no) {
 
     switch (sensor_no) {
         case SENSOR_DIS_LOCAL:
-            sprintf(Temp_buf, "Local Sensor: %d C ", temp); // Convert Temp value to string.
-            LineWrite_XY_ILI9341_16x25(Temp_buf, 1, Line0, ILI9341_WHITE, ILI9341_BLACK);
+            sprintf(Temp_buf, "Local:%dC", temp); // Convert Temp value to string.
+            LineWrite_XY_ILI9341_16x25(Temp_buf, Col_M, Line0, ILI9341_WHITE, ILI9341_BLACK);
+            break;
+
+        case SENSOR_DIS_0:
+            sprintf(Temp_buf, "LD0:%dC", temp); // Convert Temp value to string.
+            LineWrite_XY_ILI9341_16x25(Temp_buf, Col_L, Line1, ILI9341_WHITE, ILI9341_BLACK);
             break;
 
         case SENSOR_DIS_1:
-            sprintf(Temp_buf, "Switch 0 #1: %d C ", temp); // Convert Temp value to string.
-            LineWrite_XY_ILI9341_16x25(Temp_buf, 1, Line1, ILI9341_WHITE, ILI9341_BLACK);
+            sprintf(Temp_buf, "LD1:%dC", temp); // Convert Temp value to string.
+            LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line1, ILI9341_WHITE, ILI9341_BLACK);
             break;
 
         case SENSOR_DIS_2:
-            sprintf(Temp_buf, "TEMP  50mW: %d C ", temp); // Convert Temp value to string.
-            LineWrite_XY_ILI9341_16x25(Temp_buf, 1, Line2, ILI9341_WHITE, ILI9341_BLACK);
+            sprintf(Temp_buf, "LD2:%dC", temp); // Convert Temp value to string.          
+            LineWrite_XY_ILI9341_16x25(Temp_buf, Col_L, Line2, ILI9341_WHITE, ILI9341_BLACK);
+            break;
+
+        case SENSOR_DIS_3:
+            sprintf(Temp_buf, "LD3:%dC", temp); // Convert Temp value to string.           
+            LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line2, ILI9341_WHITE, ILI9341_BLACK);
+            break;
+
+        case SENSOR_DIS_4:
+            sprintf(Temp_buf, "LD4:%dC", temp); // Convert Temp value to string.           
+            LineWrite_XY_ILI9341_16x25(Temp_buf, Col_L, Line3, ILI9341_WHITE, ILI9341_BLACK);
+            break;
+
+        case SENSOR_DIS_5:
+            sprintf(Temp_buf, "LD5:%dC", temp); // Convert Temp value to string.            
+            LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line3, ILI9341_WHITE, ILI9341_BLACK);
+            break;
+
+        case SENSOR_DIS_6:
+            sprintf(Temp_buf, "LD6:%dC", temp); // Convert Temp value to string.          
+            LineWrite_XY_ILI9341_16x25(Temp_buf, Col_L, Line4, ILI9341_WHITE, ILI9341_BLACK);
+            break;
+
+        case SENSOR_DIS_7:
+            sprintf(Temp_buf, "LD7:%dC", temp); // Convert Temp value to string.          
+            LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line4, ILI9341_WHITE, ILI9341_BLACK);
+            break;
+
+        case SENSOR_DIS_8:
+            sprintf(Temp_buf, "LD8:%dC ", temp); // Convert Temp value to string.
+            LineWrite_XY_ILI9341_16x25(Temp_buf, Col_L, Line5, ILI9341_WHITE, ILI9341_BLACK);
             break;
 
         case SENSOR_DIS_9:
-            sprintf(Temp_buf, "switch 1: %d C ", temp); // Convert Temp value to string.
-            LineWrite_XY_ILI9341_16x25(Temp_buf, 1, Line3, ILI9341_WHITE, ILI9341_BLACK);
+            sprintf(Temp_buf, "LD9:%dC ", temp); // Convert Temp value to string.
+            LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line5, ILI9341_WHITE, ILI9341_BLACK);
             break;
 
         case SENSOR_DIS_10:
-            sprintf(Temp_buf, "switch 1: %d C ", temp); // Convert Temp value to string.
-            LineWrite_XY_ILI9341_16x25(Temp_buf, 1, Line3, ILI9341_WHITE, ILI9341_BLACK);
+            sprintf(Temp_buf, "LD10:%dC ", temp); // Convert Temp value to string.
+            LineWrite_XY_ILI9341_16x25(Temp_buf, Col_L, Line6, ILI9341_WHITE, ILI9341_BLACK);
             break;
-            
+
+        case SENSOR_DIS_11:
+            sprintf(Temp_buf, "LD11:%dC ", temp); // Convert Temp value to string.
+            LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line6, ILI9341_WHITE, ILI9341_BLACK);
+            break;
+
         default:
             LineWrite_XY_ILI9341_16x25("No sensor found.", 1, Line0, ILI9341_WHITE, ILI9341_BLACK);
 
