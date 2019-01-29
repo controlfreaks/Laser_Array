@@ -63,11 +63,13 @@
 // Sequentially read laser head temperatures and store in array. 1st entry will
 // be the local temp sensor, next 12 are heads 1 - 12.
 
-
-void Read_Laser_Driver_Temp(int *Driverpt);
-void Read_Laser_Head_Temp(int *Headpt);
 void Display_Laser_Driver_Temp(int *Driverpt);
 void Display_Laser_Head_Temp(int *Headpt);
+void Ext_Fan(int status);
+void Read_Laser_Driver_Temp(int *Driverpt);
+void Read_Laser_Head_Temp(int *Headpt);
+void Temp_Sensor_Sleep(void);   // Puts all the temperature sensors to standby mode.
+
 
 int Temp_Array_Head [13]; // Temperature storing laser head temps, ist value is local.
 int Temp_Array_Driver [13]; //Temperature storing laser driver temps, ist value is local.
@@ -135,7 +137,6 @@ int main(int argc, char** argv) {
 
     // *** Initialize I2C ***
     I2CInit();
-
     // *** Initialize I2C Switch ***
     //TCA9548A_I2CSwitch_Reset = 1;   // Take TCA9548A out of reset.
     //TCA9548A_I2CSwitch_A0 = 0;           
@@ -162,156 +163,29 @@ int main(int argc, char** argv) {
 
 
     Temp_Dis_Frame();
-    //ExtFan = ON ;
-    //LasRly = ON;
-    //DelayMs(3000);
-    //ExtFan = OFF;
-    ONLED = OFF;
-
-    while (1) {
+    Ext_Fan(OFF);
+    LasRly = OFF;
+    //while (1) {
 
 
-
-        //Read_Laser_Head_Temp(Headpt);
+        //  DelayMs(500);
+        Read_Laser_Head_Temp(Headpt);
         Read_Laser_Driver_Temp(Driverpt);
         LineWrite_XY_ILI9341_16x25("Head  ", 1, Line7, ILI9341_WHITE, ILI9341_BLACK);
-        //Display_Laser_Head_Temp(Headpt);
-        //DelayMs(4000);
-       LineWrite_XY_ILI9341_16x25("Driver", 1, Line7, ILI9341_WHITE, ILI9341_BLACK);
+        Display_Laser_Head_Temp(Headpt);
+        DelayMs(2500);
+        LineWrite_XY_ILI9341_16x25("Driver", 1, Line7, ILI9341_WHITE, ILI9341_BLACK);
         Display_Laser_Driver_Temp(Driverpt);
-       // DelayMs(4000);
-
-        ExtFan = ON;
-        LasRly = ON;
-        // DelayMs(6000);
-        // ExtFan = OFF;
-        //LasRly = OFF;
-
-        // Temp = Read_Temp_TC74_Local();
-        // Temp_TC74_Display(Temp, SENSOR_DIS_LOCAL);
-
-        // Display temperature of sensor# LD0
-        // void TCA9548A_I2CSwitch_Open(int con_Reg, int address)
-
-        //  TCA9548A_I2CSwitch_Open(LH_1, TCA9548A_I2CSwitch_0);
-        //  Temp = Read_Temp_TC74_Remote();
-        // if (Temp >= 30) {
-        //     ExtFan = ON;
-        // }
-        //else { 
-        //     ExtFan = OFF;
-        // }
-        //  Temp_TC74_Display(Temp, SENSOR_DIS_LOCAL);
-
-        // TCA9548A_I2CSwitch_Open(SENSOR_CLOSE, TCA9548A_I2CSwitch_0);
+        DelayMs(2500);
 
 
-        // Close Switch_0 down.
-        // ***Note: Closing the switch down is only necessary when moving
-        // from one switch to another.
-        // TCA9548A_I2CSwitch_Open(SENSOR_CLOSE, TCA9548A_I2CSwitch_0);
-        /*
-
-        // Display temperature of sensor# LD1
-        // void TCA9548A_I2CSwitch_Open(int con_Reg, int address)
-        TCA9548A_I2CSwitch_Open(LD_1 , TCA9548A_I2CSwitch_3);
-        Temp = Read_Temp_TC74_Remote();
-        Temp_TC74_Display(Temp, SENSOR_DIS_1);
-        //TCA9548A_I2CSwitch_Open(SENSOR_CLOSE, TCA9548A_I2CSwitch_0);
-        
-
-
-        // Display temperature of sensor# LD2
-        // void TCA9548A_I2CSwitch_Open(int con_Reg, int address)
-        TCA9548A_I2CSwitch_Open(LD_2, TCA9548A_I2CSwitch_3);
-        Temp = Read_Temp_TC74_Remote();
-         Temp_TC74_Display(Temp, SENSOR_DIS_2);
-        //TCA9548A_I2CSwitch_Open(SENSOR_CLOSE, TCA9548A_I2CSwitch_0);
-
-        // Display temperature of sensor# LD3
-        // void TCA9548A_I2CSwitch_Open(int con_Reg, int address)
-        TCA9548A_I2CSwitch_Open(LD_3, TCA9548A_I2CSwitch_3);
-        Temp = Read_Temp_TC74_Remote();
-        Temp_TC74_Display(Temp, SENSOR_DIS_3);
-
-        // Close Switch_3 down.
-        // ***Note: Closing the switch down is only necessary when moving
-        // from one switch to another.
-        TCA9548A_I2CSwitch_Open(SENSOR_CLOSE, TCA9548A_I2CSwitch_3);
-
-        // Display temperature of sensor# LD4
-        // void TCA9548A_I2CSwitch_Open(int con_Reg, int address)
-        TCA9548A_I2CSwitch_Open(LD_4, TCA9548A_I2CSwitch_4);
-        Temp = Read_Temp_TC74_Remote();
-        Temp_TC74_Display(Temp, SENSOR_DIS_4);
-
-        // Display temperature of sensor# LD5
-        // void TCA9548A_I2CSwitch_Open(int con_Reg, int address)
-        TCA9548A_I2CSwitch_Open(LD_5, TCA9548A_I2CSwitch_4);
-        Temp = Read_Temp_TC74_Remote();
-        Temp_TC74_Display(Temp, SENSOR_DIS_5);
-
-        // Display temperature of sensor# LD6
-        // void TCA9548A_I2CSwitch_Open(int con_Reg, int address)
-        TCA9548A_I2CSwitch_Open(LD_6, TCA9548A_I2CSwitch_4);
-        Temp = Read_Temp_TC74_Remote();
-        Temp_TC74_Display(Temp, SENSOR_DIS_6);
-
-        // Display temperature of sensor# LD7
-        // void TCA9548A_I2CSwitch_Open(int con_Reg, int address)
-        TCA9548A_I2CSwitch_Open(LD_7, TCA9548A_I2CSwitch_4);
-        Temp = Read_Temp_TC74_Remote();
-        Temp_TC74_Display(Temp, SENSOR_DIS_7);
-
-        // Close Switch_4 down.
-        // ***Note: Closing the switch down is only necessary when moving
-        // from one switch to another.
-        TCA9548A_I2CSwitch_Open(SENSOR_CLOSE, TCA9548A_I2CSwitch_4);
-
-
-        // Display temperature of sensor# LD8
-        // void TCA9548A_I2CSwitch_Open(int con_Reg, int address)
-        TCA9548A_I2CSwitch_Open(LD_8, TCA9548A_I2CSwitch_5);
-        Temp = Read_Temp_TC74_Remote();
-        Temp_TC74_Display(Temp, SENSOR_DIS_8);
-
-        // Display temperature of sensor# LD9
-        // void TCA9548A_I2CSwitch_Open(int con_Reg, int address)
-        TCA9548A_I2CSwitch_Open(LD_9, TCA9548A_I2CSwitch_5);
-        Temp = Read_Temp_TC74_Remote();
-        Temp_TC74_Display(Temp, SENSOR_DIS_9);
-
-        // Display temperature of sensor# LD10
-        // void TCA9548A_I2CSwitch_Open(int con_Reg, int address)
-        TCA9548A_I2CSwitch_Open(LD_10, TCA9548A_I2CSwitch_5);
-        Temp = Read_Temp_TC74_Remote();
-        Temp_TC74_Display(Temp, SENSOR_DIS_10);
-
-        // Display temperature of sensor# LD11
-        // void TCA9548A_I2CSwitch_Open(int con_Reg, int address)
-        TCA9548A_I2CSwitch_Open(LD_11, TCA9548A_I2CSwitch_5);
-        Temp = Read_Temp_TC74_Remote();
-        Temp_TC74_Display(Temp, SENSOR_DIS_11);
-
-        // Close Switch_5 down.
-        // ***Note: Closing the switch down is only necessary when moving
-        // from one switch to another.
-        TCA9548A_I2CSwitch_Open(SENSOR_CLOSE, TCA9548A_I2CSwitch_5);
+        while(1) {
+            
+        }
 
 
 
-        // Display temperature of sensor #2
-      //  TCA9548A_I2CSwitch_Open(LH_0, TCA9548A_I2CSwitch_0);
-       //  Temp = Read_Temp_TC74_Remote();
-       //  Temp_TC74_Display(Temp, SENSOR_DIS_0);
-       //  TCA9548A_I2CSwitch_Open(SENSOR_CLOSE, TCA9548A_I2CSwitch_0);
 
-
-        // DelayMs(3000);
-        // Display temperature of sensor #3
-        // TCA9548A_I2CSwitch_Open(SENSOR_3, TCA9548A_I2CSwitch_0);
-        // Temp = Read_Temp_TC74();
-        //Temp_TC74_Display(Temp, SENSOR_3);
 
         //Nop(), Nop();   // Time for display to settle.
 
@@ -332,14 +206,13 @@ int main(int argc, char** argv) {
         //   SCREEN = OFF;
         //   DelayMs(3000);
         // Sleep(); // PWRSAV #SLEEP_MODE
-         */
-    }
+         
+  //  }
     return (EXIT_SUCCESS);
 } // End of main program loop.
 
 void Display_Laser_Driver_Temp(int *Driverpt) {
     Temp_TC74_Display(*Driverpt++, SENSOR_DIS_LOCAL);
-    Temp_TC74_Display(*Driverpt++, SENSOR_DIS_0);
     Temp_TC74_Display(*Driverpt++, SENSOR_DIS_1);
     Temp_TC74_Display(*Driverpt++, SENSOR_DIS_2);
     Temp_TC74_Display(*Driverpt++, SENSOR_DIS_3);
@@ -351,13 +224,13 @@ void Display_Laser_Driver_Temp(int *Driverpt) {
     Temp_TC74_Display(*Driverpt++, SENSOR_DIS_9);
     Temp_TC74_Display(*Driverpt++, SENSOR_DIS_10);
     Temp_TC74_Display(*Driverpt++, SENSOR_DIS_11);
+    Temp_TC74_Display(*Driverpt++, SENSOR_DIS_12);
 
     Driverpt = Temp_Array_Driver; // Reset pointer when finished.
 }
 
 void Display_Laser_Head_Temp(int *Headpt) {
     Temp_TC74_Display(*Headpt++, SENSOR_DIS_LOCAL);
-    Temp_TC74_Display(*Headpt++, SENSOR_DIS_0);
     Temp_TC74_Display(*Headpt++, SENSOR_DIS_1);
     Temp_TC74_Display(*Headpt++, SENSOR_DIS_2);
     Temp_TC74_Display(*Headpt++, SENSOR_DIS_3);
@@ -369,8 +242,14 @@ void Display_Laser_Head_Temp(int *Headpt) {
     Temp_TC74_Display(*Headpt++, SENSOR_DIS_9);
     Temp_TC74_Display(*Headpt++, SENSOR_DIS_10);
     Temp_TC74_Display(*Headpt++, SENSOR_DIS_11);
+    Temp_TC74_Display(*Headpt++, SENSOR_DIS_12);
 
     Headpt = Temp_Array_Head; // Reset pointer when finished.
+}
+
+void Ext_Fan(int status) {
+    ExtFan = status;
+    DelayMs(300);
 }
 
 void Read_Laser_Driver_Temp(int *Driverpt) {
@@ -380,10 +259,7 @@ void Read_Laser_Driver_Temp(int *Driverpt) {
     // Assign local temp sensor to first array location.
     *Driverpt++ = Read_Temp_TC74_Local();
 
-    // Reading from I2C switch 3, Laser Drivers 0 - 3
-    TCA9548A_I2CSwitch_Open(LD_0, TCA9548A_I2CSwitch_3);
-    *Driverpt++ = Read_Temp_TC74_Remote();
-
+    // Reading from I2C switch 3, Laser Drivers 1 - 4
     TCA9548A_I2CSwitch_Open(LD_1, TCA9548A_I2CSwitch_3);
     *Driverpt++ = Read_Temp_TC74_Remote();
 
@@ -393,17 +269,17 @@ void Read_Laser_Driver_Temp(int *Driverpt) {
     TCA9548A_I2CSwitch_Open(LD_3, TCA9548A_I2CSwitch_3);
     *Driverpt++ = Read_Temp_TC74_Remote();
 
+    TCA9548A_I2CSwitch_Open(LD_4, TCA9548A_I2CSwitch_3);
+    *Driverpt++ = Read_Temp_TC74_Remote();
+
     // Close current switch before opening another switch.
     TCA9548A_I2CSwitch_Open(SENSOR_CLOSE, TCA9548A_I2CSwitch_3);
 
 
 
-    // Reading from I2C switch 4, Laser Drivers 4 - 7
-    TCA9548A_I2CSwitch_Open(LD_4, TCA9548A_I2CSwitch_4);
-    *Driverpt++ = Read_Temp_TC74_Remote(); // *****This temp sensor not working.
-
+    // Reading from I2C switch 4, Laser Drivers 5 - 8
     TCA9548A_I2CSwitch_Open(LD_5, TCA9548A_I2CSwitch_4);
-    *Driverpt++ = Read_Temp_TC74_Remote();
+    *Driverpt++ = Read_Temp_TC74_Remote(); // *****This temp sensor not working.
 
     TCA9548A_I2CSwitch_Open(LD_6, TCA9548A_I2CSwitch_4);
     *Driverpt++ = Read_Temp_TC74_Remote();
@@ -411,14 +287,14 @@ void Read_Laser_Driver_Temp(int *Driverpt) {
     TCA9548A_I2CSwitch_Open(LD_7, TCA9548A_I2CSwitch_4);
     *Driverpt++ = Read_Temp_TC74_Remote();
 
+    TCA9548A_I2CSwitch_Open(LD_8, TCA9548A_I2CSwitch_4);
+    *Driverpt++ = Read_Temp_TC74_Remote();
+
     // Close current switch before opening another switch.
     TCA9548A_I2CSwitch_Open(SENSOR_CLOSE, TCA9548A_I2CSwitch_4);
 
 
-    // Reading from I2C switch 5, Laser Drivers 8 - 1
-    TCA9548A_I2CSwitch_Open(LD_8, TCA9548A_I2CSwitch_5);
-    *Driverpt++ = Read_Temp_TC74_Remote();
-
+    // Reading from I2C switch 5, Laser Drivers 9 - 12
     TCA9548A_I2CSwitch_Open(LD_9, TCA9548A_I2CSwitch_5);
     *Driverpt++ = Read_Temp_TC74_Remote();
 
@@ -426,6 +302,9 @@ void Read_Laser_Driver_Temp(int *Driverpt) {
     *Driverpt++ = Read_Temp_TC74_Remote();
 
     TCA9548A_I2CSwitch_Open(LD_11, TCA9548A_I2CSwitch_5);
+    *Driverpt++ = Read_Temp_TC74_Remote();
+
+    TCA9548A_I2CSwitch_Open(LD_12, TCA9548A_I2CSwitch_5);
     *Driverpt++ = Read_Temp_TC74_Remote();
 
     // Close current switch before opening another switch.
@@ -442,10 +321,7 @@ void Read_Laser_Head_Temp(int *Headpt) {
     // Assign local temp sensor to first array location.
     *Headpt++ = Read_Temp_TC74_Local();
 
-    // Reading from I2C switch 0, Laser Heads 0 - 3
-    TCA9548A_I2CSwitch_Open(LH_0, TCA9548A_I2CSwitch_0);
-    *Headpt++ = Read_Temp_TC74_Remote();
-
+    // Reading from I2C switch 0, Laser Heads 1 - 4
     TCA9548A_I2CSwitch_Open(LH_1, TCA9548A_I2CSwitch_0);
     *Headpt++ = Read_Temp_TC74_Remote();
 
@@ -455,33 +331,32 @@ void Read_Laser_Head_Temp(int *Headpt) {
     TCA9548A_I2CSwitch_Open(LH_3, TCA9548A_I2CSwitch_0);
     *Headpt++ = Read_Temp_TC74_Remote();
 
+    TCA9548A_I2CSwitch_Open(LH_4, TCA9548A_I2CSwitch_0);
+    *Headpt++ = Read_Temp_TC74_Remote();
+
     // Close current switch before opening another switch.
     TCA9548A_I2CSwitch_Open(SENSOR_CLOSE, TCA9548A_I2CSwitch_0);
 
 
-
-    // Reading from I2C switch 1, Laser Heads 4 - 7
-    TCA9548A_I2CSwitch_Open(LH_4, TCA9548A_I2CSwitch_1);
-    // *Headpt++ = Read_Temp_TC74_Remote(); // *****This temp sensor not working.
-    *Headpt++;
-
+    // Reading from I2C switch 1, Laser Heads 5 - 8
     TCA9548A_I2CSwitch_Open(LH_5, TCA9548A_I2CSwitch_1);
-    *Headpt++ = Read_Temp_TC74_Remote();
+    *Headpt++ = Read_Temp_TC74_Remote(); // *****This temp sensor not working.
 
     TCA9548A_I2CSwitch_Open(LH_6, TCA9548A_I2CSwitch_1);
-    *Headpt++ = Read_Temp_TC74_Remote();
+    //*Headpt++ = Read_Temp_TC74_Remote();
+    *Headpt++;
 
     TCA9548A_I2CSwitch_Open(LH_7, TCA9548A_I2CSwitch_1);
+    *Headpt++ = Read_Temp_TC74_Remote();
+
+    TCA9548A_I2CSwitch_Open(LH_8, TCA9548A_I2CSwitch_1);
     *Headpt++ = Read_Temp_TC74_Remote();
 
     // Close current switch before opening another switch.
     TCA9548A_I2CSwitch_Open(SENSOR_CLOSE, TCA9548A_I2CSwitch_1);
 
 
-    // Reading from I2C switch 2, Laser Heads 8 - 1
-    TCA9548A_I2CSwitch_Open(LH_8, TCA9548A_I2CSwitch_2);
-    *Headpt++ = Read_Temp_TC74_Remote();
-
+    // Reading from I2C switch 2, Laser Heads 9 - 12
     TCA9548A_I2CSwitch_Open(LH_9, TCA9548A_I2CSwitch_2);
     *Headpt++ = Read_Temp_TC74_Remote();
 
@@ -491,9 +366,15 @@ void Read_Laser_Head_Temp(int *Headpt) {
     TCA9548A_I2CSwitch_Open(LH_11, TCA9548A_I2CSwitch_2);
     *Headpt++ = Read_Temp_TC74_Remote();
 
+    TCA9548A_I2CSwitch_Open(LH_12, TCA9548A_I2CSwitch_2);
+    *Headpt++ = Read_Temp_TC74_Remote();
+
     // Close current switch before opening another switch.
     TCA9548A_I2CSwitch_Open(SENSOR_CLOSE, TCA9548A_I2CSwitch_2);
 
-
     Headpt = Temp_Array_Head; // Reset pointer when finished.
+}
+
+void Temp_Sensor_Sleep(void) {
+    
 }
