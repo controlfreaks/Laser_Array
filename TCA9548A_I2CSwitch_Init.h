@@ -22,27 +22,43 @@
 #define TCA9548A_I2CSwitch_Reset _LATA8 // Set the reset pin  for the TCA9548A.
 #define TCA9548A_I2CSwitch_0 0xE0
 #define TCA9548A_I2CSwitch_1 0xE2
+#define TCA9548A_I2CSwitch_2 0xE4
+#define TCA9548A_I2CSwitch_3 0xE6
+#define TCA9548A_I2CSwitch_4 0xE8
+#define TCA9548A_I2CSwitch_5 0xEA
 
-#define SENSOR_CLOSE 0x00
-#define SENSOR_ADD_1 0x01
-#define SENSOR_ADD_2 0x02
-#define SENSOR_ADD_3 0x04
-#define SENSOR_ADD_4 0x08
-#define SENSOR_ADD_5 0x10
-#define SENSOR_ADD_6 0x20
-#define SENSOR_ADD_7 0x40
-#define SENSOR_ADD_8 0x80
-#define SENSOR_ADD_9 0x01
-#define SENSOR_ADD_10 0x02
-#define SENSOR_ADD_11 0x04
-#define SENSOR_ADD_12 0x08
+#define NULL_SENSOR 0x00
+#define LH_1 0x02
+#define LH_2 0x01
+#define LH_3 0x08
+#define LH_4 0x04
+#define LH_5 0x02
+#define LH_6 0x01
+#define LH_7 0x08
+#define LH_8 0x04
+#define LH_9 0x02
+#define LH_10 0x01
+#define LH_11 0x08
+#define LH_12 0x04
+
+#define LD_1 0x02
+#define LD_2 0x01
+#define LD_3 0x08
+#define LD_4 0x04
+#define LD_5 0x02
+#define LD_6 0x01
+#define LD_7 0x08
+#define LD_8 0x04
+#define LD_9 0x02
+#define LD_10 0x01
+#define LD_11 0x08
+#define LD_12 0x04
 // Opens communication with the switch and sets the channels to open. The 
-// 'control' is an 8-bit work with each of the 8 bits representing 1 of 8 
+// 'control' is an 8-bit work with each of the 8 bits representing 1 of 4 
 // I2C channels.
 void TCA9548A_I2CSwitch_Open(int con_Reg, int address);
 
 void TCA9548A_I2CSwitch_Open(int con_Reg, int address) {
-
 
     //TCA9548A_I2CSwitch_Reset = 0; // Reset TCA9548A.
     // DelayUs(1);

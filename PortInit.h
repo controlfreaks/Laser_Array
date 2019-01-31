@@ -33,11 +33,11 @@ void PortInit(void) {
     // ****************************
 
     // *** OUTPUTS ***
-#define SCREEN _LATA4   // TFT screen.
-#define Laser_LED1 _LATA9
-#define Laser_LED2 _LATA8
-#define Laser_LED3 _LATC2
-#define Laser_LED5 _LATC4
+#define SCREEN _LATB14   // TFT screen relay.
+#define ONLED _LATA1
+//#define Laser_LED2 _LATA8
+//#define Laser_LED3 _LATC2
+//#define Laser_LED5 _LATC4
 #define ExtFan _LATC5   // External fan
 #define LasRly _LATC8   // Laser relay.
 
@@ -152,14 +152,14 @@ void PortInit(void) {
     _TRISB4 = 0; // 0 = output, 1 = input
     _TRISB5 = 1; // 0 = output, 1 = input
     _TRISB6 = 0; // 0 = output, 1 = input
-    _TRISB7 = 0; // 0 = output, 1 = input
+    _TRISB7 = 1; // 0 = output, 1 = input
     _TRISB8 = 1; // 0 = output, 1 = input   // I2C-SCL1 for local temp sensor.
     _TRISA9 = 1; // 0 = output, 1 = input   // I2C-SDA1 for local temp sensor.
     _TRISA10 = 0; // 0 = output, 1 = input
     _TRISB11 = 0; // 0 = output, 1 = input
     _TRISB12 = 0; // 0 = output, 1 = input  // SPI-DC
     _TRISB13 = 0; // 0 = output, 1 = input
-    _TRISB14 = 0; // 0 = output, 1 = input  // SPI-RST
+    _TRISB14 = 0; // 0 = output, 1 = input  // DISPWR  - controls screen relay.
     _TRISB15 = 0; // 0 = output, 1 = input  // Re-mapped to INT1
 
     // *** Open Drain Configuration ***
@@ -201,7 +201,7 @@ void PortInit(void) {
     //_LATB11 = 0;       // 0 = low(0v), 1 = high(+3.3V)
     //_LATB12 = 0;       // 0 = low(0v), 1 = high(+3.3V)
     //_LATB13 = 0;       // 0 = low(0v), 1 = high(+3.3V)
-    //_LATB14 = 0;       // 0 = low(0v), 1 = high(+3.3V)
+    _LATB14 = 1;       // 0 = low(0v), 1 = high(+3.3V)// Set display screen ON
     _LATB15 = 0;       // 0 = low(0v), 1 = high(+3.3V)
 
     //************************
@@ -215,8 +215,8 @@ void PortInit(void) {
 
     //TRISC = 0x00;         // Set entire PORT
 
-    _TRISC0 = 0; // 0 = output, 1 = input  // re-mapped for RP16 (SPI-SDO1) 
-    _TRISC1 = 0; // 0 = output, 1 = input   // re-mapped for RP17 (SPI-SCLKO1)
+    _TRISC0 = 1; // 0 = output, 1 = input  // re-mapped for RP16 (SPI-SDO1) 
+    _TRISC1 = 1; // 0 = output, 1 = input   // re-mapped for RP17 (SPI-SCLKO1)
     _TRISC2 = 0; // 0 = output, 1 = input
     _TRISC3 = 0; // 0 = output, 1 = input 
     _TRISC4 = 0; // 0 = output, 1 = input

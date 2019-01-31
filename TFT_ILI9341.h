@@ -30,7 +30,8 @@
 
 // #define statements for serial connection to the display.
 #define SPI_CS _LATA10            // Chip select for OLED - Serial Mode, initialized as 1.
-#define SPI_RES _LATB14          // Reset for OLED - Serial Mode.
+// Do not use this for Laser Array code.
+//#define SPI_RES _LATB14          // Reset for OLED - Serial Mode.
 #define SPI_DC _LATB12            // Data / Command for OLED (LATG0 for pictail) - Serial Mode.
 // Note: SCLK _LATC0          // Clock for OLED - Serial Mode.
 // Note: MOSI _LATC1          // Master out, serial in for OLED - Serial Mode.
@@ -152,9 +153,9 @@ void WriteData_ILI9341(unsigned char Data);
 // ****  Insert code here. *****
 
 void Initialize_TFT_ILI9341(void) {
-    SPI_RES = 0; // Reset the TFT.
+    //SPI_RES = 0; // Reset the TFT.
     DelayMs(120);
-    SPI_RES = 1; // Take TFT out of reset.
+    //SPI_RES = 1; // Take TFT out of reset.
 
     WriteCommand_ILI9341(ILI9341_SWRESET);
     DelayMs(50);    // Necessary delay for FTF to settle.

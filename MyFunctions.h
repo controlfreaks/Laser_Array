@@ -19,7 +19,7 @@
 #ifndef MYFUNCTIONS_50_Shot_H
 #define	MYFUNCTIONS_50_Shot_H
 
-#define OSC_CLOCK 8000000              // 8 MHz oscillator
+#define OSC_CLOCK 16000000              // 8 MHz oscillator
 // divide OSC_CLOCK / 4 for FRCDIV, divide OSC_CLOCK / 1 for FRPLL clock setting
 #define INSTRUCT_CLOCK (OSC_CLOCK / 1) // 4 OSC per instruction cycle
 
