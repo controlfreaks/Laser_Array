@@ -114,7 +114,7 @@ void IntInit(void) {
     // configure INT0
     IFS0bits.INT0IF = 0; // reset INT0 interrupt flag
     IEC0bits.INT0IE = 1; // enable INT0 ISR
-    IPC0bits.INT0IP = 4; // set low priority
+    IPC0bits.INT0IP = 7; // set low priority
 
     // configure INT1
    // IFS1bits.INT1IF = 0; // reset INT1 interrupt flag
@@ -154,14 +154,14 @@ void IntInit(void) {
     // Enable on Input Change Notification Bits
 
     // CNEN1 = 0x0000         // set the entire register (CN0 - CN15)
-
+/*
     _CN0IE = 0; // 0 = CN0 disabled, 1 = CN0 enabled
     _CN1IE = 0; // 0 = CN1 disabled, 1 = CN1 enabled
     _CN2IE = 0; // 0 = CN2 disabled, 1 = CN2 enabled
     _CN3IE = 0; // 0 = CN3 disabled, 1 = CN3 enabled 
     _CN4IE = 0; // 0 = CN4 disabled, 1 = CN4 enabled
-    _CN5IE = 1; // 0 = CN5 disabled, 1 = CN5 enabled
-    _CN6IE = 1; // 0 = CN6 disabled, 1 = CN6 enabled
+    _CN5IE = 0; // 0 = CN5 disabled, 1 = CN5 enabled
+    _CN6IE = 0; // 0 = CN6 disabled, 1 = CN6 enabled
     _CN7IE = 0; // 0 = CN7 disabled, 1 = CN7 enabled
     _CN8IE = 0; // 0 = CN8 disabled, 1 = CN8 enabled
     _CN9IE = 0; // 0 = CN9 disabled, 1 = CN9 enabled
@@ -180,11 +180,11 @@ void IntInit(void) {
     _CN19IE = 0; // 0 = CN19 disabled, 1 = CN19 enabled
     _CN20IE = 0; // 0 = CN20 disabled, 1 = CN20 enabled
     _CN21IE = 0; // 0 = CN21 disabled, 1 = CN21 enabled
-
+*/
 
     // Input CHANGE Notification Interrupt section
     IFS1bits.CNIF = 0; // reset CN interrupt flag
-    IEC1bits.CNIE = 1; // enable CN ISR
+    IEC1bits.CNIE = 0; // enable CN ISR
     IPC4bits.CNIP = 4; // set CN interrupt priority to low
 
 

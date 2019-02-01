@@ -135,6 +135,8 @@
 
 void CharWrite_XY_ILI9341_16x25(int digit, int x_start, int y_start,
         int fore_colour, int back_colour);
+void Display_TFT_ILI9341_Sleep(void); // Puts the LCD display to sleep.
+void Display_TFT_ILI9341_Wake(void); // Wakes display up.
 void DrawPixel_ILI9341(int x, int y, int colour);
 void FillRec_ILI9341(long int x, long int y, long int w, long int h,
         long int colour);
@@ -270,6 +272,40 @@ void Initialize_TFT_ILI9341(void) {
     WriteCommand_ILI9341(ILI9341_DISPON); //Display on 
     DelayMs(120);
 }
+
+void Display_TFT_ILI9341_Sleep(void) {
+    // These commands seem to save 100-200uA
+    WriteCommand_ILI9341(ILI9341_DISPOFF);
+    DelayMs(10);
+    WriteCommand_ILI9341(ILI9341_SLPIN);
+    DelayMs(10);
+    WriteCommand_ILI9341(ILI9341_SLPOUT); //VCM control 
+    WriteCommand_ILI9341(ILI9341_DISPON);
+
+    // Change SPI pins, either high or OD, saves about 1 mA.
+    _ODC0 = 1;
+    _ODC1 = 1;
+    _ODA10 = 1;
+    _ODB12 = 1;
+    _LATA8 = 1;
+
+    SCREEN = OFF;
+    DelayMs(500); // Time for relay to settle.
+}
+
+void Display_TFT_ILI9341_Wake(void) {
+
+    SCREEN = ON;
+    DelayMs(500); //  Necessary to let relay settle.
+    _ODC0 = 0;
+    _ODC1 = 0;
+    _ODA10 = 0;
+    _ODB12 = 0;
+    _LATA8 = 0;
+    Initialize_TFT_ILI9341();
+    DelayMs(500);
+}
+
 
 void DrawPixel_ILI9341(int x, int y, int colour) {
 

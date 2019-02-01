@@ -5,9 +5,9 @@ Fonts.h  \
 INTInit.h  \
 MyFunctions.h  \
 Interrupt_ISR.h  \
-PortInit.h  \
- Misc_Macro.h  \
-SPIInit.h  \
+Misc_Macro.h  \
+ PortInit.h  \
 TCA9548A_I2CSwitch_Init.h  \
 TFT_ILI9341.h  \
- Temp_TC74_Init.h 
+Temp_TC74_Init.h  \
+ SPIInit.h 

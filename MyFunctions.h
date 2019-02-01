@@ -33,11 +33,12 @@
 #define _INPUT 1
 
 
-#include <xc.h> // include processor files - each processor file is guarded. 
+#include <xc.h> // include processor files - each processor file is guarded.
 
 // *** Declarations start here ***
 void DelayMs(long time);
 void DelayUs(long time);
+
 
 
 // *** Function definitions start here, all declarations above this point
@@ -74,6 +75,9 @@ void DelayUs(long time) {
     while (IFS0bits.T2IF == 0) {
     }
 }
+
+
+
 
 
 #ifdef	__cplusplus

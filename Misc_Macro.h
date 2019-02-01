@@ -43,7 +43,7 @@ struct tagFLAGS_A { // FLAG structure for setting up flags
     unsigned FLG15 : 1;
 } FLAGBITS_A = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-#define FLAG1_FLG FLAGBITS_A.FLG0 
+#define SLEEP_FLG FLAGBITS_A.FLG0 //1 = goto Sleep, 0 = wake up.
 #define FLAG2_FLG FLAGBITS_A.FLG1
 #define FLAG3_FLG FLAGBITS_A.FLG2 
 #define FLAG4_FLG FLAGBITS_A.FLG3
