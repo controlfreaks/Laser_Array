@@ -65,12 +65,13 @@
 
 void Display_Laser_Driver_Temp(int *Driverpt);
 void Display_Laser_Head_Temp(int *Headpt);
-void Display_Sleep(void); // Puts the LCD display to sleep.
-void Display_Wake(void); // Wakes display up.
 void Ext_Fan(int status);
 void Read_Laser_Driver_Temp(int *Driverpt);
 void Read_Laser_Head_Temp(int *Headpt);
-void Temp_Sensor_Sleep(void); // Puts all the temperature sensors to standby mode.
+void System_Sleep(void); // System Sleep function.
+void System_Wake(void); // System wake function.
+
+
 
 
 int Temp_Array_Head [13] = {0}; // Temperature storing laser head temps, ist value is local.
@@ -119,7 +120,6 @@ int *Driverpt = Temp_Array_Driver;
 // *****************************************************************************
 
 int main(int argc, char** argv) {
-    int temp = 0;
 
     // **** Initialize PORTS ****
     PortInit();
@@ -138,77 +138,39 @@ int main(int argc, char** argv) {
 
     // *** Initialize I2C Switch ***
     // No initiation necessary.
-    TCA9548A_I2CSwitch_Reset = 1; // Take TCA9548A out of reset.
+    // TCA9548A_I2CSwitch_Reset = 1; // Take TCA9548A out of reset.
     //TCA9548A_I2CSwitch_A0 = 0;           
     //TCA9548A_I2CSwitch_Open(SENSOR_1, TCA9548A_I2CSwitch_0);
 
-    //Write_Config_TC74_Local(NORMAL); // Set Temperature to normal mode.
-    //TCA9548A_I2CSwitch_Open(SENSOR_1, TCA9548A_I2CSwitch_0);
-    // Write_Config_TC74_Remote(NORMAL); // Set Temperature to normal mode.
+    // *** Initialize Temperature Sensor ***
+    Temp_Sensor_Wake();
 
-    //TCA9548A_I2CSwitch_Open(SENSOR_CLEAR, TCA9548A_I2CSwitch_1);
-
-    //ExtFan = ON;
-    //LasRly = ON;
-    //LineWrite_XY_ILI9341_16x25("FAN ON ", 1, Line6, ILI9341_GREEN, ILI9341_BLACK);
-    // LineWrite_XY_ILI9341_16x25("LASER ON ", 1, Line5, ILI9341_GREEN, ILI9341_BLACK);
-    // DelayMs(5000);
-    // ExtFan = OFF;
-    // LasRly = OFF;
-    // LineWrite_XY_ILI9341_16x25("FAN OFF ", 1, Line6, ILI9341_RED, ILI9341_BLACK);
-    // LineWrite_XY_ILI9341_16x25("LASER OFF ", 1, Line5, ILI9341_RED, ILI9341_BLACK);
-
-
-    // DelayMs(10);
+    // *** Initialize FLAGs ***
+    SLEEP_FLG = 0;
 
 
     Temp_Dis_Frame();
     Ext_Fan(OFF);
     LasRly = OFF;
-
-
-    Temp_Sensor_Sleep();
-
-    // Write_Config_TC74_Local(STANDBY);
-    // _TRISB8 = 0;
-    // _TRISB9 = 0;
-    //_ODB8 = 1; // 0 = normal, 1 = open drain 
-    //_ODB9 = 1; // 0 = normal, 1 = open drain 
-    //_LATB9 = 0; // Force pin high
-    // _LATB8 = 0;
-
+    //ONLED = ON;
 
     while (1) {
+        // Test status of SLeep flag. 0 = goto sleep, 1 = 
+        if (SLEEP_FLG == 1) {
+            System_Sleep();
+        }
 
-        //  temp = Read_Temp_TC74_Local();
-        //  Temp_TC74_Display(temp, SENSOR_DIS_LOCAL);
-
-        //DelayMs(500);
         //Read_Laser_Head_Temp(Headpt);
         Read_Laser_Driver_Temp(Driverpt);
-        //LineWrite_XY_ILI9341_16x25("Head  ", 1, Line7, ILI9341_WHITE, ILI9341_BLACK);
+        LineWrite_XY_ILI9341_16x25("Driver  ", 1, Line7, ILI9341_WHITE, ILI9341_BLACK);
         //Display_Laser_Head_Temp(Headpt);
-       // DelayMs(1500);
-        LineWrite_XY_ILI9341_16x25("Driver", 1, Line7, ILI9341_WHITE, ILI9341_BLACK);
+        // DelayMs(1500);
+        //LineWrite_XY_ILI9341_16x25("Driver", 1, Line7, ILI9341_WHITE, ILI9341_BLACK);
         Display_Laser_Driver_Temp(Driverpt);
-        DelayMs(1500);
-        Display_Sleep();
-        //DelayMs(100);
-        Sleep();
-        
-        // FillScreen_ILI9341(ILI9341_MAGENTA);
-         DelayMs(500);
-       // while (1) {
 
-       // }
+        //while (1) {
 
-
-
-
-
-        //Nop(), Nop();   // Time for display to settle.
-
-
+        // }
 
     }
     return (EXIT_SUCCESS);
@@ -248,43 +210,6 @@ void Display_Laser_Head_Temp(int *Headpt) {
     Temp_TC74_Display(*Headpt++, SENSOR_DIS_12);
 
     Headpt = Temp_Array_Head; // Reset pointer when finished.
-}
-
-void Display_Sleep(void) {
-   // WriteCommand_ILI9341(ILI9341_DISPOFF);
-  //  DelayMs(10);
-  //  WriteCommand_ILI9341(ILI9341_SLPIN);
-  //  DelayMs(10);
-   // WriteCommand_ILI9341(ILI9341_SLPOUT); //VCM control 
-   // WriteCommand_ILI9341(ILI9341_DISPON);
-
-    // Change SPI pins, either high or OD 
-    _ODC0 = 1;
-    _ODC1 = 1;
-    _ODA10 = 1;
-    _ODB12 = 1;
-    _LATA8 = 1;
-
-    SCREEN = OFF;
-    DelayMs(3000);
-}
-
-void Display_Wake(void) {
-    // WriteCommand_ILI9341(ILI9341_DISPOFF);
-    //DelayMs(10);
-    //WriteCommand_ILI9341(ILI9341_SLPIN);
-    // DelayMs(10);
-    //WriteCommand_ILI9341(ILI9341_SLPOUT); //VCM control 
-    // WriteCommand_ILI9341(ILI9341_DISPON);
-
-    // Change SPI pins, either high or OD 
-   // _ODC0 = 0;
-   // _ODC1 = 0;
-   // _ODA10 = 0;
-   // _ODB12 = 0;
-    //_LATA8 = 0;
-
-    SCREEN = ON;
 }
 
 void Ext_Fan(int status) {
@@ -416,127 +341,24 @@ void Read_Laser_Head_Temp(int *Headpt) {
     Headpt = Temp_Array_Head; // Reset pointer when finished.
 }
 
-void Temp_Sensor_Sleep(void) {
+void System_Sleep(void) {
+    FillScreen_ILI9341(ILI9341_BLACK);
+    LineWrite_XY_ILI9341_16x25("SYSTEM SHUTTING DOWN", 0, Line3, ILI9341_PHOSPHORGREEN, ILI9341_BLACK);
+    DelayMs(300);
+    LineWrite_XY_ILI9341_16x25(".", 150, Line4, ILI9341_PHOSPHORGREEN, ILI9341_BLACK);
+    DelayMs(300);
+    LineWrite_XY_ILI9341_16x25("..", 150, Line4, ILI9341_PHOSPHORGREEN, ILI9341_BLACK);
+    DelayMs(300);
+    LineWrite_XY_ILI9341_16x25("...", 150, Line4, ILI9341_PHOSPHORGREEN, ILI9341_BLACK);
+    DelayMs(2000);
+    Temp_Sensor_Sleep();
+    Display_TFT_ILI9341_Sleep();
+    Sleep();
+    Nop();
+}
 
-    //I2C1CONbits.I2CEN = OFF; // Turn off I2c module #1.
-    // I2C2CONbits.I2CEN = OFF; // Turn off I2c module #2.
-    // _TRISB8 = 0;
-    //_TRISB9 = 0;
-    // _ODB8 = 1; // 0 = normal, 1 = open drain 
-    // _ODB9 = 1; // 0 = normal, 1 = open drain 
-    // _LATB9 = 0; // Force pin high
-    // _LATB8 = 0;
-    // _LATB2 = 0;
-    //  _LATB3 = 0;
-    // TCA9548A_I2CSwitch_Reset = 0;
-
-
-    // Close remote sensor (no switch needed)
-
-    Write_Config_TC74_Local(STANDBY);
-    /*
-  
-      // Writing to I2C switch 0, Laser Heads 1 - 4
-      TCA9548A_I2CSwitch_Open(LH_1, TCA9548A_I2CSwitch_0);
-      Write_Config_TC74_Remote(STANDBY);
-
-      TCA9548A_I2CSwitch_Open(LH_2, TCA9548A_I2CSwitch_0);
-      Write_Config_TC74_Remote(STANDBY);
-
-      TCA9548A_I2CSwitch_Open(LH_3, TCA9548A_I2CSwitch_0);
-      Write_Config_TC74_Remote(STANDBY);
-
-      TCA9548A_I2CSwitch_Open(LH_4, TCA9548A_I2CSwitch_0);
-      Write_Config_TC74_Remote(STANDBY);
-
-      // Close current switch before opening another switch.
-      TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_0);
-
-
-      // Writing to I2C switch 1, Laser Heads 5 - 8
-      TCA9548A_I2CSwitch_Open(LH_5, TCA9548A_I2CSwitch_1);
-      Write_Config_TC74_Remote(STANDBY);
-
-      TCA9548A_I2CSwitch_Open(LH_6, TCA9548A_I2CSwitch_1);
-      Write_Config_TC74_Remote(STANDBY);
-
-      TCA9548A_I2CSwitch_Open(LH_7, TCA9548A_I2CSwitch_1);
-      Write_Config_TC74_Remote(STANDBY);
-
-      TCA9548A_I2CSwitch_Open(LH_8, TCA9548A_I2CSwitch_1);
-      Write_Config_TC74_Remote(STANDBY);
-
-      // Close current switch before opening another switch.
-      TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_1);
-
-
-      // Writing to I2C switch 2, Laser Heads 9 - 12
-      TCA9548A_I2CSwitch_Open(LH_9, TCA9548A_I2CSwitch_2);
-      Write_Config_TC74_Remote(STANDBY);
-
-      TCA9548A_I2CSwitch_Open(LH_10, TCA9548A_I2CSwitch_2);
-      Write_Config_TC74_Remote(STANDBY);
-
-      TCA9548A_I2CSwitch_Open(LH_11, TCA9548A_I2CSwitch_2);
-      Write_Config_TC74_Remote(STANDBY);
-
-      TCA9548A_I2CSwitch_Open(LH_12, TCA9548A_I2CSwitch_2);
-      Write_Config_TC74_Remote(STANDBY);
-
-      // Close current switch before opening another switch.
-      TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_2);
-     */
-
-    // Writing to I2C switch 3, Laser Heads 1 - 4
-    TCA9548A_I2CSwitch_Open(LD_1, TCA9548A_I2CSwitch_3);
-    Write_Config_TC74_Remote(STANDBY);
-
-    TCA9548A_I2CSwitch_Open(LD_2, TCA9548A_I2CSwitch_3);
-    Write_Config_TC74_Remote(STANDBY);
-
-    TCA9548A_I2CSwitch_Open(LD_3, TCA9548A_I2CSwitch_3);
-    Write_Config_TC74_Remote(STANDBY);
-
-    TCA9548A_I2CSwitch_Open(LD_4, TCA9548A_I2CSwitch_3);
-    Write_Config_TC74_Remote(STANDBY);
-
-    // Close current switch before opening another switch.
-    TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_3);
-
-
-    // Writing to I2C switch 4, Laser Heads 5 - 8
-    TCA9548A_I2CSwitch_Open(LD_5, TCA9548A_I2CSwitch_4);
-    Write_Config_TC74_Remote(STANDBY);
-
-    TCA9548A_I2CSwitch_Open(LD_6, TCA9548A_I2CSwitch_4);
-    Write_Config_TC74_Remote(STANDBY);
-
-    TCA9548A_I2CSwitch_Open(LD_7, TCA9548A_I2CSwitch_4);
-    Write_Config_TC74_Remote(STANDBY);
-
-    TCA9548A_I2CSwitch_Open(LD_8, TCA9548A_I2CSwitch_4);
-    Write_Config_TC74_Remote(STANDBY);
-
-    // Close current switch before opening another switch.
-    TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_4);
-
-
-    // Writing to I2C switch 5, Laser Heads 9 - 12
-    TCA9548A_I2CSwitch_Open(LD_9, TCA9548A_I2CSwitch_5);
-    Write_Config_TC74_Remote(STANDBY);
-
-    TCA9548A_I2CSwitch_Open(LD_10, TCA9548A_I2CSwitch_5);
-    Write_Config_TC74_Remote(STANDBY);
-
-    TCA9548A_I2CSwitch_Open(LD_11, TCA9548A_I2CSwitch_5);
-    Write_Config_TC74_Remote(STANDBY);
-
-    TCA9548A_I2CSwitch_Open(LD_12, TCA9548A_I2CSwitch_5);
-    Write_Config_TC74_Remote(STANDBY);
-
-    // Close current switch before opening another switch.
-    TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_5);
-
-    // TCA9548A_I2CSwitch_Reset = 0;
-
+void System_Wake(void) {
+    Display_TFT_ILI9341_Wake();
+    Temp_Sensor_Wake();
+    asm("RESET");
 }
