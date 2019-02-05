@@ -35,7 +35,7 @@
 #include <p24FJ64GA004.h>
 #include <xc.h>
 //#include <xc.inc>
-//#include "ADCInit.h"
+#include "ADCInit.h"
 #include "Fonts.h"
 #include "I2CInit.h"
 #include "INTInit.h"
@@ -53,6 +53,7 @@
 
 #define ON 1
 #define OFF 0
+#define V_Step 3.225806 
 
 // *****************************************************************************
 // *****************************************************************************
@@ -65,11 +66,15 @@
 
 void Display_Laser_Driver_Temp(int *Driverpt);
 void Display_Laser_Head_Temp(int *Headpt);
+void Display_Voltage(double adcvalue);
 void Ext_Fan(int status);
+void Laser_Activate(int *Driverpt, int *Headpt);
 void Read_Laser_Driver_Temp(int *Driverpt);
 void Read_Laser_Head_Temp(int *Headpt);
+int Read_Voltage(void);
+void Start_Screen(void);
 void System_Sleep(void); // System Sleep function.
-void System_Wake(void); // System wake function.
+void Version_Screen(void);
 
 
 
@@ -120,11 +125,18 @@ int *Driverpt = Temp_Array_Driver;
 // *****************************************************************************
 
 int main(int argc, char** argv) {
-
+    int ADCValue = 0;
     // **** Initialize PORTS ****
     PortInit();
     SCREEN = ON; // turn power to screen on.
     DelayMs(1000);
+
+    // **********************
+    // *** Initialize ADC ***
+    // **********************
+    ADCInit();
+
+
 
     // *** Initialize SPI ***
     SPIInit();
@@ -152,25 +164,26 @@ int main(int argc, char** argv) {
     Temp_Dis_Frame();
     Ext_Fan(OFF);
     LasRly = OFF;
-    //ONLED = ON;
+    ONLED = ON;
 
     while (1) {
         // Test status of SLeep flag. 0 = goto sleep, 1 = 
         if (SLEEP_FLG == 1) {
             System_Sleep();
         }
-
+        Laser_Activate(Driverpt, Headpt);
         //Read_Laser_Head_Temp(Headpt);
         Read_Laser_Driver_Temp(Driverpt);
-        LineWrite_XY_ILI9341_16x25("Driver  ", 1, Line7, ILI9341_WHITE, ILI9341_BLACK);
+        //LineWrite_XY_ILI9341_16x25("Driver  ", 1, Line7, ILI9341_WHITE, ILI9341_BLACK);
         //Display_Laser_Head_Temp(Headpt);
         // DelayMs(1500);
         //LineWrite_XY_ILI9341_16x25("Driver", 1, Line7, ILI9341_WHITE, ILI9341_BLACK);
         Display_Laser_Driver_Temp(Driverpt);
 
-        //while (1) {
-
-        // }
+        //  while (1) {
+        ADCValue = Read_Voltage();
+        Display_Voltage(ADCValue);
+        //   }
 
     }
     return (EXIT_SUCCESS);
@@ -212,9 +225,31 @@ void Display_Laser_Head_Temp(int *Headpt) {
     Headpt = Temp_Array_Head; // Reset pointer when finished.
 }
 
+void Display_Voltage(double adcvalue) {
+
+    char Volts1[10];
+    char Volts2[10];
+
+    // Print the decimal ADC value.
+    sprintf(Volts2, "%4.0f D", adcvalue);
+    LineWrite_XY_ILI9341_16x25(Volts2, 1, Line7, ILI9341_WHITE, ILI9341_BLACK);
+
+    adcvalue = ((adcvalue * V_Step) / 187.5); // Convert the ADC value to volts.
+
+    // Convert to string, 5 digits total, 2 decimal places, decimal counts as 1.)
+    sprintf(Volts1, "%5.2f V", adcvalue);
+    LineWrite_XY_ILI9341_16x25(Volts1, 180, Line7, ILI9341_WHITE, ILI9341_BLACK);
+}
+
 void Ext_Fan(int status) {
     ExtFan = status;
     DelayMs(300);
+}
+
+void Laser_Activate(int *Driverpt, int *Headpt) {
+    ExtFan = ON;
+    LasRly = ON;
+
 }
 
 void Read_Laser_Driver_Temp(int *Driverpt) {
@@ -341,24 +376,71 @@ void Read_Laser_Head_Temp(int *Headpt) {
     Headpt = Temp_Array_Head; // Reset pointer when finished.
 }
 
+int Read_Voltage(void) {
+    // ADC routine samples AN0 16 times and takes the average. (SMPI = F)
+    //In ADVInit _SSRC = 7 for auto conversion and _ASAM = 0. Sampling starts when
+    // _ASAMP = 1. After 16 sample/conversions the ADC interrupt is set. The flag
+    // is manually checked instead of a written routine.
+
+    int ADCValue = 0;
+    int count = 0;
+
+    int *ADC16Ptr;
+
+    _ADON = 1; // Start ADC
+
+    //while (1) {
+    ADCValue = 0;
+    ADC16Ptr = &ADC1BUF0;
+    IFS0bits.AD1IF = 0; // Clear interrupt flag
+
+    _ASAM = 1; // Auto sampling start for 31Tad then auto convert
+
+    while (!IFS0bits.AD1IF) {
+    } // Waiting for conversion interrupt flag
+
+    _ASAM = 0; // Stop  auto sample/convert
+
+    // Add all 16 buffer locations
+    for (count = 0; count <= 15; count++) {
+        ADCValue = ADCValue + *ADC16Ptr++;
+    }
+    // Take the average.
+    ADCValue = ADCValue >> 4;
+    return ADCValue;
+    // }
+
+}
+
+void Start_Screen(void) {
+
+}
+
 void System_Sleep(void) {
     FillScreen_ILI9341(ILI9341_BLACK);
     LineWrite_XY_ILI9341_16x25("SYSTEM SHUTTING DOWN", 0, Line3, ILI9341_PHOSPHORGREEN, ILI9341_BLACK);
+    ONLED = OFF;
     DelayMs(300);
     LineWrite_XY_ILI9341_16x25(".", 150, Line4, ILI9341_PHOSPHORGREEN, ILI9341_BLACK);
+    ONLED = ON;
+    LasRly = OFF;
     DelayMs(300);
     LineWrite_XY_ILI9341_16x25("..", 150, Line4, ILI9341_PHOSPHORGREEN, ILI9341_BLACK);
+    ONLED = OFF;
+    ExtFan = OFF;
     DelayMs(300);
     LineWrite_XY_ILI9341_16x25("...", 150, Line4, ILI9341_PHOSPHORGREEN, ILI9341_BLACK);
+    ONLED = ON;
     DelayMs(2000);
+    ONLED = OFF;
     Temp_Sensor_Sleep();
     Display_TFT_ILI9341_Sleep();
+
     Sleep();
     Nop();
 }
 
-void System_Wake(void) {
-    Display_TFT_ILI9341_Wake();
-    Temp_Sensor_Wake();
-    asm("RESET");
+void Version_Screen(void) {
+
 }
+

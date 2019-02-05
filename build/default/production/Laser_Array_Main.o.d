@@ -1,7 +1,8 @@
 build/default/production/Laser_Array_Main.o:  \
 Laser_Array_Main.c  \
-Fonts.h  \
- I2CInit.h  \
+ADCInit.h  \
+ Fonts.h  \
+I2CInit.h  \
 INTInit.h  \
 MyFunctions.h  \
 Interrupt_ISR.h  \

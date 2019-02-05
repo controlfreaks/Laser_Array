@@ -36,6 +36,7 @@ void __attribute__((interrupt)) _INT0Interrupt(void);
 //void __attribute__((interrupt)) _T4Interrupt(void);
 
 
+void System_Wake(void); // System wake function. 
 //*** Extern statements go here ***
 
 
@@ -56,6 +57,14 @@ void __attribute__((interrupt, auto_psv)) _INT0Interrupt(void) {
         SLEEP_FLG = 1;
     }
     IFS0bits.INT0IF = 0; // reset INT0 interrupt flag
+}
+
+void System_Wake(void) {
+    ONLED = ON;
+    Display_TFT_ILI9341_Wake();
+    Temp_Sensor_Wake();
+    asm("RESET");
+    //ONLED = ON;
 }
 
 #ifdef	__cplusplus

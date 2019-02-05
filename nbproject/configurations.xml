@@ -17,6 +17,7 @@
       <itemPath>../../../../../../Program Files (x86)/Microchip/xc16/v1.34/support/PIC24F/inc/p24FJ64GA004.inc</itemPath>
       <itemPath>Interrupt_ISR.h</itemPath>
       <itemPath>INTInit.h</itemPath>
+      <itemPath>ADCInit.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
