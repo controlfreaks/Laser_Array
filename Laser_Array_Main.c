@@ -131,11 +131,8 @@ int main(int argc, char** argv) {
     SCREEN = ON; // turn power to screen on.
     DelayMs(1000);
 
-    // **********************
     // *** Initialize ADC ***
-    // **********************
     ADCInit();
-
 
 
     // *** Initialize SPI ***
@@ -143,16 +140,16 @@ int main(int argc, char** argv) {
 
     // *** Initialization TFT_ILI9341 *** 
     Initialize_TFT_ILI9341();
-    FillScreen_ILI9341(ILI9341_MAGENTA);
+    FillScreen_ILI9341(ILI9341_BLACK);
 
     // *** Initialize I2C ***
     I2CInit();
 
-    // *** Initialize I2C Switch ***
-    // No initiation necessary.
-    // TCA9548A_I2CSwitch_Reset = 1; // Take TCA9548A out of reset.
-    //TCA9548A_I2CSwitch_A0 = 0;           
-    //TCA9548A_I2CSwitch_Open(SENSOR_1, TCA9548A_I2CSwitch_0);
+
+    Start_Screen();
+    while (1) {
+    }
+
 
     // *** Initialize Temperature Sensor ***
     Temp_Sensor_Wake();
@@ -413,7 +410,25 @@ int Read_Voltage(void) {
 }
 
 void Start_Screen(void) {
+    float a = 0;
 
+    //Crosshair_TFT_ILI9341(100, 100, 75, ILI9341_MAGENTA);
+
+
+    for (a = -90; a <= 90; a = a + 60) {
+        DrawAngleLine_TFT_ILI9341(100, 100, 150, a, ILI9341_PHOSPHORGREEN);
+    }
+    a = 0;
+    for (a = -90; a <= 90; a = a + 30) {
+        DrawAngleLine_TFT_ILI9341(100, 100, 120, a, ILI9341_PHOSPHORGREEN);
+    }
+
+    DrawHLine_TFT_ILI9341(100, 100, 200, ILI9341_PHOSPHORGREEN);
+
+    for (a = -90; a <= 90; a = a + 30) {
+        DrawAngleLine_TFT_ILI9341(100, 100, 25, a, ILI9341_BLACK);
+    }
+    //LineWrite_XY_ILI9341_16x25("DONE", 0, Line7, ILI9341_PHOSPHORGREEN, ILI9341_BLACK);
 }
 
 void System_Sleep(void) {

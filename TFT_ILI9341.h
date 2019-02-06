@@ -20,6 +20,8 @@
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include "MyFunctions.h"
 #include "Fonts.h"
+#include <Math.h>
+#include <stdlib.h>
 
 // *** Definitions here
 
@@ -135,9 +137,29 @@
 
 void CharWrite_XY_ILI9341_16x25(int digit, int x_start, int y_start,
         int fore_colour, int back_colour);
+// This function puts crosshairs at the x, y coordinate with given 
+// half segment length, and colour, and prints the X, Y coordinates as
+// returned from X_Screen, and Y_Screen, in the top left corner of the screen.
+void Crosshair_TFT_ILI9341(int x, int y, int len, long int colour);
+
+
+
 void Display_TFT_ILI9341_Sleep(void); // Puts the LCD display to sleep.
 void Display_TFT_ILI9341_Wake(void); // Wakes display up.
+// Draws angled line with the specified parameters: midpoint of line, length,
+// angle between -90 and +90 deg, and colour.
+void DrawAngleLine_TFT_ILI9341(int x1, int y1, int length, float angle, int colour);
+// Draws circle with the specified parameters: centre coordinintes, radius, 
+// number of rings starting from outside radius, colour. for solid circle,
+// Rings = radius.
+void DrawCircle_TFT_ILI9341(int x, int y, int rad, int rings, int colour);
 void DrawPixel_ILI9341(int x, int y, int colour);
+// This function draws a horizontal line of given colour starting at x, y 
+// for given length.
+void DrawHLine_TFT_ILI9341(int x, int y, int len, long int colour);
+// This function draws a vertical line of given colour starting at x, y 
+// for given length.
+void DrawVLine_TFT_ILI9341(int x, int y, int len, long int colour);
 void FillRec_ILI9341(long int x, long int y, long int w, long int h,
         long int colour);
 void FillScreen_ILI9341(int colour);
@@ -160,7 +182,7 @@ void Initialize_TFT_ILI9341(void) {
     //SPI_RES = 1; // Take TFT out of reset.
 
     WriteCommand_ILI9341(ILI9341_SWRESET);
-    DelayMs(50);    // Necessary delay for FTF to settle.
+    DelayMs(50); // Necessary delay for FTF to settle.
 
 
     WriteCommand_ILI9341(0xEF);
@@ -273,6 +295,75 @@ void Initialize_TFT_ILI9341(void) {
     DelayMs(120);
 }
 
+void Crosshair_TFT_ILI9341(int x, int y, int len, long int colour) {
+
+
+    DrawHLine_TFT_ILI9341(x, y, len, colour); // Right horizontal segment.
+    DrawVLine_TFT_ILI9341(x, y, len, colour); // Bottom vertical  segment.
+    DrawHLine_TFT_ILI9341((x - len), y, len, colour); // Left horizontal segment.
+    DrawVLine_TFT_ILI9341(x, (y - len), len, colour); // Top vertical segment.
+
+
+
+}
+
+void DrawVLine_TFT_ILI9341(int x, int y, int len, long int colour) {
+
+    int colour_hi;
+    int colour_low;
+
+    // Set the memory window;
+    SetAddrWindow_ILI9341(x, y, x, (y + len));
+
+    colour_hi = colour >> 8;
+    colour_low = colour;
+
+    IEC0bits.INT0IE = 0; // disable INT0 ISR
+    Nop();
+
+    SPI_DC = DATA; // Write Command, leave low
+    SPI_CS = 0; // Activate ~CS   
+
+
+
+    for (y = 0; y <= len; y++) {
+        SPI2BUF = colour_hi;
+        Nop(), Nop(), Nop(), Nop();
+        Nop(), Nop(), Nop(), Nop();
+        SPI2BUF = colour_low;
+    }
+    SPI_CS = 1; // deactivate ~CS. - end RAM read.
+    IEC0bits.INT0IE = 1; // enable INT0 ISR
+    Nop();
+}
+
+void DrawHLine_TFT_ILI9341(int x, int y, int len, long int colour) {
+
+    int colour_hi;
+    int colour_low;
+    // Set the memory window;
+    SetAddrWindow_ILI9341(x, y, (x + len), y);
+
+    colour_hi = colour >> 8;
+    colour_low = colour;
+
+    SPI_DC = DATA; // Write Command, leave low
+    SPI_CS = 0; // Activate ~CS   
+
+    IEC0bits.INT0IE = 0; // disable INT0 ISR
+
+
+    for (x = 0; x <= len; x++) {
+        SPI2BUF = colour_hi;
+        Nop(), Nop(), Nop(), Nop();
+        Nop(), Nop(), Nop(), Nop();
+        SPI2BUF = colour_low;
+    }
+    SPI_CS = 1; // deactivate ~CS. - end RAM read.
+    IEC0bits.INT0IE = 1; // enable INT0 ISR
+
+}
+
 void Display_TFT_ILI9341_Sleep(void) {
     // These commands seem to save 100-200uA
     WriteCommand_ILI9341(ILI9341_DISPOFF);
@@ -306,6 +397,117 @@ void Display_TFT_ILI9341_Wake(void) {
     DelayMs(500);
 }
 
+void DrawAngleLine_TFT_ILI9341(int x1, int y1, int length, float angle, int colour) {
+    /* Note: this TFT screen has its origin at the upper left hand corner, not
+     * the lower left therefore this function does some trickery to get this
+     * while sill using Quad I.
+     * The line equation uses y = mx+b, and the Law of Sins to determine 
+     * (x2, y2). 
+     * For some unknown reason(at time of writing this), angles between -45
+     * through +45 graph nicely but angles between -90 & -45, 45 & 90 graph
+     * (nearest the Y-axis) graph with many missing points. The work around to
+     * this was to graph wrt x instead of y at these angles, hence the 
+     * conditional statements concerning the angles. An additional angle check
+     * needed to be done because of the inverted Y-axis.
+     */
+
+    float xangle, yangle = 0; // x dimension of triangle.
+    float x, y, y2, ny2, x2, nx2, m, nm, b, nb, radangle;
+
+    // Calculate constants for the line.
+    length = length / 2; // Because starting in centre of line.
+    radangle = Deg2Rad(angle); // convert degrees to radians
+
+    if ((angle >= -45) && (angle <= 45)) {
+        // Calculate constants for this angle range
+        xangle = radangle - (3 * PI / 2);
+        m = (tan(radangle) * -1); // Make slope -ve to counter y axis backwards.
+       // nm = (m * -1); 
+        b = y1 - (x1 * m);
+       // nb = y1 - (x1 * nm);
+        x2 = x1 + (length * sin(xangle));
+        nx2 = x1 - (length * sin(xangle));
+
+        // -45 to +45 deg.    
+        // Quad I & IV
+        for (x = x1; x <= x2; x = x + 1) {
+            y2 = (m * x) + b;
+            DrawPixel_ILI9341(x, y2, colour);
+        }
+
+        // Quad I & IV
+        for (x = x1; x >= nx2; x = x - 1) {
+            y2 = (m * x) + b;
+            DrawPixel_ILI9341(x, y2, colour);
+        }
+    }
+
+    if (((angle >= -90) && (angle <= -46)) || ((angle >= 46) && (angle <= 90))) {
+        
+        yangle = radangle;
+        m = tan(radangle);
+        nm = (m * -1);
+        b = y1 - (x1 * m);
+        nb = y1 - (x1 * nm);
+        y2 = y1 + (length * sin(yangle));
+        ny2 = y1 - (length * sin(yangle));
+
+        // -90 to -45 deg
+        // Quads I & IV 
+        for (y = y1; y <= ny2; y = y + 1) {
+            x2 = (y - nb) / nm;
+            DrawPixel_ILI9341(x2, y, colour);
+        }
+        // Quads II & III;
+        for (y = y1; y >= y2; y = y - 1) {
+            x2 = (y - nb) / nm;
+            DrawPixel_ILI9341(x2, y, colour);
+        }
+
+        //46 to 90 deg
+        // Quads II & III
+        for (y = y1; y <= y2; y = y + 1) {
+            x2 = (y - nb) / nm;
+            DrawPixel_ILI9341(x2, y, colour);
+        }
+        // Quads I & IV;
+        for (y = y1; y >= ny2; y = y - 1) {
+            x2 = (y - nb) / nm;
+            DrawPixel_ILI9341(x2, y, colour);
+        }
+    }
+
+}
+
+void DrawCircle_TFT_ILI9341(int h, int k, int rad, int rings, int colour) {
+    float x, y = 0;
+    int count = rings;
+
+
+    while (count) {
+
+        for (x = h - (rad / sqrt(2)); x <= h + (rad / sqrt(2)); x = x + 0.5) {
+            y = -(sqrt((rad * rad) - ((x - h) * (x - h)))) + k;
+            DrawPixel_ILI9341(x, y, colour);
+            y = (sqrt((rad * rad) - ((x - h) * (x - h)))) + k;
+            DrawPixel_ILI9341(x, y, colour);
+            //DelayMs(50);
+        }
+
+
+        for (y = k - (rad / sqrt(2)); y <= k + (rad / sqrt(2)); y = y + 1) {
+            x = -(sqrt((rad * rad) - ((y - k) * (y - k)))) + h;
+            DrawPixel_ILI9341(x, y, colour);
+            x = (sqrt((rad * rad) - ((y - k) * (y - k)))) + h;
+            DrawPixel_ILI9341(x, y, colour);
+            //DelayMs(50);
+        }
+
+        count--;
+        rad--;
+
+    }
+}
 
 void DrawPixel_ILI9341(int x, int y, int colour) {
 
@@ -331,7 +533,6 @@ void DrawPixel_ILI9341(int x, int y, int colour) {
 
     IEC0bits.INT0IE = 1; // enable INT0 ISR
 }
-
 
 void FillRec_ILI9341(long int x, long int y, long int w, long int h, long int colour) {
 
@@ -366,11 +567,9 @@ void FillRec_ILI9341(long int x, long int y, long int w, long int h, long int co
     IEC0bits.INT0IE = 1; // enable INT0 ISR
 }
 
-
 void FillScreen_ILI9341(int colour) {
     FillRec_ILI9341(0, 0, ILI9341_TFTWIDTH, ILI9341_TFTHEIGHT, colour);
 }
-
 
 void SetAddrWindow_ILI9341(int X_Start, int Y_Start, int X_End, int Y_End) {
     WriteCommand_ILI9341(ILI9341_CASET); // Column addr set (Horizontal, 480 Max.)
@@ -387,7 +586,6 @@ void SetAddrWindow_ILI9341(int X_Start, int Y_Start, int X_End, int Y_End) {
 
     WriteCommand_ILI9341(ILI9341_RAMWR); // write to RAM
 }
-
 
 /*
 void CharWrite_XY_ILI9341(int digit, long int x_start, long int y_start,
@@ -510,8 +708,6 @@ void WriteCommand_ILI9341(unsigned char Command) {
 
     IEC0bits.INT0IE = 1; // enable INT0 ISR
 }
-
-
 
 void WriteData_ILI9341(unsigned char Data) {
 

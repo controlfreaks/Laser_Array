@@ -84,9 +84,9 @@ void IntInit(void) {
     // Note: The configuration bits for the A/D module can be found in the
     // header file for that module.
 
-    IFS0bits.AD1IF = 0; // reset A/D Conversion Done interrupt flag
-    IEC0bits.AD1IE = 0; // disable A/D Conversion Done interrupt
-    IPC3bits.AD1IP = 4; // set A/D Conversion Done priority to low
+    //IFS0bits.AD1IF = 0; // reset A/D Conversion Done interrupt flag
+    //IEC0bits.AD1IE = 0; // disable A/D Conversion Done interrupt
+    //IPC3bits.AD1IP = 4; // set A/D Conversion Done priority to low
 
 
     // *********************************************************

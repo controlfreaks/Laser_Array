@@ -31,6 +31,7 @@
 #define _NEG 1
 #define _OUTPUT 0
 #define _INPUT 1
+#define PI 3.141592654
 
 
 #include <xc.h> // include processor files - each processor file is guarded.
@@ -38,10 +39,18 @@
 // *** Declarations start here ***
 void DelayMs(long time);
 void DelayUs(long time);
+float Rad2Deg(float rad); // converts rads to degrees
+float Deg2Rad(float deg);
 
 
 
 // *** Function definitions start here, all declarations above this point
+float Deg2Rad(float deg) {
+    float rad = 0;
+    return deg *(PI/180);
+    
+}
+
 
 void DelayMs(long time) {
     long Temp = 0; // temp 32 bit variable]
@@ -75,8 +84,14 @@ void DelayUs(long time) {
     while (IFS0bits.T2IF == 0) {
     }
 }
+// converts rads to degrees
 
+float Rad2Deg(float rad) {
+    float deg = 0;
 
+    return rad*(180/PI);
+
+}
 
 
 
