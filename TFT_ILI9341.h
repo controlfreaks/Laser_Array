@@ -142,13 +142,19 @@ void CharWrite_XY_ILI9341_16x25(int digit, int x_start, int y_start,
 // returned from X_Screen, and Y_Screen, in the top left corner of the screen.
 void Crosshair_TFT_ILI9341(int x, int y, int len, long int colour);
 
-
-
 void Display_TFT_ILI9341_Sleep(void); // Puts the LCD display to sleep.
 void Display_TFT_ILI9341_Wake(void); // Wakes display up.
 // Draws angled line with the specified parameters: midpoint of line, length,
 // angle between -90 and +90 deg, and colour.
 void DrawAngleLine_TFT_ILI9341(int x1, int y1, int length, float angle, int colour);
+
+/* This function does the same as the above DrawAngleLine_TFT_ILI9341() with
+ * the additional parameter of width which is the number of pairs of adjacent
+ * lines flanking the original line. It uses DrawAngleLine_TFT_ILI9341()
+ * within its function. 
+ */
+void DrawAngleLineWide_TFT_ILI9341(int x1, int y1, int length, int width, float angle, int colour);
+
 // Draws circle with the specified parameters: centre coordinintes, radius, 
 // number of rings starting from outside radius, colour. for solid circle,
 // Rings = radius.
@@ -297,14 +303,10 @@ void Initialize_TFT_ILI9341(void) {
 
 void Crosshair_TFT_ILI9341(int x, int y, int len, long int colour) {
 
-
     DrawHLine_TFT_ILI9341(x, y, len, colour); // Right horizontal segment.
     DrawVLine_TFT_ILI9341(x, y, len, colour); // Bottom vertical  segment.
     DrawHLine_TFT_ILI9341((x - len), y, len, colour); // Left horizontal segment.
     DrawVLine_TFT_ILI9341(x, (y - len), len, colour); // Top vertical segment.
-
-
-
 }
 
 void DrawVLine_TFT_ILI9341(int x, int y, int len, long int colour) {
@@ -323,8 +325,6 @@ void DrawVLine_TFT_ILI9341(int x, int y, int len, long int colour) {
 
     SPI_DC = DATA; // Write Command, leave low
     SPI_CS = 0; // Activate ~CS   
-
-
 
     for (y = 0; y <= len; y++) {
         SPI2BUF = colour_hi;
@@ -352,7 +352,6 @@ void DrawHLine_TFT_ILI9341(int x, int y, int len, long int colour) {
 
     IEC0bits.INT0IE = 0; // disable INT0 ISR
 
-
     for (x = 0; x <= len; x++) {
         SPI2BUF = colour_hi;
         Nop(), Nop(), Nop(), Nop();
@@ -361,7 +360,6 @@ void DrawHLine_TFT_ILI9341(int x, int y, int len, long int colour) {
     }
     SPI_CS = 1; // deactivate ~CS. - end RAM read.
     IEC0bits.INT0IE = 1; // enable INT0 ISR
-
 }
 
 void Display_TFT_ILI9341_Sleep(void) {
@@ -385,7 +383,6 @@ void Display_TFT_ILI9341_Sleep(void) {
 }
 
 void Display_TFT_ILI9341_Wake(void) {
-
     SCREEN = ON;
     DelayMs(500); //  Necessary to let relay settle.
     _ODC0 = 0;
@@ -410,7 +407,6 @@ void DrawAngleLine_TFT_ILI9341(int x1, int y1, int length, float angle, int colo
      * conditional statements concerning the angles. An additional angle check
      * needed to be done because of the inverted Y-axis.
      */
-
     float xangle, yangle = 0; // x dimension of triangle.
     float x, y, y2, ny2, x2, nx2, m, nm, b, nb, radangle;
 
@@ -422,9 +418,7 @@ void DrawAngleLine_TFT_ILI9341(int x1, int y1, int length, float angle, int colo
         // Calculate constants for this angle range
         xangle = radangle - (3 * PI / 2);
         m = (tan(radangle) * -1); // Make slope -ve to counter y axis backwards.
-       // nm = (m * -1); 
-        b = y1 - (x1 * m);
-       // nb = y1 - (x1 * nm);
+        b = y1 - (x1 * m); //  This makes this -ve b.
         x2 = x1 + (length * sin(xangle));
         nx2 = x1 - (length * sin(xangle));
 
@@ -443,40 +437,62 @@ void DrawAngleLine_TFT_ILI9341(int x1, int y1, int length, float angle, int colo
     }
 
     if (((angle >= -90) && (angle <= -46)) || ((angle >= 46) && (angle <= 90))) {
-        
+
         yangle = radangle;
-        m = tan(radangle);
-        nm = (m * -1);
-        b = y1 - (x1 * m);
-        nb = y1 - (x1 * nm);
+        m = (tan(radangle) * -1); // Make slope -ve to counter y axis backwards.
+        b = y1 - (x1 * m); //  This makes this -ve b.
+        nb = y1 - (x1 * m);
         y2 = y1 + (length * sin(yangle));
         ny2 = y1 - (length * sin(yangle));
 
         // -90 to -45 deg
         // Quads I & IV 
         for (y = y1; y <= ny2; y = y + 1) {
-            x2 = (y - nb) / nm;
+            x2 = (y - b) / m;
             DrawPixel_ILI9341(x2, y, colour);
         }
+
         // Quads II & III;
         for (y = y1; y >= y2; y = y - 1) {
-            x2 = (y - nb) / nm;
+            x2 = (y - b) / m;
             DrawPixel_ILI9341(x2, y, colour);
         }
 
         //46 to 90 deg
         // Quads II & III
         for (y = y1; y <= y2; y = y + 1) {
-            x2 = (y - nb) / nm;
+            x2 = (y - b) / m;
             DrawPixel_ILI9341(x2, y, colour);
         }
+
         // Quads I & IV;
         for (y = y1; y >= ny2; y = y - 1) {
-            x2 = (y - nb) / nm;
+            x2 = (y - b) / m;
             DrawPixel_ILI9341(x2, y, colour);
         }
     }
+}
 
+void DrawAngleLineWide_TFT_ILI9341(int x1, int y1, int length, int width, float angle, int colour) {
+    int linecount = (width - 1);
+    int newlen = length; // The decreasing length.
+    int lenadj = 2; // Amount to shorten lengths each layer.
+
+    float x1a, y1a = 0;
+    DrawAngleLine_TFT_ILI9341(x1, y1, length, angle, colour); //Original line
+
+    // Adjusting the x1, y1 coordinates according to the angle.
+    x1a = (angle / 90);
+    y1a = (90 - angle) / 90;
+
+    while (linecount > 0) {
+        newlen = newlen - lenadj; // To give the thicker line a rounded effect. 
+        DrawAngleLine_TFT_ILI9341((x1 + x1a), (y1 + y1a), newlen, angle, colour);
+        DrawAngleLine_TFT_ILI9341((x1 - x1a), (y1 - y1a), newlen, angle, colour);
+        linecount--;
+        x1a = x1a + x1a;
+        y1a = y1a + y1a;
+    }
 }
 
 void DrawCircle_TFT_ILI9341(int h, int k, int rad, int rings, int colour) {

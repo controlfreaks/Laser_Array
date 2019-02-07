@@ -412,22 +412,15 @@ int Read_Voltage(void) {
 void Start_Screen(void) {
     float a = 0;
 
-    //Crosshair_TFT_ILI9341(100, 100, 75, ILI9341_MAGENTA);
+    Crosshair_TFT_ILI9341(100, 100, 100, ILI9341_MAGENTA);
 
-
-    for (a = -90; a <= 90; a = a + 60) {
-        DrawAngleLine_TFT_ILI9341(100, 100, 150, a, ILI9341_PHOSPHORGREEN);
+    for (a = -90; a <= 90; a = a + 10) {
+        DrawAngleLineWide_TFT_ILI9341(100, 100, 100, 3, a, ILI9341_PHOSPHORGREEN);
+        DelayMs(100);
+      //  DrawAngleLineWide_TFT_ILI9341(100, 100, 100, 4, a, ILI9341_BLACK);
     }
-    a = 0;
-    for (a = -90; a <= 90; a = a + 30) {
-        DrawAngleLine_TFT_ILI9341(100, 100, 120, a, ILI9341_PHOSPHORGREEN);
-    }
-
-    DrawHLine_TFT_ILI9341(100, 100, 200, ILI9341_PHOSPHORGREEN);
-
-    for (a = -90; a <= 90; a = a + 30) {
-        DrawAngleLine_TFT_ILI9341(100, 100, 25, a, ILI9341_BLACK);
-    }
+    //DrawAngleLineWide_TFT_ILI9341(100, 100, 100, 2, 60, ILI9341_PHOSPHORGREEN);
+    // DrawAngleLineWide_TFT_ILI9341(100, 100, 100, 2, 0, ILI9341_PHOSPHORGREEN);
     //LineWrite_XY_ILI9341_16x25("DONE", 0, Line7, ILI9341_PHOSPHORGREEN, ILI9341_BLACK);
 }
 
