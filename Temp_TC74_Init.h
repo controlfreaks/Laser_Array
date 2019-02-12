@@ -27,9 +27,9 @@
 #define RTR 0x00    // Read Temperature (TEMP)
 #define RWCR 0x01   // Read/Write Configuration Register (CONFIG) 
 
-#define Col_L 40
-#define Col_M 170
-#define Col_R 210
+#define Col_L 0
+#define Col_M 100
+#define Col_R 150
 
 #define SENSOR_DIS_LOCAL 0x00
 #define SENSOR_DIS_1 0x01
@@ -50,7 +50,7 @@ int Read_Temp_TC74_Remote(void); // Read remote Temperature sensor.
 int Read_Temp_TC74_Local(void); // Read local Temperature sensor.
 void Temp_Dis_Frame(void); // Displays the frame work for display.
 void Temp_Sensor_Sleep(void); // Puts all the temperature sensors to standby mode.
-void Temp_Sensor_Wake(void);// Wakes the temp sensors to be reading to read again.
+void Temp_Sensor_Wake(void); // Wakes the temp sensors to be reading to read again.
 void Write_Config_TC74_Remote(int command); // Accepts either 'NORMAL' or 'STANDBY'.
 void Write_Config_TC74_Local(int command); // Accepts either 'NORMAL' or 'STANDBY'.
 
@@ -86,68 +86,68 @@ void Temp_TC74_Display(int temp, int sensor_no) {
 
     switch (sensor_no) {
         case SENSOR_DIS_LOCAL:
-            sprintf(Temp_buf, "%d", temp); // Convert Temp value to string.
-            LineWrite_XY_ILI9341_16x25(Temp_buf, Col_M, Line0, ILI9341_WHITE, ILI9341_BLACK);
+            sprintf(Temp_buf, "Local %02d C", temp); // Convert Temp value to string.
+            LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line0, ILI9341_WHITE, ILI9341_BLACK);
             break;
 
         case SENSOR_DIS_1:
-            sprintf(Temp_buf, "%d", temp); // Convert Temp value to string.
+            sprintf(Temp_buf, " 1 %02d C", temp); // Convert Temp value to string.
             LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line1, ILI9341_WHITE, ILI9341_BLACK);
             break;
 
         case SENSOR_DIS_2:
-            sprintf(Temp_buf, "%d", temp); // Convert Temp value to string.
+            sprintf(Temp_buf, " 2 %02d C", temp); // Convert Temp value to string.
             LineWrite_XY_ILI9341_16x25(Temp_buf, Col_L, Line1, ILI9341_WHITE, ILI9341_BLACK);
             break;
 
         case SENSOR_DIS_3:
-            sprintf(Temp_buf, "%d", temp); // Convert Temp value to string.          
+            sprintf(Temp_buf, " 3 %02d C", temp); // Convert Temp value to string.          
             LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line2, ILI9341_WHITE, ILI9341_BLACK);
             break;
 
         case SENSOR_DIS_4:
-            sprintf(Temp_buf, "%d", temp); // Convert Temp value to string.           
+            sprintf(Temp_buf, " 4 %02d C", temp); // Convert Temp value to string.           
             LineWrite_XY_ILI9341_16x25(Temp_buf, Col_L, Line2, ILI9341_WHITE, ILI9341_BLACK);
             break;
 
         case SENSOR_DIS_5:
-            sprintf(Temp_buf, "%d", temp); // Convert Temp value to string.           
+            sprintf(Temp_buf, " 5 %02d C", temp); // Convert Temp value to string.           
             LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line3, ILI9341_WHITE, ILI9341_BLACK);
             break;
 
         case SENSOR_DIS_6:
-            sprintf(Temp_buf, "%d", temp); // Convert Temp value to string.            
+            sprintf(Temp_buf, " 6 %02d C", temp); // Convert Temp value to string.            
             LineWrite_XY_ILI9341_16x25(Temp_buf, Col_L, Line3, ILI9341_WHITE, ILI9341_BLACK);
             break;
 
         case SENSOR_DIS_7:
-            sprintf(Temp_buf, "%d", temp); // Convert Temp value to string.          
+            sprintf(Temp_buf, " 7 %02d C", temp); // Convert Temp value to string.          
             LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line4, ILI9341_WHITE, ILI9341_BLACK);
             break;
 
         case SENSOR_DIS_8:
-            sprintf(Temp_buf, "%d", temp); // Convert Temp value to string.          
+            sprintf(Temp_buf, " 8 %02d C", temp); // Convert Temp value to string.          
             LineWrite_XY_ILI9341_16x25(Temp_buf, Col_L, Line4, ILI9341_WHITE, ILI9341_BLACK);
             break;
 
         case SENSOR_DIS_9:
-            sprintf(Temp_buf, "%d", temp); // Convert Temp value to string.
+            sprintf(Temp_buf, " 9 %02d C", temp); // Convert Temp value to string.
             LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line5, ILI9341_WHITE, ILI9341_BLACK);
             break;
 
         case SENSOR_DIS_10:
-            sprintf(Temp_buf, "%d", temp); // Convert Temp value to string.
-            LineWrite_XY_ILI9341_16x25(Temp_buf, (Col_L + 16), Line5, ILI9341_WHITE, ILI9341_BLACK);
+            sprintf(Temp_buf, "10 %02d C", temp); // Convert Temp value to string.
+            LineWrite_XY_ILI9341_16x25(Temp_buf, (Col_L), Line5, ILI9341_WHITE, ILI9341_BLACK);
             break;
 
         case SENSOR_DIS_11:
-            sprintf(Temp_buf, "%d", temp); // Convert Temp value to string.
-            LineWrite_XY_ILI9341_16x25(Temp_buf, (Col_R + 16), Line6, ILI9341_WHITE, ILI9341_BLACK);
+            sprintf(Temp_buf, "11 %02d C", temp); // Convert Temp value to string.
+            LineWrite_XY_ILI9341_16x25(Temp_buf, (Col_R), Line6, ILI9341_WHITE, ILI9341_BLACK);
             break;
 
         case SENSOR_DIS_12:
-            sprintf(Temp_buf, "%d", temp); // Convert Temp value to string.
-            LineWrite_XY_ILI9341_16x25(Temp_buf, (Col_L + 16), Line6, ILI9341_WHITE, ILI9341_BLACK);
+            sprintf(Temp_buf, "12 %02d C", temp); // Convert Temp value to string.
+            LineWrite_XY_ILI9341_16x25(Temp_buf, (Col_L), Line6, ILI9341_WHITE, ILI9341_BLACK);
             break;
 
         default:
@@ -408,63 +408,64 @@ void Temp_Sensor_Sleep(void) {
 }
 
 void Temp_Sensor_Wake(void) {
-    
+
     // Close remote sensor (no switch needed)
     Write_Config_TC74_Local(NORMAL);
-    /*
-  
-      // Writing to I2C switch 0, Laser Heads 1 - 4
-      TCA9548A_I2CSwitch_Open(LH_1, TCA9548A_I2CSwitch_0);
-      Write_Config_TC74_Remote(NORMAL);
-
-      TCA9548A_I2CSwitch_Open(LH_2, TCA9548A_I2CSwitch_0);
-      Write_Config_TC74_Remote(NORMAL);
-
-      TCA9548A_I2CSwitch_Open(LH_3, TCA9548A_I2CSwitch_0);
-      Write_Config_TC74_Remote(NORMAL);
-
-      TCA9548A_I2CSwitch_Open(LH_4, TCA9548A_I2CSwitch_0);
-      Write_Config_TC74_Remote(NORMAL);
-
-      // Close current switch before opening another switch.
-      TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_0);
 
 
-      // Writing to I2C switch 1, Laser Heads 5 - 8
-      TCA9548A_I2CSwitch_Open(LH_5, TCA9548A_I2CSwitch_1);
-      Write_Config_TC74_Remote(NORMAL);
+    // Writing to I2C switch 0, Laser Heads 1 - 4
+    TCA9548A_I2CSwitch_Open(LH_1, TCA9548A_I2CSwitch_0);
+    Write_Config_TC74_Remote(NORMAL);
 
-      TCA9548A_I2CSwitch_Open(LH_6, TCA9548A_I2CSwitch_1);
-      Write_Config_TC74_Remote(NORMAL);
+    TCA9548A_I2CSwitch_Open(LH_2, TCA9548A_I2CSwitch_0);
+    Write_Config_TC74_Remote(NORMAL);
 
-      TCA9548A_I2CSwitch_Open(LH_7, TCA9548A_I2CSwitch_1);
-      Write_Config_TC74_Remote(NORMAL);
+    TCA9548A_I2CSwitch_Open(LH_3, TCA9548A_I2CSwitch_0);
+    Write_Config_TC74_Remote(NORMAL);
 
-      TCA9548A_I2CSwitch_Open(LH_8, TCA9548A_I2CSwitch_1);
-      Write_Config_TC74_Remote(NORMAL);
+    TCA9548A_I2CSwitch_Open(LH_4, TCA9548A_I2CSwitch_0);
+    Write_Config_TC74_Remote(NORMAL);
 
-      // Close current switch before opening another switch.
-      TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_1);
+    // Close current switch before opening another switch.
+    TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_0);
 
 
-      // Writing to I2C switch 2, Laser Heads 9 - 12
-      TCA9548A_I2CSwitch_Open(LH_9, TCA9548A_I2CSwitch_2);
-      Write_Config_TC74_Remote(NORMAL);
+    // Writing to I2C switch 1, Laser Heads 5 - 8
+    TCA9548A_I2CSwitch_Open(LH_5, TCA9548A_I2CSwitch_1);
+    Write_Config_TC74_Remote(NORMAL);
 
-      TCA9548A_I2CSwitch_Open(LH_10, TCA9548A_I2CSwitch_2);
-      Write_Config_TC74_Remote(NORMAL);
+    //This one not working right now.
+    //TCA9548A_I2CSwitch_Open(LH_6, TCA9548A_I2CSwitch_1);
+    //Write_Config_TC74_Remote(NORMAL);
 
-      TCA9548A_I2CSwitch_Open(LH_11, TCA9548A_I2CSwitch_2);
-      Write_Config_TC74_Remote(NORMAL);
+    TCA9548A_I2CSwitch_Open(LH_7, TCA9548A_I2CSwitch_1);
+    Write_Config_TC74_Remote(NORMAL);
 
-      TCA9548A_I2CSwitch_Open(LH_12, TCA9548A_I2CSwitch_2);
-      Write_Config_TC74_Remote(NORMAL);
+    TCA9548A_I2CSwitch_Open(LH_8, TCA9548A_I2CSwitch_1);
+    Write_Config_TC74_Remote(NORMAL);
 
-      // Close current switch before opening another switch.
-      TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_2);
-     */
+    // Close current switch before opening another switch.
+    TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_1);
 
-    // Writing to I2C switch 3, Laser Heads 1 - 4
+
+    // Writing to I2C switch 2, Laser Heads 9 - 12
+    TCA9548A_I2CSwitch_Open(LH_9, TCA9548A_I2CSwitch_2);
+    Write_Config_TC74_Remote(NORMAL);
+
+    TCA9548A_I2CSwitch_Open(LH_10, TCA9548A_I2CSwitch_2);
+    Write_Config_TC74_Remote(NORMAL);
+
+    TCA9548A_I2CSwitch_Open(LH_11, TCA9548A_I2CSwitch_2);
+    Write_Config_TC74_Remote(NORMAL);
+
+    TCA9548A_I2CSwitch_Open(LH_12, TCA9548A_I2CSwitch_2);
+    Write_Config_TC74_Remote(NORMAL);
+
+    // Close current switch before opening another switch.
+    TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_2);
+
+
+    // Writing to I2C switch 3, Laser Drivers 1 - 4
     TCA9548A_I2CSwitch_Open(LD_1, TCA9548A_I2CSwitch_3);
     Write_Config_TC74_Remote(NORMAL);
 
@@ -481,7 +482,7 @@ void Temp_Sensor_Wake(void) {
     TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_3);
 
 
-    // Writing to I2C switch 4, Laser Heads 5 - 8
+    // Writing to I2C switch 4, Laser Drivers 5 - 8
     TCA9548A_I2CSwitch_Open(LD_5, TCA9548A_I2CSwitch_4);
     Write_Config_TC74_Remote(NORMAL);
 
@@ -498,7 +499,7 @@ void Temp_Sensor_Wake(void) {
     TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_4);
 
 
-    // Writing to I2C switch 5, Laser Heads 9 - 12
+    // Writing to I2C switch 5, Laser Drivers 9 - 12
     TCA9548A_I2CSwitch_Open(LD_9, TCA9548A_I2CSwitch_5);
     Write_Config_TC74_Remote(NORMAL);
 
@@ -515,9 +516,8 @@ void Temp_Sensor_Wake(void) {
     TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_5);
 
     // TCA9548A_I2CSwitch_Reset = 0;
-    
-}
 
+}
 
 void Write_Config_TC74_Local(int command) {
     I2C1CONbits.SEN = 1; // Start bit.
