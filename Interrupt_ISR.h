@@ -52,8 +52,12 @@ void __attribute__((interrupt, auto_psv)) _INT0Interrupt(void) {
     //ONLED = ~ONLED;
     if (_SLEEP == 1) { // Coming out of sleep mode, device was in sleep mode.
         _SLEEP = 0;
-        System_Wake();  // Wake up from shutdown.
-    } else {
+        System_Wake(); // Wake up from shutdown.
+    } 
+    else if ((_SLEEP == 0) && (LASER_PROMPT_FLG)) {// OK to turn on laser
+        LASER_OK_FLG = 1;
+    } 
+    else if ((_SLEEP == 0) && (!LASER_PROMPT_FLG)){// Go to sleep.
         SLEEP_FLG = 1;
     }
     IFS0bits.INT0IF = 0; // reset INT0 interrupt flag

@@ -156,12 +156,20 @@ int main(int argc, char** argv) {
 
     // *** Initialize FLAGs ***
     SLEEP_FLG = 0;
+    LASER_OK_FLG = 0;
+    LASER_PROMPT_FLG = 0;
 
 
     //Temp_Dis_Frame();
     Ext_Fan(OFF);
     LasRly = OFF;
     ONLED = ON;
+
+    Read_Voltage(&ADCValue);
+    Display_Voltage(&ADCValue);
+    ChargeMsg(ADCValuept);
+
+    Laser_Activate(Driverpt, Headpt);
 
     while (1) {
         // Test status of SLeep flag. 0 = goto sleep, 1 = 
@@ -173,7 +181,7 @@ int main(int argc, char** argv) {
         Display_Voltage(&ADCValue);
         ChargeMsg(ADCValuept);
 
-        Laser_Activate(Driverpt, Headpt);
+        // Laser_Activate(Driverpt, Headpt);
 
         Read_Laser_Head_Temp(Headpt);
         Read_Laser_Driver_Temp(Driverpt);
@@ -285,9 +293,65 @@ void Ext_Fan(int status) {
 }
 
 void Laser_Activate(int *Driverpt, int *Headpt) {
+    /* This function turns on the fan and the laser relay after prompting the 
+     * user to signal it is ok by pressing the ON/OFF button. This tries to 
+     * ensure that the lasers are not turned on unexpectedly. */
+
+    LASER_PROMPT_FLG = 1; // Prompt user
+    LineWrite_XY_ILI9341_16x25("CAUTION", 90, Line0, ILI9341_RED, ILI9341_BLACK);
+    LineWrite_XY_ILI9341_16x25("ENSURE LASERS ARE", 20, Line1, ILI9341_WHITE, ILI9341_BLACK);
+    LineWrite_XY_ILI9341_16x25("IN SAFE POSITION", 20, Line2, ILI9341_WHITE, ILI9341_BLACK);
+    LineWrite_XY_ILI9341_16x25("ATTENTION", 75, Line3, ILI9341_RED, ILI9341_BLACK);
+
+    LineWrite_XY_ILI9341_16x25("CAUTION", 90, Line0, ILI9341_BLACK, ILI9341_RED);
+    DelayMs(50);
+    LineWrite_XY_ILI9341_16x25("ATTENTION", 75, Line3, ILI9341_BLACK, ILI9341_RED);
+
+    LineWrite_XY_ILI9341_16x25("CAUTION", 90, Line0, ILI9341_RED, ILI9341_BLACK);
+    DelayMs(10);
+    LineWrite_XY_ILI9341_16x25("ATTENTION", 75, Line3, ILI9341_RED, ILI9341_BLACK);
+
+    LineWrite_XY_ILI9341_16x25("CAUTION", 90, Line0, ILI9341_BLACK, ILI9341_RED);
+    DelayMs(10);
+    LineWrite_XY_ILI9341_16x25("ATTENTION", 75, Line3, ILI9341_BLACK, ILI9341_RED);
+
+    LineWrite_XY_ILI9341_16x25("CAUTION", 90, Line0, ILI9341_RED, ILI9341_BLACK);
+    DelayMs(10);
+    LineWrite_XY_ILI9341_16x25("ATTENTION", 75, Line3, ILI9341_RED, ILI9341_BLACK);
+
+    LineWrite_XY_ILI9341_16x25("CAUTION", 90, Line0, ILI9341_BLACK, ILI9341_RED);
+    DelayMs(10);
+    LineWrite_XY_ILI9341_16x25("ATTENTION", 75, Line3, ILI9341_BLACK, ILI9341_RED);
+
+    LineWrite_XY_ILI9341_16x25("CAUTION", 90, Line0, ILI9341_RED, ILI9341_BLACK);
+    DelayMs(10);
+    LineWrite_XY_ILI9341_16x25("ATTENTION", 75, Line3, ILI9341_RED, ILI9341_BLACK);
+
+    LineWrite_XY_ILI9341_16x25("CAUTION", 90, Line0, ILI9341_BLACK, ILI9341_RED);
+    DelayMs(10);
+    LineWrite_XY_ILI9341_16x25("ATTENTION", 75, Line3, ILI9341_BLACK, ILI9341_RED);
+
+    LineWrite_XY_ILI9341_16x25("CAUTION", 90, Line0, ILI9341_RED, ILI9341_BLACK);
+    DelayMs(10);
+    LineWrite_XY_ILI9341_16x25("ATTENTION", 75, Line3, ILI9341_RED, ILI9341_BLACK);
+    
+    LineWrite_XY_ILI9341_16x25("PRESS ON BUTTON TO", 0, Line5, ILI9341_WHITE, ILI9341_BLACK);
+    LineWrite_XY_ILI9341_16x25(" ACTIVATE LASERS.", 0, Line6, ILI9341_WHITE, ILI9341_BLACK);
+
+    while (!LASER_OK_FLG) {
+        ONLED = OFF;
+        DelayMs(100);
+        ONLED = ON;
+        DelayMs(100);
+    }
+    LASER_PROMPT_FLG = 0;
+    LASER_OK_FLG = 0;
+    ONLED = ON;
     ExtFan = ON;
     LasRly = ON;
     DelayMs(500); // Needed to let relays settle
+
+    FillScreen_ILI9341(ILI9341_BLACK);
 
 }
 

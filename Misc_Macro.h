@@ -44,8 +44,8 @@ struct tagFLAGS_A { // FLAG structure for setting up flags
 } FLAGBITS_A = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 #define SLEEP_FLG FLAGBITS_A.FLG0 //1 = goto Sleep, 0 = wake up.
-#define FLAG2_FLG FLAGBITS_A.FLG1
-#define FLAG3_FLG FLAGBITS_A.FLG2 
+#define LASER_PROMPT_FLG FLAGBITS_A.FLG1// 1 = Prompting user for laser activation.
+#define LASER_OK_FLG FLAGBITS_A.FLG2 // 1 = OK to turn on.
 #define FLAG4_FLG FLAGBITS_A.FLG3
 #define FLAG5_FLG FLAGBITS_A.FLG4
 #define FLAG6_FLG FLAGBITS_A.FLG5
