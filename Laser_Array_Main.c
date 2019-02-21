@@ -65,14 +65,19 @@
 // be the local temp sensor, next 12 are heads 1 - 12.
 
 void ChargeMsg(double *ADCValuept); // Displays appropriate charge message based on voltage.
-void Display_Laser_Driver_Temp(int *Driverpt);
-void Display_Laser_Head_Temp(int *Headpt);
-void Display_Voltage(double *ADCValuept);
+void Display_Laser_Driver_Temp(int *Driverpt); // Displays laser driver temperatures.
+void Display_Laser_Head_Temp(int *Headpt); // Displays laser head temperatures.
+void Display_Mode(void); // determines which mode to display, Temp or Symbol.
+void Display_Voltage(double *ADCValuept); // Displays voltage
+//void Draw_Laser_symbols(int *Temp_Colourpt);
 void Ext_Fan(int status);
 void Laser_Activate(int *Driverpt, int *Headpt);
-void Read_Laser_Driver_Temp(int *Driverpt);
-void Read_Laser_Head_Temp(int *Headpt);
-void Read_Voltage(double *ADCValuept);
+void Laser_Colour_Level(int *Driverpt, int *Headpt, int *Colourpt);
+void Read_Laser_Driver_Temp(int *Driverpt); // Reads all laser driver sensors.
+void Read_Laser_Head_Temp(int *Headpt); // Reads all laser head sensors.
+void Read_Voltage(double *ADCValuept); // Reads voltage from ADC, converts it.
+void Show_Temps(void); // Displays raw temperature data.
+void Show_Symbols(void); // Shows each laser as a colour temperature.
 void Start_Screen(void);
 void System_Sleep(void); // System Sleep function.
 void Version_Screen(void);
@@ -80,8 +85,12 @@ void Version_Screen(void);
 
 
 double ADCValue = 0;
-int Temp_Array_Head [13] = {0}; // Temperature storing laser head temps, ist value is local.
-int Temp_Array_Driver [13] = {0}; //Temperature storing laser driver temps, ist value is local.
+int Temp_Array_Head [13] = {0}; // Temperature storing laser head temps, 1st value is local.
+int Temp_Array_Driver [13] = {0}; //Temperature storing laser driver temps, 1st value is local.
+int Colour_Array[13] = {0}; // Array holding laser symbol colours.
+int Temp_Colour_Array [13] = {0}; //Temporary colour array.
+int *Colourpt = Colour_Array;
+int *Temp_Colourpt = Temp_Colour_Array;
 int *Headpt = Temp_Array_Head; // Pointer to 1st element of array.
 int *Driverpt = Temp_Array_Driver;
 double *ADCValuept = &ADCValue;
@@ -147,9 +156,7 @@ int main(int argc, char** argv) {
     // *** Initialize I2C ***
     I2CInit();
 
-
     //Start_Screen();
-
 
     // *** Initialize Temperature Sensor ***
     Temp_Sensor_Wake();
@@ -158,6 +165,7 @@ int main(int argc, char** argv) {
     SLEEP_FLG = 0;
     LASER_OK_FLG = 0;
     LASER_PROMPT_FLG = 0;
+    DISP_MODE_FLG = 0;
 
 
     //Temp_Dis_Frame();
@@ -169,7 +177,10 @@ int main(int argc, char** argv) {
     Display_Voltage(&ADCValue);
     ChargeMsg(ADCValuept);
 
-    Laser_Activate(Driverpt, Headpt);
+
+    Display_Mode(); // Determine which mode to enter into.
+
+    //Laser_Activate(Driverpt, Headpt);
 
     while (1) {
         // Test status of SLeep flag. 0 = goto sleep, 1 = 
@@ -177,30 +188,22 @@ int main(int argc, char** argv) {
             System_Sleep();
         }
 
-        Read_Voltage(&ADCValue);
-        Display_Voltage(&ADCValue);
-        ChargeMsg(ADCValuept);
+        Read_Voltage(&ADCValue); // Read voltage from ADC.
+        Display_Voltage(&ADCValue); // Display the voltage derived from ADC.
+        ChargeMsg(ADCValuept); // Display appropriate message based on voltage level.
 
-        // Laser_Activate(Driverpt, Headpt);
 
-        Read_Laser_Head_Temp(Headpt);
-        Read_Laser_Driver_Temp(Driverpt);
-        LineWrite_XY_ILI9341_16x25("Head  ", 1, Line0, ILI9341_WHITE, ILI9341_BLACK);
-        Display_Laser_Head_Temp(Headpt);
-        DelayMs(1000);
 
-        Read_Voltage(&ADCValue);
-        Display_Voltage(&ADCValue);
-        ChargeMsg(ADCValuept);
-        LineWrite_XY_ILI9341_16x25("Driver", 1, Line0, ILI9341_WHITE, ILI9341_BLACK);
-        Display_Laser_Driver_Temp(Driverpt);
-        DelayMs(1000);
-        //  while (1) {
-        //   }
+        if (DISP_MODE_FLG) { // Show data according to entered mode.
+            Show_Symbols();
+        } else {
+            Show_Temps();
+        }
 
     }
+
     return (EXIT_SUCCESS);
-} // End of main program loop.
+}// End of main program loop. 
 
 void ChargeMsg(double *ADCValuept) {
     if (*ADCValuept > 14.1) { // Charging condition.
@@ -270,6 +273,19 @@ void Display_Laser_Head_Temp(int *Headpt) {
     Headpt = Temp_Array_Head; // Reset pointer when finished.
 }
 
+void Display_Mode(void) {
+    if (_RB7 == 0) {
+        LineWrite_XY_ILI9341_16x25("Temperature Display Mode", 1, Line2, ILI9341_WHITE, ILI9341_BLACK);
+        DISP_MODE_FLG = 0; // Show Temperature.
+        DelayMs(2000);
+        LineWrite_XY_ILI9341_16x25("Temperature Display Mode", 1, Line2, ILI9341_BLACK, ILI9341_BLACK);
+
+    } else if (_RB7 == 1) {
+        DISP_MODE_FLG = 1; // Show symbols.
+    }
+    SLEEP_FLG = 0;
+}
+
 void Display_Voltage(double *ADCValuept) {
 
     char Volts1[10];
@@ -286,6 +302,10 @@ void Display_Voltage(double *ADCValuept) {
     sprintf(Volts1, "%5.2f V", ADCValue);
     LineWrite_XY_ILI9341_16x25(Volts1, 195, Line7, ILI9341_WHITE, ILI9341_BLACK);
 }
+
+//void Draw_Laser_symbols(int *Temp_Colourpt) {
+//
+//}
 
 void Ext_Fan(int status) {
     ExtFan = status;
@@ -334,9 +354,9 @@ void Laser_Activate(int *Driverpt, int *Headpt) {
     LineWrite_XY_ILI9341_16x25("CAUTION", 90, Line0, ILI9341_RED, ILI9341_BLACK);
     DelayMs(10);
     LineWrite_XY_ILI9341_16x25("ATTENTION", 75, Line3, ILI9341_RED, ILI9341_BLACK);
-    
-    LineWrite_XY_ILI9341_16x25("PRESS ON BUTTON TO", 0, Line5, ILI9341_WHITE, ILI9341_BLACK);
-    LineWrite_XY_ILI9341_16x25(" ACTIVATE LASERS.", 0, Line6, ILI9341_WHITE, ILI9341_BLACK);
+
+    LineWrite_XY_ILI9341_16x25("PRESS ON BUTTON TO", 15, Line5, ILI9341_WHITE, ILI9341_BLACK);
+    LineWrite_XY_ILI9341_16x25(" ACTIVATE LASERS.", 20, Line6, ILI9341_WHITE, ILI9341_BLACK);
 
     while (!LASER_OK_FLG) {
         ONLED = OFF;
@@ -352,6 +372,28 @@ void Laser_Activate(int *Driverpt, int *Headpt) {
     DelayMs(500); // Needed to let relays settle
 
     FillScreen_ILI9341(ILI9341_BLACK);
+
+}
+
+void Laser_Colour_Level(int *Driverpt, int *Headpt, int *Colourpt) {
+    int element = 0;
+    while (element <= 12) {
+        if (((*Driverpt >= 35) && (*Driverpt <= 38)) || ((*Headpt >= 35) && (*Headpt <= 38))) {
+            *Colourpt = ILI9341_RED; // Make colour RED.
+        } else if (((*Driverpt >= 31) && (*Driverpt <= 34)) || ((*Headpt >= 31) && (*Headpt <= 34))) {
+            *Colourpt = ILI9341_ORANGE; // Make colour ORANGE.
+        } else if (((*Driverpt >= 27) && (*Driverpt <= 30)) || ((*Headpt >= 27) && (*Headpt <= 30))) {
+            *Colourpt = ILI9341_YELLOW; // Make colour YELLOW.
+        } else if (((*Driverpt >= 21) && (*Driverpt <= 26)) || ((*Headpt >= 21) && (*Headpt <= 26))) {
+            *Colourpt = ILI9341_GREEN; // Make colour GREEN.
+        } else if (((*Driverpt >= 0) && (*Driverpt <= 20)) || ((*Headpt >= 0) && (*Headpt <= 20))) {
+            *Colourpt = ILI9341_WHITE; // Make colour WHITE.
+        }
+        element++;
+        Driverpt++;
+        Headpt++;
+        Colourpt++;
+    }
 
 }
 
@@ -416,9 +458,17 @@ void Read_Laser_Driver_Temp(int *Driverpt) {
 
     Driverpt = Temp_Array_Driver; // Reset pointer when finished.
 
+
+
+
 }
 
 void Read_Laser_Head_Temp(int *Headpt) {
+    // ***Note in Laser Array box serial number LA00191018-001, Head temperature
+    // senor #2 and #4 are switched because of wiring constraints therefore 
+    // their values need to be switched at the end of this function.
+
+    int temp = 0;
     //Advance the Laser_Head_Array pointer immediately after assigning it a 
     // value.
 
@@ -477,6 +527,11 @@ void Read_Laser_Head_Temp(int *Headpt) {
     TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_2);
 
     Headpt = Temp_Array_Head; // Reset pointer when finished.
+
+    // Switch values 2 and 4 as discussed at top of function.
+    temp = Temp_Array_Head[2]; //Store element 2 temporarily;
+    Temp_Array_Head[2] = Temp_Array_Head[4]; // Element 2 is 4;
+    Temp_Array_Head[4] = temp; // Element 4 is 3;
 }
 
 void Read_Voltage(double *ADCValuept) {
@@ -512,6 +567,166 @@ void Read_Voltage(double *ADCValuept) {
     *ADCValuept = *ADCValuept / 16;
     //return *ADCValue;
     // }
+
+}
+
+void Show_Symbols(void) {
+    int element = 0;
+
+    Read_Laser_Head_Temp(Headpt); // Read laser head temps into array.
+    Read_Laser_Driver_Temp(Driverpt); // Read laser driver temps into array.
+    Laser_Colour_Level(Headpt, Driverpt, Colourpt); // Colour levels into array.
+
+
+    DrawLaserL(LASER_X_L, Line0, Colour_Array[2]);
+    LineWrite_XY_ILI9341_16x25("Laser 2", (LASER_X_L + 20), (Line0 + Y_OFFSET), Colour_Array[2], ILI9341_BLACK);
+    DrawLaserR(LASER_X_R, Line0, Colour_Array[1]);
+    LineWrite_XY_ILI9341_16x25("Laser 1", (LASER_X_R - 120), (Line0 + Y_OFFSET), Colour_Array[1], ILI9341_BLACK);
+
+    DrawLaserL(LASER_X_L, Line1, Colour_Array[4]);
+    LineWrite_XY_ILI9341_16x25("Laser 4", (LASER_X_L + 20), (Line1 + Y_OFFSET), Colour_Array[4], ILI9341_BLACK);
+    DrawLaserR(LASER_X_R, Line1, Colour_Array[3]);
+    LineWrite_XY_ILI9341_16x25("Laser 3", (LASER_X_R - 120), (Line1 + Y_OFFSET), Colour_Array[3], ILI9341_BLACK);
+
+    DrawLaserL(LASER_X_L, Line2, Colour_Array[6]);
+    LineWrite_XY_ILI9341_16x25("Laser 6", (LASER_X_L + 20), (Line2 + Y_OFFSET), Colour_Array[6], ILI9341_BLACK);
+    DrawLaserR(LASER_X_R, Line2, Colour_Array[5]);
+    LineWrite_XY_ILI9341_16x25("Laser 5", (LASER_X_R - 120), (Line2 + Y_OFFSET), Colour_Array[5], ILI9341_BLACK);
+
+    DrawLaserL(LASER_X_L, Line3, Colour_Array[8]);
+    LineWrite_XY_ILI9341_16x25("Laser 8", (LASER_X_L + 20), (Line3 + Y_OFFSET), Colour_Array[8], ILI9341_BLACK);
+    DrawLaserR(LASER_X_R, Line3, Colour_Array[7]);
+    LineWrite_XY_ILI9341_16x25("Laser 7", (LASER_X_R - 120), (Line3 + Y_OFFSET), Colour_Array[7], ILI9341_BLACK);
+
+    DrawLaserL(LASER_X_L, Line4, Colour_Array[10]);
+    LineWrite_XY_ILI9341_16x25("Laser 10", (LASER_X_L + 20), (Line4 + Y_OFFSET), Colour_Array[10], ILI9341_BLACK);
+    DrawLaserR(LASER_X_R, Line4, Colour_Array[9]);
+    LineWrite_XY_ILI9341_16x25("Laser 9", (LASER_X_R - 120), (Line4 + Y_OFFSET), Colour_Array[9], ILI9341_BLACK);
+
+    DrawLaserL(LASER_X_L, Line5, Colour_Array[12]);
+    LineWrite_XY_ILI9341_16x25("Laser 12", (LASER_X_L + 20), (Line5 + Y_OFFSET), Colour_Array[12], ILI9341_BLACK);
+    DrawLaserR(LASER_X_R, Line5, Colour_Array[11]);
+    LineWrite_XY_ILI9341_16x25("Laser 11", (LASER_X_R - 130), (Line5 + Y_OFFSET), Colour_Array[11], ILI9341_BLACK);
+}
+
+void Show_Temps(void) {
+
+    char Temp_buf [12] = "";
+    int element = 0;
+
+    Read_Laser_Head_Temp(Headpt);
+    Read_Laser_Driver_Temp(Driverpt);
+    Laser_Colour_Level(Headpt, Driverpt, Colourpt); // Colour levels into array.
+
+    sprintf(Temp_buf, "Local %02d C", Temp_Array_Head[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line0, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "1 %02d C", Temp_Array_Head[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line1, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "2 %02d C", Temp_Array_Head[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_L, Line1, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "3 %02d C", Temp_Array_Head[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line2, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "4 %02d C", Temp_Array_Head[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_L, Line2, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "5 %02d C", Temp_Array_Head[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line3, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "6 %02d C", Temp_Array_Head[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_L, Line3, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "7 %02d C", Temp_Array_Head[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line4, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "8 %02d C", Temp_Array_Head[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_L, Line4, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "9 %02d C", Temp_Array_Head[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line5, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "10 %02d C", Temp_Array_Head[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_L, Line5, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "11 %02d C", Temp_Array_Head[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line6, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "12 %02d C", Temp_Array_Head[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_L, Line6, Colour_Array[element], ILI9341_BLACK);
+
+    LineWrite_XY_ILI9341_16x25("Head  ", 1, Line0, ILI9341_WHITE, ILI9341_BLACK);
+    DelayMs(1000);
+    element = 0;
+
+
+    sprintf(Temp_buf, "Local %02d C", Temp_Array_Driver[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line0, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "1 %02d C", Temp_Array_Driver[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line1, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "2 %02d C", Temp_Array_Driver[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_L, Line1, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "3 %02d C", Temp_Array_Driver[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line2, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "4 %02d C", Temp_Array_Driver[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_L, Line2, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "5 %02d C", Temp_Array_Driver[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line3, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "6 %02d C", Temp_Array_Driver[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_L, Line3, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "7 %02d C", Temp_Array_Driver[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line4, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "8 %02d C", Temp_Array_Driver[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_L, Line4, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "9 %02d C", Temp_Array_Driver[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line5, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "10 %02d C", Temp_Array_Driver[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_L, Line5, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "11 %02d C", Temp_Array_Driver[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_R, Line6, Colour_Array[element], ILI9341_BLACK);
+    element++;
+
+    sprintf(Temp_buf, "12 %02d C", Temp_Array_Driver[element]); // Convert Temp value to string.
+    LineWrite_XY_ILI9341_16x25(Temp_buf, Col_L, Line6, Colour_Array[element], ILI9341_BLACK);
+
+    LineWrite_XY_ILI9341_16x25("Driver", 1, Line0, ILI9341_WHITE, ILI9341_BLACK);
+    DelayMs(1000);
 
 }
 

@@ -29,6 +29,9 @@
 #define COMMAND 0
 #define WHITE 1
 #define DATA 1
+#define Y_OFFSET 10
+#define LASER_X_L 15
+#define LASER_X_R 300
 
 // #define statements for serial connection to the display.
 #define SPI_CS _LATA10            // Chip select for OLED - Serial Mode, initialized as 1.
@@ -159,6 +162,10 @@ void DrawAngleLineWide_TFT_ILI9341(int x1, int y1, int length, int width, float 
 // number of rings starting from outside radius, colour. for solid circle,
 // Rings = radius.
 void DrawCircle_TFT_ILI9341(int x, int y, int rad, int rings, int colour);
+
+void DrawLaserL(int x, int y, int Colour);
+void DrawLaserR(int x, int y, int Colour);
+
 void DrawPixel_ILI9341(int x, int y, int colour);
 // This function draws a horizontal line of given colour starting at x, y 
 // for given length.
@@ -166,6 +173,8 @@ void DrawHLine_TFT_ILI9341(int x, int y, int len, long int colour);
 // This function draws a vertical line of given colour starting at x, y 
 // for given length.
 void DrawVLine_TFT_ILI9341(int x, int y, int len, long int colour);
+
+
 void FillRec_ILI9341(long int x, long int y, long int w, long int h,
         long int colour);
 void FillScreen_ILI9341(int colour);
@@ -524,6 +533,33 @@ void DrawCircle_TFT_ILI9341(int h, int k, int rad, int rings, int colour) {
 
     }
 }
+
+void DrawLaserL(int x, int y, int Colour) {
+    float a = 0;
+    for (a = -90; a <= 90; a = a + 30) {
+        DrawAngleLine_TFT_ILI9341(x, (y + 22), 30, a, Colour);
+    }
+    for (a = -75; a <= 75; a = a + 30) {
+        DrawAngleLine_TFT_ILI9341(x, (y + 22), 25, a, Colour);
+    }
+    DrawAngleLineWide_TFT_ILI9341((LASER_X_L + 2), (y + 22), 35, 2, -45, Colour);
+    //DrawHLine_TFT_ILI9341((LASER_X_L + 15), (y + 34), 115, Colour);
+    DrawAngleLineWide_TFT_ILI9341((LASER_X_L + 72), (y + 34), 120, 2, 0, Colour);
+}
+
+void DrawLaserR(int x, int y, int Colour) {
+    float a = 0;
+    for (a = -90; a <= 90; a = a + 30) {
+        DrawAngleLine_TFT_ILI9341(x, (y + 22), 30, a, Colour);
+    }
+    for (a = -75; a <= 75; a = a + 30) {
+        DrawAngleLine_TFT_ILI9341(x, (y + 22), 25, a, Colour);
+    }
+    DrawAngleLineWide_TFT_ILI9341((LASER_X_R), (y + 22), 35, 2, 45, Colour);
+    //DrawHLine_TFT_ILI9341((LASER_X_L + 15), (y + 34), 115, Colour);
+    DrawAngleLineWide_TFT_ILI9341((LASER_X_R - 71), (y + 34), 120, 2, 0, Colour);
+}
+
 
 void DrawPixel_ILI9341(int x, int y, int colour) {
 
