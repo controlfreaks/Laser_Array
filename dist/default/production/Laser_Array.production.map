@@ -180,23 +180,22 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200              0x1c5a          0x2a87  (10887)
 .const                      0x1e5a              0x4c50          0x7278  (29304)
-.text                       0x6aaa              0x2940          0x3de0  (15840)
-.dinit                      0x93ea                0xa2            0xf3  (243)
+.text                       0x6aaa              0x2b62          0x4113  (16659)
+.dinit                      0x960c                0xa2            0xf3  (243)
 
-                 Total "program" memory used (bytes):         0xdbd2  (56274) 86%
+                 Total "program" memory used (bytes):         0xdf05  (57093) 87%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x2000]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-.nbss                        0x800                   0             0xa  (10)
-.ndata                       0x80a                   0             0xa  (10)
-.nbss                        0x814                   0             0x2  (2)
-.bss                         0x816                   0            0x68  (104)
-.data                        0x87e                   0            0x96  (150)
+.ndata                       0x800                   0             0xc  (12)
+.nbss                        0x80c                   0             0xc  (12)
+.bss                         0x818                   0            0x82  (130)
+.data                        0x89a                   0            0x96  (150)
 
-                 Total "data" memory used (bytes):          0x114  (276) 3%
+                 Total "data" memory used (bytes):          0x130  (304) 3%
 
 
 Dynamic Memory Usage
@@ -204,42 +203,46 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0x914                              0x1eec  (7916)
+stack                        0x930                              0x1ed0  (7888)
 
-                 Maximum dynamic memory (bytes):         0x1eec  (7916)
+                 Maximum dynamic memory (bytes):         0x1ed0  (7888)
 
 
 External Symbols in Data Memory (by address):
 
-                    0x0800                  _CHANGEBITS
-                    0x0802                  _FLAGBITS_A
-                    0x0804                  _FLAGBITS_B
-                    0x0806                  _ADCValue
-                    0x080a                  _Colourpt
-                    0x080c                  _Temp_Colourpt
-                    0x080e                  _Headpt
-                    0x0810                  _Driverpt
-                    0x0812                  _ADCValuept
-                    0x0816                  _Temp_Array_Head
-                    0x0830                  _Temp_Array_Driver
-                    0x084a                  _Colour_Array
-                    0x0864                  _Temp_Colour_Array
+                    0x0800                  _Colourpt
+                    0x0802                  _BackColourpt
+                    0x0804                  _Temp_Colourpt
+                    0x0806                  _Headpt
+                    0x0808                  _Driverpt
+                    0x080a                  _ADCValuept
+                    0x080c                  _CHANGEBITS
+                    0x080e                  _FLAGBITS_A
+                    0x0810                  _FLAGBITS_B
+                    0x0812                  _ADCValue
+                    0x0818                  _Temp_Array_Head
+                    0x0832                  _Temp_Array_Driver
+                    0x084c                  _Colour_Array
+                    0x0866                  _Back_Colour_Array
+                    0x0880                  _Temp_Colour_Array
 
 External Symbols in Data Memory (by name):
 
-                    0x0806                  _ADCValue
-                    0x0812                  _ADCValuept
-                    0x0800                  _CHANGEBITS
-                    0x084a                  _Colour_Array
-                    0x080a                  _Colourpt
-                    0x0810                  _Driverpt
-                    0x0802                  _FLAGBITS_A
-                    0x0804                  _FLAGBITS_B
-                    0x080e                  _Headpt
-                    0x0830                  _Temp_Array_Driver
-                    0x0816                  _Temp_Array_Head
-                    0x0864                  _Temp_Colour_Array
-                    0x080c                  _Temp_Colourpt
+                    0x0812                  _ADCValue
+                    0x080a                  _ADCValuept
+                    0x0802                  _BackColourpt
+                    0x0866                  _Back_Colour_Array
+                    0x080c                  _CHANGEBITS
+                    0x084c                  _Colour_Array
+                    0x0800                  _Colourpt
+                    0x0808                  _Driverpt
+                    0x080e                  _FLAGBITS_A
+                    0x0810                  _FLAGBITS_B
+                    0x0806                  _Headpt
+                    0x0832                  _Temp_Array_Driver
+                    0x0818                  _Temp_Array_Head
+                    0x0880                  _Temp_Colour_Array
+                    0x0804                  _Temp_Colourpt
 
 External Symbols in Program Memory (by address):
 
@@ -365,38 +368,38 @@ External Symbols in Program Memory (by address):
                   0x008388                  _System_Wake
                   0x008396                  _SPIInit
                   0x0083ce                  _main
-                  0x008430                  _ChargeMsg
-                  0x0085a4                  _Display_Laser_Driver_Temp
-                  0x008632                  _Display_Laser_Head_Temp
-                  0x0086c0                  _Display_Mode
-                  0x008700                  _Display_Voltage
-                  0x008740                  _Ext_Fan
-                  0x008764                  _Laser_Activate
-                  0x0088d6                  _Laser_Colour_Level
-                  0x0089d4                  _Read_Laser_Driver_Temp
-                  0x008aa2                  _Read_Laser_Head_Temp
-                  0x008bae                  _Read_Voltage
-                  0x008c14                  _Show_Symbols
-                  0x008d4e                  _Show_Temps
-                  0x009244                  _Start_Screen
-                  0x009352                  _System_Sleep
-                  0x0093e4                  _Version_Screen
+                  0x008438                  _ChargeMsg
+                  0x0085ac                  _Display_Laser_Driver_Temp
+                  0x00863a                  _Display_Laser_Head_Temp
+                  0x0086c8                  _Display_Mode
+                  0x008720                  _Display_Voltage
+                  0x008760                  _Ext_Fan
+                  0x008784                  _Laser_Activate
+                  0x0088f6                  _Laser_Colour_Level
+                  0x008a3c                  _Read_Laser_Driver_Temp
+                  0x008b0a                  _Read_Laser_Head_Temp
+                  0x008c16                  _Read_Voltage
+                  0x008c7c                  _Show_Symbols
+                  0x008e60                  _Show_Temps
+                  0x00945c                  _Start_Screen
+                  0x009574                  _System_Sleep
+                  0x009606                  _Version_Screen
 
 External Symbols in Program Memory (by name):
 
                   0x006aaa                  _ADCInit
                   0x007a68                  _CharWrite_XY_ILI9341_16x25
-                  0x008430                  _ChargeMsg
+                  0x008438                  _ChargeMsg
                   0x006e8e                  _Crosshair_TFT_ILI9341
                   0x006b3c                  _Deg2Rad
                   0x006b54                  _DelayMs
                   0x006ba6                  _DelayUs
-                  0x0085a4                  _Display_Laser_Driver_Temp
-                  0x008632                  _Display_Laser_Head_Temp
-                  0x0086c0                  _Display_Mode
+                  0x0085ac                  _Display_Laser_Driver_Temp
+                  0x00863a                  _Display_Laser_Head_Temp
+                  0x0086c8                  _Display_Mode
                   0x006fb2                  _Display_TFT_ILI9341_Sleep
                   0x006fe6                  _Display_TFT_ILI9341_Wake
-                  0x008700                  _Display_Voltage
+                  0x008720                  _Display_Voltage
                   0x0073e2                  _DrawAngleLineWide_TFT_ILI9341
                   0x007006                  _DrawAngleLine_TFT_ILI9341
                   0x0074be                  _DrawCircle_TFT_ILI9341
@@ -405,35 +408,35 @@ External Symbols in Program Memory (by name):
                   0x0077be                  _DrawLaserR
                   0x007864                  _DrawPixel_ILI9341
                   0x006ed6                  _DrawVLine_TFT_ILI9341
-                  0x008740                  _Ext_Fan
+                  0x008760                  _Ext_Fan
                   0x0078e0                  _FillRec_ILI9341
                   0x0079f8                  _FillScreen_ILI9341
                   0x006b22                  _I2CInit
                   0x006d14                  _Initialize_TFT_ILI9341
                   0x006be0                  _IntInit
-                  0x008764                  _Laser_Activate
-                  0x0088d6                  _Laser_Colour_Level
+                  0x008784                  _Laser_Activate
+                  0x0088f6                  _Laser_Colour_Level
                   0x007b58                  _LineWrite_XY_ILI9341_16x25
                   0x006c32                  _PortInit
                   0x006bc8                  _Rad2Deg
-                  0x0089d4                  _Read_Laser_Driver_Temp
-                  0x008aa2                  _Read_Laser_Head_Temp
+                  0x008a3c                  _Read_Laser_Driver_Temp
+                  0x008b0a                  _Read_Laser_Head_Temp
                   0x007ee0                  _Read_Temp_TC74_Local
                   0x007f8e                  _Read_Temp_TC74_Remote
-                  0x008bae                  _Read_Voltage
+                  0x008c16                  _Read_Voltage
                   0x008396                  _SPIInit
                   0x007a16                  _SetAddrWindow_ILI9341
-                  0x008c14                  _Show_Symbols
-                  0x008d4e                  _Show_Temps
-                  0x009244                  _Start_Screen
-                  0x009352                  _System_Sleep
+                  0x008c7c                  _Show_Symbols
+                  0x008e60                  _Show_Temps
+                  0x00945c                  _Start_Screen
+                  0x009574                  _System_Sleep
                   0x008388                  _System_Wake
                   0x007c16                  _TCA9548A_I2CSwitch_Open
                   0x007c86                  _Temp_Dis_Frame
                   0x00803c                  _Temp_Sensor_Sleep
                   0x008150                  _Temp_Sensor_Wake
                   0x007d28                  _Temp_TC74_Display
-                  0x0093e4                  _Version_Screen
+                  0x009606                  _Version_Screen
                   0x007bbe                  _WriteCommand_ILI9341
                   0x007bea                  _WriteData_ILI9341
                   0x008264                  _Write_Config_TC74_Local
@@ -767,26 +770,26 @@ __CONFIG1
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x4b75
+.debug_info       0x000000       0x4bc2
  *(.debug_info)
- .debug_info      0x000000       0x4b75 build/default/production/Laser_Array_Main.o
+ .debug_info      0x000000       0x4bc2 build/default/production/Laser_Array_Main.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x23f
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x23f build/default/production/Laser_Array_Main.o
 
-.debug_line       0x000000        0x81b
+.debug_line       0x000000        0x843
  *(.debug_line)
- .debug_line      0x000000        0x81b build/default/production/Laser_Array_Main.o
+ .debug_line      0x000000        0x843 build/default/production/Laser_Array_Main.o
 
 .debug_frame      0x000000        0x8e0
  *(.debug_frame)
  .debug_frame     0x000000        0x8e0 build/default/production/Laser_Array_Main.o
 
-.debug_str        0x000000        0x24c
+.debug_str        0x000000        0x26b
  *(.debug_str)
- .debug_str       0x000000        0x24c build/default/production/Laser_Array_Main.o
+ .debug_str       0x000000        0x26b build/default/production/Laser_Array_Main.o
 
 .debug_loc
  *(.debug_loc)
@@ -795,10 +798,10 @@ __CONFIG1
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x57a
+                  0x000000        0x5a1
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000        0x57a build/default/production/Laser_Array_Main.o
+                  0x000000        0x5a1 build/default/production/Laser_Array_Main.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -1548,37 +1551,37 @@ __c30_signature
  __c30_signature
                   0x000666          0x6 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(floatundidf.eo)
 
-.nbss               0x0800          0xa
- .nbss              0x0800          0xa build/default/production/Laser_Array_Main.o
-                    0x0800                  _CHANGEBITS
-                    0x0802                  _FLAGBITS_A
-                    0x0804                  _FLAGBITS_B
-                    0x0806                  _ADCValue
+.ndata              0x0800          0xc
+ .ndata             0x0800          0xc build/default/production/Laser_Array_Main.o
+                    0x0800                  _Colourpt
+                    0x0802                  _BackColourpt
+                    0x0804                  _Temp_Colourpt
+                    0x0806                  _Headpt
+                    0x0808                  _Driverpt
+                    0x080a                  _ADCValuept
 
-.ndata              0x080a          0xa
- .ndata             0x080a          0xa build/default/production/Laser_Array_Main.o
-                    0x080a                  _Colourpt
-                    0x080c                  _Temp_Colourpt
-                    0x080e                  _Headpt
-                    0x0810                  _Driverpt
-                    0x0812                  _ADCValuept
+.nbss               0x080c          0xc
+ .nbss              0x080c          0xa build/default/production/Laser_Array_Main.o
+                    0x080c                  _CHANGEBITS
+                    0x080e                  _FLAGBITS_A
+                    0x0810                  _FLAGBITS_B
+                    0x0812                  _ADCValue
+ .nbss              0x0816          0x2 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(errno.eo)
+                    0x0816                  _errno
 
-.nbss               0x0814          0x2
- .nbss              0x0814          0x2 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a(errno.eo)
-                    0x0814                  _errno
+.bss                0x0818         0x82
+ .bss               0x0818         0x82 build/default/production/Laser_Array_Main.o
+                    0x0818                  _Temp_Array_Head
+                    0x0832                  _Temp_Array_Driver
+                    0x084c                  _Colour_Array
+                    0x0866                  _Back_Colour_Array
+                    0x0880                  _Temp_Colour_Array
 
-.bss                0x0816         0x68
- .bss               0x0816         0x68 build/default/production/Laser_Array_Main.o
-                    0x0816                  _Temp_Array_Head
-                    0x0830                  _Temp_Array_Driver
-                    0x084a                  _Colour_Array
-                    0x0864                  _Temp_Colour_Array
-
-.data               0x087e         0x96
- .data              0x087e         0x58 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-c-elf.a(xldtob_cdfFnopuxX.XXeo)
- .data              0x08d6         0x22 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-c-elf.a(xlitob.XX_eo)
- .data              0x08f8         0x1a c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-c-elf.a(xprintf_cdfFnopuxX.XXeo)
- .data              0x0912          0x2 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-c-elf.a(xgenld_cdfFnopuxX.XXeo)
+.data               0x089a         0x96
+ .data              0x089a         0x58 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-c-elf.a(xldtob_cdfFnopuxX.XXeo)
+ .data              0x08f2         0x22 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-c-elf.a(xlitob.XX_eo)
+ .data              0x0914         0x1a c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-c-elf.a(xprintf_cdfFnopuxX.XXeo)
+ .data              0x092e          0x2 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-c-elf.a(xgenld_cdfFnopuxX.XXeo)
 
 .config_JTAGEN    0x00abfe          0x2
  .config_JTAGEN
@@ -1595,8 +1598,8 @@ __c30_signature
 .const              0x9e5a       0x4c50 load address 0x001e5a  
  .const             0x9e5a       0x4c50 build/default/production/Laser_Array_Main.o
 
-.text             0x006aaa       0x2940
- .text            0x006aaa       0x2940 build/default/production/Laser_Array_Main.o
+.text             0x006aaa       0x2b62
+ .text            0x006aaa       0x2b62 build/default/production/Laser_Array_Main.o
                   0x006aaa                  _ADCInit
                   0x006b22                  _I2CInit
                   0x006b3c                  _Deg2Rad
@@ -1636,22 +1639,22 @@ __c30_signature
                   0x008388                  _System_Wake
                   0x008396                  _SPIInit
                   0x0083ce                  _main
-                  0x008430                  _ChargeMsg
-                  0x0085a4                  _Display_Laser_Driver_Temp
-                  0x008632                  _Display_Laser_Head_Temp
-                  0x0086c0                  _Display_Mode
-                  0x008700                  _Display_Voltage
-                  0x008740                  _Ext_Fan
-                  0x008764                  _Laser_Activate
-                  0x0088d6                  _Laser_Colour_Level
-                  0x0089d4                  _Read_Laser_Driver_Temp
-                  0x008aa2                  _Read_Laser_Head_Temp
-                  0x008bae                  _Read_Voltage
-                  0x008c14                  _Show_Symbols
-                  0x008d4e                  _Show_Temps
-                  0x009244                  _Start_Screen
-                  0x009352                  _System_Sleep
-                  0x0093e4                  _Version_Screen
+                  0x008438                  _ChargeMsg
+                  0x0085ac                  _Display_Laser_Driver_Temp
+                  0x00863a                  _Display_Laser_Head_Temp
+                  0x0086c8                  _Display_Mode
+                  0x008720                  _Display_Voltage
+                  0x008760                  _Ext_Fan
+                  0x008784                  _Laser_Activate
+                  0x0088f6                  _Laser_Colour_Level
+                  0x008a3c                  _Read_Laser_Driver_Temp
+                  0x008b0a                  _Read_Laser_Head_Temp
+                  0x008c16                  _Read_Voltage
+                  0x008c7c                  _Show_Symbols
+                  0x008e60                  _Show_Temps
+                  0x00945c                  _Start_Screen
+                  0x009574                  _System_Sleep
+                  0x009606                  _Version_Screen
 
-.dinit            0x0093ea         0xa2
- .dinit           0x0093ea         0xa2 data_init
+.dinit            0x00960c         0xa2
+ .dinit           0x00960c         0xa2 data_init

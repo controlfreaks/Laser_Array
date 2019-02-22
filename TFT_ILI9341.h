@@ -130,7 +130,7 @@
 #define ILI9341_MAGENTA     0xF81F      /* 255,   0, 255 */
 #define ILI9341_YELLOW      0xFFE0      /* 255, 255,   0 */
 #define ILI9341_WHITE       0xFFFF      /* 255, 255, 255 */
-#define ILI9341_ORANGE      0xFD20      /* 255, 165,   0 */
+#define ILI9341_ORANGE      0xFB64      /* 255, 165,   0 */
 #define ILI9341_GREENYELLOW 0xAFE5      /* 173, 255,  47 */
 #define ILI9341_PINK        0xF81F
 #define ILI9341_PHOSPHORGREEN 0x07C7

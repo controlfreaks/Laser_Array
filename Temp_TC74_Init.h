@@ -28,8 +28,8 @@
 #define RWCR 0x01   // Read/Write Configuration Register (CONFIG) 
 
 #define Col_L 0
-#define Col_M 100
-#define Col_R 150
+#define Col_M 120
+#define Col_R 200
 
 #define SENSOR_DIS_LOCAL 0x00
 #define SENSOR_DIS_1 0x01
