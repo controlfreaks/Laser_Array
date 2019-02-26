@@ -141,6 +141,12 @@ double *ADCValuept = &ADCValue;
 int main(int argc, char** argv) {
     // **** Initialize PORTS ****
     PortInit();
+    
+        //Temp_Dis_Frame();
+    Ext_Fan(OFF);
+    LasRly = OFF;
+    ONLED = ON;
+    
     SCREEN = ON; // turn power to screen on.
     DelayMs(1000);
 
@@ -158,7 +164,7 @@ int main(int argc, char** argv) {
     // *** Initialize I2C ***
     I2CInit();
 
-     Start_Screen();
+    Start_Screen();
 
     // *** Initialize Temperature Sensor ***
     Temp_Sensor_Wake();
@@ -169,11 +175,6 @@ int main(int argc, char** argv) {
     LASER_PROMPT_FLG = 0;
     DISP_MODE_FLG = 0;
 
-
-    //Temp_Dis_Frame();
-    Ext_Fan(OFF);
-    LasRly = OFF;
-    ONLED = ON;
 
     Read_Voltage(&ADCValue);
     Display_Voltage(&ADCValue);
@@ -210,9 +211,9 @@ int main(int argc, char** argv) {
 void ChargeMsg(double *ADCValuept) {
     if (*ADCValuept > 14.1) { // Charging condition.
         LineWrite_XY_ILI9341_16x25("<Charging>", 1, Line7, ILI9341_CYAN, ILI9341_BLACK);
-    } else if ((*ADCValuept >= 11.80) && (*ADCValuept <= 14.09)) { // Normal Condition.
+    } else if ((*ADCValuept >= 11.61) && (*ADCValuept <= 14.09)) { // Normal Condition.
         LineWrite_XY_ILI9341_16x25("          ", 1, Line7, ILI9341_BLACK, ILI9341_BLACK);
-    } else if ((*ADCValuept >= 11.0) && (*ADCValuept <= 11.78)) { // Low Batt.
+    } else if ((*ADCValuept >= 11.0) && (*ADCValuept <= 11.6)) { // Low Batt.
         LineWrite_XY_ILI9341_16x25("<Low Batt>", 1, Line7, ILI9341_YELLOW, ILI9341_BLACK);
     } else if ((*ADCValuept >= 10.0) && (*ADCValuept <= 10.99)) { // Charge Batt.
 
@@ -283,6 +284,7 @@ void Display_Mode(void) {
         DelayMs(2000);
         LineWrite_XY_ILI9341_16x25("Temperature Display", 35, Line2, ILI9341_BLACK, ILI9341_BLACK);
         LineWrite_XY_ILI9341_16x25("Mode", 130, Line3, ILI9341_BLACK, ILI9341_BLACK);
+        Version_Screen();
 
     } else if (_RB7 == 1) {
         DISP_MODE_FLG = 1; // Show symbols.
@@ -367,6 +369,9 @@ void Laser_Activate(int *Driverpt, int *Headpt) {
         DelayMs(100);
         ONLED = ON;
         DelayMs(100);
+        Read_Voltage(&ADCValue);
+        Display_Voltage(&ADCValue);
+        ChargeMsg(ADCValuept);
     }
     LASER_PROMPT_FLG = 0;
     LASER_OK_FLG = 0;
@@ -383,22 +388,24 @@ void Laser_Colour_Level(int *Driverpt, int *Headpt, int *Colourpt, int *BackColo
     int element = 0;
 
     while (element <= 12) {
-        if ((*Driverpt >= 39) || (*Headpt >= 39)) {
+        if ((*Driverpt >= 43 ) || (*Headpt >= 43)) {
             *Colourpt = ILI9341_BLACK; // Make colour RED.
             *BackColourpt = ILI9341_RED;
-        } else if (((*Driverpt >= 35) && (*Driverpt <= 38)) || ((*Headpt >= 35) && (*Headpt <= 38))) {
-            *Colourpt = ILI9341_RED; // Make colour RED.
-            *BackColourpt = ILI9341_BLACK;
-        } else if (((*Driverpt >= 31) && (*Driverpt <= 34)) || ((*Headpt >= 31) && (*Headpt <= 34))) {
+        }
+       // else if (((*Driverpt >= 41) && (*Driverpt <= 47)) || ((*Headpt >= 38) && (*Headpt <= 40))) {
+        //    *Colourpt = ILI9341_RED; // Make colour RED.
+        //    *BackColourpt = ILI9341_BLACK;
+        //}
+        else if (((*Driverpt >= 41) && (*Driverpt <= 42)) || ((*Headpt >= 35) && (*Headpt <= 42))) {
             *Colourpt = ILI9341_ORANGE; // Make colour ORANGE.
             *BackColourpt = ILI9341_BLACK;
-        } else if (((*Driverpt >= 27) && (*Driverpt <= 30)) || ((*Headpt >= 27) && (*Headpt <= 30))) {
+        } else if (((*Driverpt >= 38) && (*Driverpt <= 40)) || ((*Headpt >= 31) && (*Headpt <= 34))) {
             *Colourpt = ILI9341_YELLOW; // Make colour YELLOW.
             *BackColourpt = ILI9341_BLACK;
-        } else if (((*Driverpt >= 21) && (*Driverpt <= 26)) || ((*Headpt >= 21) && (*Headpt <= 26))) {
+        } else if (((*Driverpt >= 23) && (*Driverpt <= 37)) || ((*Headpt >= 21) && (*Headpt <= 30))) {
             *Colourpt = ILI9341_GREEN; // Make colour GREEN.
             *BackColourpt = ILI9341_BLACK;
-        } else if (((*Driverpt >= 0) && (*Driverpt <= 20)) || ((*Headpt >= 0) && (*Headpt <= 20))) {
+        } else if (((*Driverpt >= 0) && (*Driverpt <= 22)) || ((*Headpt >= 0) && (*Headpt <= 20))) {
             *Colourpt = ILI9341_WHITE; // Make colour WHITE.
             *BackColourpt = ILI9341_BLACK;
         }
@@ -590,7 +597,7 @@ void Show_Symbols(void) {
 
     Read_Laser_Head_Temp(Headpt); // Read laser head temps into array.
     Read_Laser_Driver_Temp(Driverpt); // Read laser driver temps into array.
-    Laser_Colour_Level(Headpt, Driverpt, Colourpt, BackColourpt); // Colour levels into array.
+    Laser_Colour_Level(Driverpt, Headpt, Colourpt, BackColourpt); // Colour levels into array.
 
     if (Colour_Array[2] != Temp_Colour_Array[2]) {// Only print symbol it changed.       
         DrawLaserL(LASER_X_L, Line0, Colour_Array[2]);
@@ -670,7 +677,7 @@ void Show_Temps(void) {
 
     Read_Laser_Head_Temp(Headpt);
     Read_Laser_Driver_Temp(Driverpt);
-    Laser_Colour_Level(Headpt, Driverpt, Colourpt, BackColourpt); // Colour levels into array.
+    Laser_Colour_Level(Driverpt, Headpt, Colourpt, BackColourpt); // Colour levels into array.
 
 
     sprintf(Temp_buf, "Local %02d C", Temp_Array_Head[element]); // Convert Temp value to string.
@@ -843,7 +850,17 @@ void System_Sleep(void) {
 }
 
 void Version_Screen(void) {
+    LineWrite_XY_ILI9341_16x25("Control Freaks", 48, Line0, ILI9341_WHITE, ILI9341_BLACK);
+    LineWrite_XY_ILI9341_16x25("Version", 104, Line1, ILI9341_WHITE, ILI9341_BLACK);
+    LineWrite_XY_ILI9341_16x25("Serial", 110, Line2, ILI9341_WHITE, ILI9341_BLACK);
+    LineWrite_XY_ILI9341_16x25("LA00191018 001", 0, Line3, ILI9341_WHITE, ILI9341_BLACK);
+    LineWrite_XY_ILI9341_16x25("Software", 96, Line4, ILI9341_WHITE, ILI9341_BLACK);
+    LineWrite_XY_ILI9341_16x25("Laser Array", 0, Line5, ILI9341_WHITE, ILI9341_BLACK);
+    LineWrite_XY_ILI9341_16x25("TAG B001 12", 0, Line6, ILI9341_WHITE, ILI9341_BLACK);
 
+
+    DelayMs(5000);
+    FillScreen_ILI9341(ILI9341_BLACK);
 }
 
 
