@@ -388,7 +388,7 @@ void Laser_Colour_Level(int *Driverpt, int *Headpt, int *Colourpt, int *BackColo
     int element = 0;
 
     while (element <= 12) {
-        if ((*Driverpt >= 43 ) || (*Headpt >= 43)) {
+        if ((*Driverpt >= 43 ) || (*Headpt >= 40)) {
             *Colourpt = ILI9341_BLACK; // Make colour RED.
             *BackColourpt = ILI9341_RED;
         }
@@ -402,10 +402,10 @@ void Laser_Colour_Level(int *Driverpt, int *Headpt, int *Colourpt, int *BackColo
         } else if (((*Driverpt >= 38) && (*Driverpt <= 40)) || ((*Headpt >= 31) && (*Headpt <= 34))) {
             *Colourpt = ILI9341_YELLOW; // Make colour YELLOW.
             *BackColourpt = ILI9341_BLACK;
-        } else if (((*Driverpt >= 23) && (*Driverpt <= 37)) || ((*Headpt >= 21) && (*Headpt <= 30))) {
+        } else if (((*Driverpt >= 30) && (*Driverpt <= 37)) || ((*Headpt >= 26) && (*Headpt <= 30))) {
             *Colourpt = ILI9341_GREEN; // Make colour GREEN.
             *BackColourpt = ILI9341_BLACK;
-        } else if (((*Driverpt >= 0) && (*Driverpt <= 22)) || ((*Headpt >= 0) && (*Headpt <= 20))) {
+        } else if ((*Headpt >= 0) && (*Headpt <= 25)) {
             *Colourpt = ILI9341_WHITE; // Make colour WHITE.
             *BackColourpt = ILI9341_BLACK;
         }

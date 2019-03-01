@@ -180,10 +180,10 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200              0x1c5a          0x2a87  (10887)
 .const                      0x1e5a              0x4c9e          0x72ed  (29421)
-.text                       0x6af8              0x2ba4          0x4176  (16758)
-.dinit                      0x969c                0xa2            0xf3  (243)
+.text                       0x6af8              0x2b94          0x415e  (16734)
+.dinit                      0x968c                0xa2            0xf3  (243)
 
-                 Total "program" memory used (bytes):         0xdfdd  (57309) 87%
+                 Total "program" memory used (bytes):         0xdfc5  (57285) 87%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x2000]
@@ -376,14 +376,14 @@ External Symbols in Program Memory (by address):
                   0x0087b0                  _Ext_Fan
                   0x0087d4                  _Laser_Activate
                   0x008952                  _Laser_Colour_Level
-                  0x008a6e                  _Read_Laser_Driver_Temp
-                  0x008b3c                  _Read_Laser_Head_Temp
-                  0x008c48                  _Read_Voltage
-                  0x008cae                  _Show_Symbols
-                  0x008e92                  _Show_Temps
-                  0x00948e                  _Start_Screen
-                  0x0095a6                  _System_Sleep
-                  0x009638                  _Version_Screen
+                  0x008a5e                  _Read_Laser_Driver_Temp
+                  0x008b2c                  _Read_Laser_Head_Temp
+                  0x008c38                  _Read_Voltage
+                  0x008c9e                  _Show_Symbols
+                  0x008e82                  _Show_Temps
+                  0x00947e                  _Start_Screen
+                  0x009596                  _System_Sleep
+                  0x009628                  _Version_Screen
 
 External Symbols in Program Memory (by name):
 
@@ -419,24 +419,24 @@ External Symbols in Program Memory (by name):
                   0x007ba6                  _LineWrite_XY_ILI9341_16x25
                   0x006c80                  _PortInit
                   0x006c16                  _Rad2Deg
-                  0x008a6e                  _Read_Laser_Driver_Temp
-                  0x008b3c                  _Read_Laser_Head_Temp
+                  0x008a5e                  _Read_Laser_Driver_Temp
+                  0x008b2c                  _Read_Laser_Head_Temp
                   0x007f2e                  _Read_Temp_TC74_Local
                   0x007fdc                  _Read_Temp_TC74_Remote
-                  0x008c48                  _Read_Voltage
+                  0x008c38                  _Read_Voltage
                   0x0083e4                  _SPIInit
                   0x007a64                  _SetAddrWindow_ILI9341
-                  0x008cae                  _Show_Symbols
-                  0x008e92                  _Show_Temps
-                  0x00948e                  _Start_Screen
-                  0x0095a6                  _System_Sleep
+                  0x008c9e                  _Show_Symbols
+                  0x008e82                  _Show_Temps
+                  0x00947e                  _Start_Screen
+                  0x009596                  _System_Sleep
                   0x0083d6                  _System_Wake
                   0x007c64                  _TCA9548A_I2CSwitch_Open
                   0x007cd4                  _Temp_Dis_Frame
                   0x00808a                  _Temp_Sensor_Sleep
                   0x00819e                  _Temp_Sensor_Wake
                   0x007d76                  _Temp_TC74_Display
-                  0x009638                  _Version_Screen
+                  0x009628                  _Version_Screen
                   0x007c0c                  _WriteCommand_ILI9341
                   0x007c38                  _WriteData_ILI9341
                   0x0082b2                  _Write_Config_TC74_Local
@@ -779,9 +779,9 @@ __CONFIG1
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x23f build/default/production/Laser_Array_Main.o
 
-.debug_line       0x000000        0x850
+.debug_line       0x000000        0x84f
  *(.debug_line)
- .debug_line      0x000000        0x850 build/default/production/Laser_Array_Main.o
+ .debug_line      0x000000        0x84f build/default/production/Laser_Array_Main.o
 
 .debug_frame      0x000000        0x8e0
  *(.debug_frame)
@@ -1598,8 +1598,8 @@ __c30_signature
 .const              0x9e5a       0x4c9e load address 0x001e5a  
  .const             0x9e5a       0x4c9e build/default/production/Laser_Array_Main.o
 
-.text             0x006af8       0x2ba4
- .text            0x006af8       0x2ba4 build/default/production/Laser_Array_Main.o
+.text             0x006af8       0x2b94
+ .text            0x006af8       0x2b94 build/default/production/Laser_Array_Main.o
                   0x006af8                  _ADCInit
                   0x006b70                  _I2CInit
                   0x006b8a                  _Deg2Rad
@@ -1647,14 +1647,14 @@ __c30_signature
                   0x0087b0                  _Ext_Fan
                   0x0087d4                  _Laser_Activate
                   0x008952                  _Laser_Colour_Level
-                  0x008a6e                  _Read_Laser_Driver_Temp
-                  0x008b3c                  _Read_Laser_Head_Temp
-                  0x008c48                  _Read_Voltage
-                  0x008cae                  _Show_Symbols
-                  0x008e92                  _Show_Temps
-                  0x00948e                  _Start_Screen
-                  0x0095a6                  _System_Sleep
-                  0x009638                  _Version_Screen
+                  0x008a5e                  _Read_Laser_Driver_Temp
+                  0x008b2c                  _Read_Laser_Head_Temp
+                  0x008c38                  _Read_Voltage
+                  0x008c9e                  _Show_Symbols
+                  0x008e82                  _Show_Temps
+                  0x00947e                  _Start_Screen
+                  0x009596                  _System_Sleep
+                  0x009628                  _Version_Screen
 
-.dinit            0x00969c         0xa2
- .dinit           0x00969c         0xa2 data_init
+.dinit            0x00968c         0xa2
+ .dinit           0x00968c         0xa2 data_init
