@@ -180,10 +180,10 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200              0x1c5a          0x2a87  (10887)
 .const                      0x1e5a              0x4ca6          0x72f9  (29433)
-.text                       0x6b00              0x2be0          0x41d0  (16848)
-.dinit                      0x96e0                0xa2            0xf3  (243)
+.text                       0x6b00              0x2be2          0x41d3  (16851)
+.dinit                      0x96e2                0xa2            0xf3  (243)
 
-                 Total "program" memory used (bytes):         0xe043  (57411) 87%
+                 Total "program" memory used (bytes):         0xe046  (57414) 87%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x2000]
@@ -383,7 +383,7 @@ External Symbols in Program Memory (by address):
                   0x008ec8                  _Show_Temps
                   0x0094d2                  _Start_Screen
                   0x0095ea                  _System_Sleep
-                  0x00967c                  _Version_Screen
+                  0x00967e                  _Version_Screen
 
 External Symbols in Program Memory (by name):
 
@@ -436,7 +436,7 @@ External Symbols in Program Memory (by name):
                   0x008092                  _Temp_Sensor_Sleep
                   0x0081a6                  _Temp_Sensor_Wake
                   0x007d7e                  _Temp_TC74_Display
-                  0x00967c                  _Version_Screen
+                  0x00967e                  _Version_Screen
                   0x007c14                  _WriteCommand_ILI9341
                   0x007c40                  _WriteData_ILI9341
                   0x0082ba                  _Write_Config_TC74_Local
@@ -779,9 +779,9 @@ __CONFIG1
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x23f build/default/production/Laser_Array_Main.o
 
-.debug_line       0x000000        0x859
+.debug_line       0x000000        0x85a
  *(.debug_line)
- .debug_line      0x000000        0x859 build/default/production/Laser_Array_Main.o
+ .debug_line      0x000000        0x85a build/default/production/Laser_Array_Main.o
 
 .debug_frame      0x000000        0x8e0
  *(.debug_frame)
@@ -1598,8 +1598,8 @@ __c30_signature
 .const              0x9e5a       0x4ca6 load address 0x001e5a  
  .const             0x9e5a       0x4ca6 build/default/production/Laser_Array_Main.o
 
-.text             0x006b00       0x2be0
- .text            0x006b00       0x2be0 build/default/production/Laser_Array_Main.o
+.text             0x006b00       0x2be2
+ .text            0x006b00       0x2be2 build/default/production/Laser_Array_Main.o
                   0x006b00                  _ADCInit
                   0x006b78                  _I2CInit
                   0x006b92                  _Deg2Rad
@@ -1654,7 +1654,7 @@ __c30_signature
                   0x008ec8                  _Show_Temps
                   0x0094d2                  _Start_Screen
                   0x0095ea                  _System_Sleep
-                  0x00967c                  _Version_Screen
+                  0x00967e                  _Version_Screen
 
-.dinit            0x0096e0         0xa2
- .dinit           0x0096e0         0xa2 data_init
+.dinit            0x0096e2         0xa2
+ .dinit           0x0096e2         0xa2 data_init

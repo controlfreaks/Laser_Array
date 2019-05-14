@@ -869,6 +869,7 @@ void System_Sleep(void) {
     LineWrite_XY_ILI9341_16x25("....", 130, Line4, ILI9341_PHOSPHORGREEN, ILI9341_BLACK);
     ONLED = OFF;
     ExtFan = OFF;
+    HeatRly = OFF;
     DelayMs(300);
     LineWrite_XY_ILI9341_16x25("......", 130, Line4, ILI9341_PHOSPHORGREEN, ILI9341_BLACK);
     ONLED = ON;
