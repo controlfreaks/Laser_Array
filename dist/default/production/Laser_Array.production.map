@@ -179,11 +179,11 @@ xc16-ld 1.34 (A)
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200              0x1c5a          0x2a87  (10887)
-.const                      0x1e5a              0x4c9e          0x72ed  (29421)
-.text                       0x6af8              0x2b94          0x415e  (16734)
-.dinit                      0x968c                0xa2            0xf3  (243)
+.const                      0x1e5a              0x4ca6          0x72f9  (29433)
+.text                       0x6b00              0x2be0          0x41d0  (16848)
+.dinit                      0x96e0                0xa2            0xf3  (243)
 
-                 Total "program" memory used (bytes):         0xdfc5  (57285) 87%
+                 Total "program" memory used (bytes):         0xe043  (57411) 87%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x2000]
@@ -329,118 +329,118 @@ External Symbols in Program Memory (by address):
                   0x001d96                  __dunpack
                   0x001de4                  ___floatdidf
                   0x001e04                  ___floatundidf
-                  0x006af8                  _ADCInit
-                  0x006b70                  _I2CInit
-                  0x006b8a                  _Deg2Rad
-                  0x006ba2                  _DelayMs
-                  0x006bf4                  _DelayUs
-                  0x006c16                  _Rad2Deg
-                  0x006c2e                  _IntInit
-                  0x006c80                  _PortInit
-                  0x006d62                  _Initialize_TFT_ILI9341
-                  0x006edc                  _Crosshair_TFT_ILI9341
-                  0x006f24                  _DrawVLine_TFT_ILI9341
-                  0x006f94                  _DrawHLine_TFT_ILI9341
-                  0x007000                  _Display_TFT_ILI9341_Sleep
-                  0x007034                  _Display_TFT_ILI9341_Wake
-                  0x007054                  _DrawAngleLine_TFT_ILI9341
-                  0x007430                  _DrawAngleLineWide_TFT_ILI9341
-                  0x00750c                  _DrawCircle_TFT_ILI9341
-                  0x007766                  _DrawLaserL
-                  0x00780c                  _DrawLaserR
-                  0x0078b2                  _DrawPixel_ILI9341
-                  0x00792e                  _FillRec_ILI9341
-                  0x007a46                  _FillScreen_ILI9341
-                  0x007a64                  _SetAddrWindow_ILI9341
-                  0x007ab6                  _CharWrite_XY_ILI9341_16x25
-                  0x007ba6                  _LineWrite_XY_ILI9341_16x25
-                  0x007c0c                  _WriteCommand_ILI9341
-                  0x007c38                  _WriteData_ILI9341
-                  0x007c64                  _TCA9548A_I2CSwitch_Open
-                  0x007cd4                  _Temp_Dis_Frame
-                  0x007d76                  _Temp_TC74_Display
-                  0x007f2e                  _Read_Temp_TC74_Local
-                  0x007fdc                  _Read_Temp_TC74_Remote
-                  0x00808a                  _Temp_Sensor_Sleep
-                  0x00819e                  _Temp_Sensor_Wake
-                  0x0082b2                  _Write_Config_TC74_Local
-                  0x008344                  _Write_Config_TC74_Remote
-                  0x0083d6                  _System_Wake
-                  0x0083e4                  _SPIInit
-                  0x00841c                  _main
-                  0x008486                  _ChargeMsg
-                  0x0085fa                  _Display_Laser_Driver_Temp
-                  0x008688                  _Display_Laser_Head_Temp
-                  0x008716                  _Display_Mode
-                  0x008770                  _Display_Voltage
-                  0x0087b0                  _Ext_Fan
-                  0x0087d4                  _Laser_Activate
-                  0x008952                  _Laser_Colour_Level
-                  0x008a5e                  _Read_Laser_Driver_Temp
-                  0x008b2c                  _Read_Laser_Head_Temp
-                  0x008c38                  _Read_Voltage
-                  0x008c9e                  _Show_Symbols
-                  0x008e82                  _Show_Temps
-                  0x00947e                  _Start_Screen
-                  0x009596                  _System_Sleep
-                  0x009628                  _Version_Screen
+                  0x006b00                  _ADCInit
+                  0x006b78                  _I2CInit
+                  0x006b92                  _Deg2Rad
+                  0x006baa                  _DelayMs
+                  0x006bfc                  _DelayUs
+                  0x006c1e                  _Rad2Deg
+                  0x006c36                  _IntInit
+                  0x006c88                  _PortInit
+                  0x006d6a                  _Initialize_TFT_ILI9341
+                  0x006ee4                  _Crosshair_TFT_ILI9341
+                  0x006f2c                  _DrawVLine_TFT_ILI9341
+                  0x006f9c                  _DrawHLine_TFT_ILI9341
+                  0x007008                  _Display_TFT_ILI9341_Sleep
+                  0x00703c                  _Display_TFT_ILI9341_Wake
+                  0x00705c                  _DrawAngleLine_TFT_ILI9341
+                  0x007438                  _DrawAngleLineWide_TFT_ILI9341
+                  0x007514                  _DrawCircle_TFT_ILI9341
+                  0x00776e                  _DrawLaserL
+                  0x007814                  _DrawLaserR
+                  0x0078ba                  _DrawPixel_ILI9341
+                  0x007936                  _FillRec_ILI9341
+                  0x007a4e                  _FillScreen_ILI9341
+                  0x007a6c                  _SetAddrWindow_ILI9341
+                  0x007abe                  _CharWrite_XY_ILI9341_16x25
+                  0x007bae                  _LineWrite_XY_ILI9341_16x25
+                  0x007c14                  _WriteCommand_ILI9341
+                  0x007c40                  _WriteData_ILI9341
+                  0x007c6c                  _TCA9548A_I2CSwitch_Open
+                  0x007cdc                  _Temp_Dis_Frame
+                  0x007d7e                  _Temp_TC74_Display
+                  0x007f36                  _Read_Temp_TC74_Local
+                  0x007fe4                  _Read_Temp_TC74_Remote
+                  0x008092                  _Temp_Sensor_Sleep
+                  0x0081a6                  _Temp_Sensor_Wake
+                  0x0082ba                  _Write_Config_TC74_Local
+                  0x00834c                  _Write_Config_TC74_Remote
+                  0x0083de                  _System_Wake
+                  0x0083ec                  _SPIInit
+                  0x008424                  _main
+                  0x00848e                  _ChargeMsg
+                  0x008602                  _Display_Laser_Driver_Temp
+                  0x008690                  _Display_Laser_Head_Temp
+                  0x00871e                  _Display_Mode
+                  0x008778                  _Display_Voltage
+                  0x0087b8                  _Ext_Fan
+                  0x0087dc                  _Laser_Activate
+                  0x00895a                  _Laser_Colour_Level
+                  0x008aaa                  _Read_Laser_Driver_Temp
+                  0x008b78                  _Read_Laser_Head_Temp
+                  0x008c7e                  _Read_Voltage
+                  0x008ce4                  _Show_Symbols
+                  0x008ec8                  _Show_Temps
+                  0x0094d2                  _Start_Screen
+                  0x0095ea                  _System_Sleep
+                  0x00967c                  _Version_Screen
 
 External Symbols in Program Memory (by name):
 
-                  0x006af8                  _ADCInit
-                  0x007ab6                  _CharWrite_XY_ILI9341_16x25
-                  0x008486                  _ChargeMsg
-                  0x006edc                  _Crosshair_TFT_ILI9341
-                  0x006b8a                  _Deg2Rad
-                  0x006ba2                  _DelayMs
-                  0x006bf4                  _DelayUs
-                  0x0085fa                  _Display_Laser_Driver_Temp
-                  0x008688                  _Display_Laser_Head_Temp
-                  0x008716                  _Display_Mode
-                  0x007000                  _Display_TFT_ILI9341_Sleep
-                  0x007034                  _Display_TFT_ILI9341_Wake
-                  0x008770                  _Display_Voltage
-                  0x007430                  _DrawAngleLineWide_TFT_ILI9341
-                  0x007054                  _DrawAngleLine_TFT_ILI9341
-                  0x00750c                  _DrawCircle_TFT_ILI9341
-                  0x006f94                  _DrawHLine_TFT_ILI9341
-                  0x007766                  _DrawLaserL
-                  0x00780c                  _DrawLaserR
-                  0x0078b2                  _DrawPixel_ILI9341
-                  0x006f24                  _DrawVLine_TFT_ILI9341
-                  0x0087b0                  _Ext_Fan
-                  0x00792e                  _FillRec_ILI9341
-                  0x007a46                  _FillScreen_ILI9341
-                  0x006b70                  _I2CInit
-                  0x006d62                  _Initialize_TFT_ILI9341
-                  0x006c2e                  _IntInit
-                  0x0087d4                  _Laser_Activate
-                  0x008952                  _Laser_Colour_Level
-                  0x007ba6                  _LineWrite_XY_ILI9341_16x25
-                  0x006c80                  _PortInit
-                  0x006c16                  _Rad2Deg
-                  0x008a5e                  _Read_Laser_Driver_Temp
-                  0x008b2c                  _Read_Laser_Head_Temp
-                  0x007f2e                  _Read_Temp_TC74_Local
-                  0x007fdc                  _Read_Temp_TC74_Remote
-                  0x008c38                  _Read_Voltage
-                  0x0083e4                  _SPIInit
-                  0x007a64                  _SetAddrWindow_ILI9341
-                  0x008c9e                  _Show_Symbols
-                  0x008e82                  _Show_Temps
-                  0x00947e                  _Start_Screen
-                  0x009596                  _System_Sleep
-                  0x0083d6                  _System_Wake
-                  0x007c64                  _TCA9548A_I2CSwitch_Open
-                  0x007cd4                  _Temp_Dis_Frame
-                  0x00808a                  _Temp_Sensor_Sleep
-                  0x00819e                  _Temp_Sensor_Wake
-                  0x007d76                  _Temp_TC74_Display
-                  0x009628                  _Version_Screen
-                  0x007c0c                  _WriteCommand_ILI9341
-                  0x007c38                  _WriteData_ILI9341
-                  0x0082b2                  _Write_Config_TC74_Local
-                  0x008344                  _Write_Config_TC74_Remote
+                  0x006b00                  _ADCInit
+                  0x007abe                  _CharWrite_XY_ILI9341_16x25
+                  0x00848e                  _ChargeMsg
+                  0x006ee4                  _Crosshair_TFT_ILI9341
+                  0x006b92                  _Deg2Rad
+                  0x006baa                  _DelayMs
+                  0x006bfc                  _DelayUs
+                  0x008602                  _Display_Laser_Driver_Temp
+                  0x008690                  _Display_Laser_Head_Temp
+                  0x00871e                  _Display_Mode
+                  0x007008                  _Display_TFT_ILI9341_Sleep
+                  0x00703c                  _Display_TFT_ILI9341_Wake
+                  0x008778                  _Display_Voltage
+                  0x007438                  _DrawAngleLineWide_TFT_ILI9341
+                  0x00705c                  _DrawAngleLine_TFT_ILI9341
+                  0x007514                  _DrawCircle_TFT_ILI9341
+                  0x006f9c                  _DrawHLine_TFT_ILI9341
+                  0x00776e                  _DrawLaserL
+                  0x007814                  _DrawLaserR
+                  0x0078ba                  _DrawPixel_ILI9341
+                  0x006f2c                  _DrawVLine_TFT_ILI9341
+                  0x0087b8                  _Ext_Fan
+                  0x007936                  _FillRec_ILI9341
+                  0x007a4e                  _FillScreen_ILI9341
+                  0x006b78                  _I2CInit
+                  0x006d6a                  _Initialize_TFT_ILI9341
+                  0x006c36                  _IntInit
+                  0x0087dc                  _Laser_Activate
+                  0x00895a                  _Laser_Colour_Level
+                  0x007bae                  _LineWrite_XY_ILI9341_16x25
+                  0x006c88                  _PortInit
+                  0x006c1e                  _Rad2Deg
+                  0x008aaa                  _Read_Laser_Driver_Temp
+                  0x008b78                  _Read_Laser_Head_Temp
+                  0x007f36                  _Read_Temp_TC74_Local
+                  0x007fe4                  _Read_Temp_TC74_Remote
+                  0x008c7e                  _Read_Voltage
+                  0x0083ec                  _SPIInit
+                  0x007a6c                  _SetAddrWindow_ILI9341
+                  0x008ce4                  _Show_Symbols
+                  0x008ec8                  _Show_Temps
+                  0x0094d2                  _Start_Screen
+                  0x0095ea                  _System_Sleep
+                  0x0083de                  _System_Wake
+                  0x007c6c                  _TCA9548A_I2CSwitch_Open
+                  0x007cdc                  _Temp_Dis_Frame
+                  0x008092                  _Temp_Sensor_Sleep
+                  0x0081a6                  _Temp_Sensor_Wake
+                  0x007d7e                  _Temp_TC74_Display
+                  0x00967c                  _Version_Screen
+                  0x007c14                  _WriteCommand_ILI9341
+                  0x007c40                  _WriteData_ILI9341
+                  0x0082ba                  _Write_Config_TC74_Local
+                  0x00834c                  _Write_Config_TC74_Remote
                   0x000324                  __DefaultInterrupt
                   0x00163a                  __Dnorm
                   0x0002cc                  __INT0Interrupt
@@ -518,7 +518,7 @@ External Symbols in Program Memory (by name):
                   0x001348                  _div
                   0x0007a4                  _fmodf
                   0x00135e                  _ldiv
-                  0x00841c                  _main
+                  0x008424                  _main
                   0x000944                  _memcpy
                   0x0005c8                  _sinf
                   0x0005cc                  _sqrtf
@@ -770,18 +770,18 @@ __CONFIG1
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x4bc2
+.debug_info       0x000000       0x4bd9
  *(.debug_info)
- .debug_info      0x000000       0x4bc2 build/default/production/Laser_Array_Main.o
+ .debug_info      0x000000       0x4bd9 build/default/production/Laser_Array_Main.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x23f
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x23f build/default/production/Laser_Array_Main.o
 
-.debug_line       0x000000        0x84f
+.debug_line       0x000000        0x859
  *(.debug_line)
- .debug_line      0x000000        0x84f build/default/production/Laser_Array_Main.o
+ .debug_line      0x000000        0x859 build/default/production/Laser_Array_Main.o
 
 .debug_frame      0x000000        0x8e0
  *(.debug_frame)
@@ -1595,66 +1595,66 @@ __c30_signature
  .ivt._INT0Interrupt
                   0x000014          0x2 build/default/production/Laser_Array_Main.o
 
-.const              0x9e5a       0x4c9e load address 0x001e5a  
- .const             0x9e5a       0x4c9e build/default/production/Laser_Array_Main.o
+.const              0x9e5a       0x4ca6 load address 0x001e5a  
+ .const             0x9e5a       0x4ca6 build/default/production/Laser_Array_Main.o
 
-.text             0x006af8       0x2b94
- .text            0x006af8       0x2b94 build/default/production/Laser_Array_Main.o
-                  0x006af8                  _ADCInit
-                  0x006b70                  _I2CInit
-                  0x006b8a                  _Deg2Rad
-                  0x006ba2                  _DelayMs
-                  0x006bf4                  _DelayUs
-                  0x006c16                  _Rad2Deg
-                  0x006c2e                  _IntInit
-                  0x006c80                  _PortInit
-                  0x006d62                  _Initialize_TFT_ILI9341
-                  0x006edc                  _Crosshair_TFT_ILI9341
-                  0x006f24                  _DrawVLine_TFT_ILI9341
-                  0x006f94                  _DrawHLine_TFT_ILI9341
-                  0x007000                  _Display_TFT_ILI9341_Sleep
-                  0x007034                  _Display_TFT_ILI9341_Wake
-                  0x007054                  _DrawAngleLine_TFT_ILI9341
-                  0x007430                  _DrawAngleLineWide_TFT_ILI9341
-                  0x00750c                  _DrawCircle_TFT_ILI9341
-                  0x007766                  _DrawLaserL
-                  0x00780c                  _DrawLaserR
-                  0x0078b2                  _DrawPixel_ILI9341
-                  0x00792e                  _FillRec_ILI9341
-                  0x007a46                  _FillScreen_ILI9341
-                  0x007a64                  _SetAddrWindow_ILI9341
-                  0x007ab6                  _CharWrite_XY_ILI9341_16x25
-                  0x007ba6                  _LineWrite_XY_ILI9341_16x25
-                  0x007c0c                  _WriteCommand_ILI9341
-                  0x007c38                  _WriteData_ILI9341
-                  0x007c64                  _TCA9548A_I2CSwitch_Open
-                  0x007cd4                  _Temp_Dis_Frame
-                  0x007d76                  _Temp_TC74_Display
-                  0x007f2e                  _Read_Temp_TC74_Local
-                  0x007fdc                  _Read_Temp_TC74_Remote
-                  0x00808a                  _Temp_Sensor_Sleep
-                  0x00819e                  _Temp_Sensor_Wake
-                  0x0082b2                  _Write_Config_TC74_Local
-                  0x008344                  _Write_Config_TC74_Remote
-                  0x0083d6                  _System_Wake
-                  0x0083e4                  _SPIInit
-                  0x00841c                  _main
-                  0x008486                  _ChargeMsg
-                  0x0085fa                  _Display_Laser_Driver_Temp
-                  0x008688                  _Display_Laser_Head_Temp
-                  0x008716                  _Display_Mode
-                  0x008770                  _Display_Voltage
-                  0x0087b0                  _Ext_Fan
-                  0x0087d4                  _Laser_Activate
-                  0x008952                  _Laser_Colour_Level
-                  0x008a5e                  _Read_Laser_Driver_Temp
-                  0x008b2c                  _Read_Laser_Head_Temp
-                  0x008c38                  _Read_Voltage
-                  0x008c9e                  _Show_Symbols
-                  0x008e82                  _Show_Temps
-                  0x00947e                  _Start_Screen
-                  0x009596                  _System_Sleep
-                  0x009628                  _Version_Screen
+.text             0x006b00       0x2be0
+ .text            0x006b00       0x2be0 build/default/production/Laser_Array_Main.o
+                  0x006b00                  _ADCInit
+                  0x006b78                  _I2CInit
+                  0x006b92                  _Deg2Rad
+                  0x006baa                  _DelayMs
+                  0x006bfc                  _DelayUs
+                  0x006c1e                  _Rad2Deg
+                  0x006c36                  _IntInit
+                  0x006c88                  _PortInit
+                  0x006d6a                  _Initialize_TFT_ILI9341
+                  0x006ee4                  _Crosshair_TFT_ILI9341
+                  0x006f2c                  _DrawVLine_TFT_ILI9341
+                  0x006f9c                  _DrawHLine_TFT_ILI9341
+                  0x007008                  _Display_TFT_ILI9341_Sleep
+                  0x00703c                  _Display_TFT_ILI9341_Wake
+                  0x00705c                  _DrawAngleLine_TFT_ILI9341
+                  0x007438                  _DrawAngleLineWide_TFT_ILI9341
+                  0x007514                  _DrawCircle_TFT_ILI9341
+                  0x00776e                  _DrawLaserL
+                  0x007814                  _DrawLaserR
+                  0x0078ba                  _DrawPixel_ILI9341
+                  0x007936                  _FillRec_ILI9341
+                  0x007a4e                  _FillScreen_ILI9341
+                  0x007a6c                  _SetAddrWindow_ILI9341
+                  0x007abe                  _CharWrite_XY_ILI9341_16x25
+                  0x007bae                  _LineWrite_XY_ILI9341_16x25
+                  0x007c14                  _WriteCommand_ILI9341
+                  0x007c40                  _WriteData_ILI9341
+                  0x007c6c                  _TCA9548A_I2CSwitch_Open
+                  0x007cdc                  _Temp_Dis_Frame
+                  0x007d7e                  _Temp_TC74_Display
+                  0x007f36                  _Read_Temp_TC74_Local
+                  0x007fe4                  _Read_Temp_TC74_Remote
+                  0x008092                  _Temp_Sensor_Sleep
+                  0x0081a6                  _Temp_Sensor_Wake
+                  0x0082ba                  _Write_Config_TC74_Local
+                  0x00834c                  _Write_Config_TC74_Remote
+                  0x0083de                  _System_Wake
+                  0x0083ec                  _SPIInit
+                  0x008424                  _main
+                  0x00848e                  _ChargeMsg
+                  0x008602                  _Display_Laser_Driver_Temp
+                  0x008690                  _Display_Laser_Head_Temp
+                  0x00871e                  _Display_Mode
+                  0x008778                  _Display_Voltage
+                  0x0087b8                  _Ext_Fan
+                  0x0087dc                  _Laser_Activate
+                  0x00895a                  _Laser_Colour_Level
+                  0x008aaa                  _Read_Laser_Driver_Temp
+                  0x008b78                  _Read_Laser_Head_Temp
+                  0x008c7e                  _Read_Voltage
+                  0x008ce4                  _Show_Symbols
+                  0x008ec8                  _Show_Temps
+                  0x0094d2                  _Start_Screen
+                  0x0095ea                  _System_Sleep
+                  0x00967c                  _Version_Screen
 
-.dinit            0x00968c         0xa2
- .dinit           0x00968c         0xa2 data_init
+.dinit            0x0096e0         0xa2
+ .dinit           0x0096e0         0xa2 data_init

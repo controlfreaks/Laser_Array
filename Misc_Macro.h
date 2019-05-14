@@ -48,7 +48,7 @@ struct tagFLAGS_A { // FLAG structure for setting up flags
 #define LASER_OK_FLG FLAGBITS_A.FLG2 // 1 = OK to turn on.
 #define DISP_MODE_FLG FLAGBITS_A.FLG3 // 0 = Temperature, 1 = Symbols.
 #define OVERTEMP_FLG FLAGBITS_A.FLG4 // 0 = normal, 1 = hot hot hot.
-#define FLAG6_FLG FLAGBITS_A.FLG5
+#define HEATER_FLG FLAGBITS_A.FLG5
 #define FLAG7_FLG FLAGBITS_A.FLG6    
 #define FLAG8_FLG FLAGBITS_A.FLG7  
 #define FLAG9_FLG FLAGBITS_A.FLG8

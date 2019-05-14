@@ -39,6 +39,8 @@ void PortInit(void) {
 //#define Laser_LED3 _LATC2
 //#define Laser_LED5 _LATC4
 #define ExtFan _LATC5   // External fan
+#define HeatRly _LATC6   //  Heater
+#define Spare _LATC7    // Spare relay circuit.  
 #define LasRly _LATC8   // Laser relay.
 
     //************************
