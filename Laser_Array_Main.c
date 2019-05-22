@@ -546,7 +546,8 @@ void Read_Laser_Head_Temp(int *Headpt) {
     *Headpt++ = Read_Temp_TC74_Remote(); // *****This temp sensor not working.
 
     TCA9548A_I2CSwitch_Open(LH_6, TCA9548A_I2CSwitch_1);
-    *Headpt++ = Read_Temp_TC74_Remote();
+    //*Headpt++ = Read_Temp_TC74_Remote();
+    *Headpt++;
 
     TCA9548A_I2CSwitch_Open(LH_7, TCA9548A_I2CSwitch_1);
     *Headpt++ = Read_Temp_TC74_Remote();
@@ -577,9 +578,9 @@ void Read_Laser_Head_Temp(int *Headpt) {
     Headpt = Temp_Array_Head; // Reset pointer when finished.
 
     // Switch values 2 and 4 as discussed at top of function.
-    //temp = Temp_Array_Head[2]; //Store element 2 temporarily;
-    // Temp_Array_Head[2] = Temp_Array_Head[4]; // Element 2 is 4;
-    //Temp_Array_Head[4] = temp; // Element 4 is 3;
+    temp = Temp_Array_Head[2]; //Store element 2 temporarily;
+    Temp_Array_Head[2] = Temp_Array_Head[4]; // Element 2 is 4;
+    Temp_Array_Head[4] = temp; // Element 4 is 3;
 
 
 }
@@ -761,9 +762,9 @@ void Show_Temps(void) {
     LineWrite_XY_ILI9341_16x25(Temp_buf, Col_L, Line6, Colour_Array[element], Back_Colour_Array[element]);
 
     LineWrite_XY_ILI9341_16x25("Head  ", 1, Line0, ILI9341_WHITE, ILI9341_BLACK);
-    
+
     show_driver = ON; // Show driver temps or not, for testing
-    
+
     if (show_driver) {
         DelayMs(1000);
         element = 0;
