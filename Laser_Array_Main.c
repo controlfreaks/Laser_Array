@@ -1,7 +1,9 @@
 /* 
  * File:        Laser_Array
  * Author:      James_Vlasblom
- * Date:        June 14, 2018. 
+ * Date:        May 30, 2019. 
+ * 
+ * Added heater hood software, moved ExtFan = ON to beginning.
  *
  * Comments:
  *  This file controls the Laser Array device consisting of 12 x 100mW 
@@ -143,7 +145,7 @@ int main(int argc, char** argv) {
     PortInit();
 
     //Temp_Dis_Frame();
-    Ext_Fan(OFF);
+    Ext_Fan(ON);
     LasRly = OFF;
     ONLED = ON;
 
@@ -869,6 +871,7 @@ void System_Sleep(void) {
     LineWrite_XY_ILI9341_16x25("....", 130, Line4, ILI9341_PHOSPHORGREEN, ILI9341_BLACK);
     ONLED = OFF;
     ExtFan = OFF;
+    HeatRly = OFF;
     DelayMs(300);
     LineWrite_XY_ILI9341_16x25("......", 130, Line4, ILI9341_PHOSPHORGREEN, ILI9341_BLACK);
     ONLED = ON;
