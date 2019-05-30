@@ -1,7 +1,7 @@
 /* 
  * File:        Laser_Array
  * Author:      James_Vlasblom
- * Date:        June 14, 2018. 
+ * Date:        May 30, 2019. 
  *
  * Comments:
  *  This file controls the Laser Array device consisting of 12 x 100mW 
@@ -19,6 +19,9 @@
  * the charging.
  * 
  * Revision History:
+ * Turned external fan on at start.
+ * Added heater head software.
+ * Modifications for Laser Array serial 001.
  * 
  */
 
@@ -143,7 +146,7 @@ int main(int argc, char** argv) {
     PortInit();
 
     //Temp_Dis_Frame();
-    Ext_Fan(OFF);
+    Ext_Fan(ON);
     LasRly = OFF;
     ONLED = ON;
 
