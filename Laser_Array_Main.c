@@ -1,7 +1,7 @@
 /* 
  * File:        Laser_Array
  * Author:      James_Vlasblom
- * Date:        May 30, 2019. 
+ * Date:        May 30, 2019.
  * 
  * Added heater hood software, moved ExtFan = ON to beginning.
  *
@@ -21,6 +21,9 @@
  * the charging.
  * 
  * Revision History:
+ * Turned external fan on at start.
+ * Added heater head software.
+ * Modifications for Laser Array serial 001.
  * 
  */
 
