@@ -4,6 +4,7 @@
  * Date:        May 30, 2019.
  * 
  * Added heater hood software, moved ExtFan = ON to beginning.
+ * Date:        May 30, 2019. 
  *
  * Comments:
  *  This file controls the Laser Array device consisting of 12 x 100mW 
@@ -22,9 +23,9 @@
  * 
  * Revision History:
  * Turned external fan on at start.
- * Added heater head software.
+ * Added heater head software
  * Modifications for Laser Array serial 001.
- * 
+ * Changed tag format to B002-
  */
 
 
