@@ -8,8 +8,10 @@
  *                      sensor.
  * 
  * Revision history:    
- * Nov 8, 2019:
- * Using only local and sensor 1 (as ambient sensor).
+ *** Nov 8, 2019 ***
+ * Using only local and head sensor 1 (as ambient sensor).
+ * Other head sensors will be commented out.
+ * 
  * 
  */
 
@@ -308,105 +310,107 @@ void Temp_Sensor_Sleep(void) {
     TCA9548A_I2CSwitch_Open(LH_1, TCA9548A_I2CSwitch_0);
     Write_Config_TC74_Remote(STANDBY);
 
-    TCA9548A_I2CSwitch_Open(LH_2, TCA9548A_I2CSwitch_0);
-    Write_Config_TC74_Remote(STANDBY);
+    //  Only working with local sensor and sensor #1 (ambient).
+    /*
+        TCA9548A_I2CSwitch_Open(LH_2, TCA9548A_I2CSwitch_0);
+        Write_Config_TC74_Remote(STANDBY);
 
-    TCA9548A_I2CSwitch_Open(LH_3, TCA9548A_I2CSwitch_0);
-    Write_Config_TC74_Remote(STANDBY);
+        TCA9548A_I2CSwitch_Open(LH_3, TCA9548A_I2CSwitch_0);
+        Write_Config_TC74_Remote(STANDBY);
 
-    TCA9548A_I2CSwitch_Open(LH_4, TCA9548A_I2CSwitch_0);
-    Write_Config_TC74_Remote(STANDBY);
+        TCA9548A_I2CSwitch_Open(LH_4, TCA9548A_I2CSwitch_0);
+        Write_Config_TC74_Remote(STANDBY);
 
-    // Close current switch before opening another switch.
-    TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_0);
-
-
-    // Writing to I2C switch 1, Laser Heads 5 - 8
-    TCA9548A_I2CSwitch_Open(LH_5, TCA9548A_I2CSwitch_1);
-    Write_Config_TC74_Remote(STANDBY);
-
-    //TCA9548A_I2CSwitch_Open(LH_6, TCA9548A_I2CSwitch_1);
-   // Write_Config_TC74_Remote(STANDBY);
-
-    TCA9548A_I2CSwitch_Open(LH_7, TCA9548A_I2CSwitch_1);
-    Write_Config_TC74_Remote(STANDBY);
-
-    TCA9548A_I2CSwitch_Open(LH_8, TCA9548A_I2CSwitch_1);
-    Write_Config_TC74_Remote(STANDBY);
-
-    // Close current switch before opening another switch.
-    TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_1);
+        // Close current switch before opening another switch.
+        TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_0);
 
 
-    // Writing to I2C switch 2, Laser Heads 9 - 12
-    TCA9548A_I2CSwitch_Open(LH_9, TCA9548A_I2CSwitch_2);
-    Write_Config_TC74_Remote(STANDBY);
+        // Writing to I2C switch 1, Laser Heads 5 - 8
+        TCA9548A_I2CSwitch_Open(LH_5, TCA9548A_I2CSwitch_1);
+        Write_Config_TC74_Remote(STANDBY);
 
-    TCA9548A_I2CSwitch_Open(LH_10, TCA9548A_I2CSwitch_2);
-    Write_Config_TC74_Remote(STANDBY);
+        //TCA9548A_I2CSwitch_Open(LH_6, TCA9548A_I2CSwitch_1);
+       // Write_Config_TC74_Remote(STANDBY);
 
-    TCA9548A_I2CSwitch_Open(LH_11, TCA9548A_I2CSwitch_2);
-    Write_Config_TC74_Remote(STANDBY);
+        TCA9548A_I2CSwitch_Open(LH_7, TCA9548A_I2CSwitch_1);
+        Write_Config_TC74_Remote(STANDBY);
 
-    TCA9548A_I2CSwitch_Open(LH_12, TCA9548A_I2CSwitch_2);
-    Write_Config_TC74_Remote(STANDBY);
+        TCA9548A_I2CSwitch_Open(LH_8, TCA9548A_I2CSwitch_1);
+        Write_Config_TC74_Remote(STANDBY);
 
-    // Close current switch before opening another switch.
-    TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_2);
-
-
-    // Writing to I2C switch 3, Laser Heads 1 - 4
-    TCA9548A_I2CSwitch_Open(LD_1, TCA9548A_I2CSwitch_3);
-    Write_Config_TC74_Remote(STANDBY);
-
-    TCA9548A_I2CSwitch_Open(LD_2, TCA9548A_I2CSwitch_3);
-    Write_Config_TC74_Remote(STANDBY);
-
-    TCA9548A_I2CSwitch_Open(LD_3, TCA9548A_I2CSwitch_3);
-    Write_Config_TC74_Remote(STANDBY);
-
-    TCA9548A_I2CSwitch_Open(LD_4, TCA9548A_I2CSwitch_3);
-    Write_Config_TC74_Remote(STANDBY);
-
-    // Close current switch before opening another switch.
-    TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_3);
+        // Close current switch before opening another switch.
+        TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_1);
 
 
-    // Writing to I2C switch 4, Laser Heads 5 - 8
-    TCA9548A_I2CSwitch_Open(LD_5, TCA9548A_I2CSwitch_4);
-    Write_Config_TC74_Remote(STANDBY);
+        // Writing to I2C switch 2, Laser Heads 9 - 12
+        TCA9548A_I2CSwitch_Open(LH_9, TCA9548A_I2CSwitch_2);
+        Write_Config_TC74_Remote(STANDBY);
 
-    TCA9548A_I2CSwitch_Open(LD_6, TCA9548A_I2CSwitch_4);
-    Write_Config_TC74_Remote(STANDBY);
+        TCA9548A_I2CSwitch_Open(LH_10, TCA9548A_I2CSwitch_2);
+        Write_Config_TC74_Remote(STANDBY);
 
-    TCA9548A_I2CSwitch_Open(LD_7, TCA9548A_I2CSwitch_4);
-    Write_Config_TC74_Remote(STANDBY);
+        TCA9548A_I2CSwitch_Open(LH_11, TCA9548A_I2CSwitch_2);
+        Write_Config_TC74_Remote(STANDBY);
 
-    TCA9548A_I2CSwitch_Open(LD_8, TCA9548A_I2CSwitch_4);
-    Write_Config_TC74_Remote(STANDBY);
+        TCA9548A_I2CSwitch_Open(LH_12, TCA9548A_I2CSwitch_2);
+        Write_Config_TC74_Remote(STANDBY);
 
-    // Close current switch before opening another switch.
-    TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_4);
+        // Close current switch before opening another switch.
+        TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_2);
 
 
-    // Writing to I2C switch 5, Laser Heads 9 - 12
-    TCA9548A_I2CSwitch_Open(LD_9, TCA9548A_I2CSwitch_5);
-    Write_Config_TC74_Remote(STANDBY);
+        // Writing to I2C switch 3, Laser Heads 1 - 4
+        TCA9548A_I2CSwitch_Open(LD_1, TCA9548A_I2CSwitch_3);
+        Write_Config_TC74_Remote(STANDBY);
 
-    TCA9548A_I2CSwitch_Open(LD_10, TCA9548A_I2CSwitch_5);
-    Write_Config_TC74_Remote(STANDBY);
+        TCA9548A_I2CSwitch_Open(LD_2, TCA9548A_I2CSwitch_3);
+        Write_Config_TC74_Remote(STANDBY);
 
-    TCA9548A_I2CSwitch_Open(LD_11, TCA9548A_I2CSwitch_5);
-    Write_Config_TC74_Remote(STANDBY);
+        TCA9548A_I2CSwitch_Open(LD_3, TCA9548A_I2CSwitch_3);
+        Write_Config_TC74_Remote(STANDBY);
 
-    TCA9548A_I2CSwitch_Open(LD_12, TCA9548A_I2CSwitch_5);
-    Write_Config_TC74_Remote(STANDBY);
+        TCA9548A_I2CSwitch_Open(LD_4, TCA9548A_I2CSwitch_3);
+        Write_Config_TC74_Remote(STANDBY);
 
-    // Close current switch before opening another switch.
-    TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_5);
+        // Close current switch before opening another switch.
+        TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_3);
 
-    // TCA9548A_I2CSwitch_Reset = 0;
 
+        // Writing to I2C switch 4, Laser Heads 5 - 8
+        TCA9548A_I2CSwitch_Open(LD_5, TCA9548A_I2CSwitch_4);
+        Write_Config_TC74_Remote(STANDBY);
+
+        TCA9548A_I2CSwitch_Open(LD_6, TCA9548A_I2CSwitch_4);
+        Write_Config_TC74_Remote(STANDBY);
+
+        TCA9548A_I2CSwitch_Open(LD_7, TCA9548A_I2CSwitch_4);
+        Write_Config_TC74_Remote(STANDBY);
+
+        TCA9548A_I2CSwitch_Open(LD_8, TCA9548A_I2CSwitch_4);
+        Write_Config_TC74_Remote(STANDBY);
+
+        // Close current switch before opening another switch.
+        TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_4);
+
+
+        // Writing to I2C switch 5, Laser Heads 9 - 12
+        TCA9548A_I2CSwitch_Open(LD_9, TCA9548A_I2CSwitch_5);
+        Write_Config_TC74_Remote(STANDBY);
+
+        TCA9548A_I2CSwitch_Open(LD_10, TCA9548A_I2CSwitch_5);
+        Write_Config_TC74_Remote(STANDBY);
+
+        TCA9548A_I2CSwitch_Open(LD_11, TCA9548A_I2CSwitch_5);
+        Write_Config_TC74_Remote(STANDBY);
+
+        TCA9548A_I2CSwitch_Open(LD_12, TCA9548A_I2CSwitch_5);
+        Write_Config_TC74_Remote(STANDBY);
+
+        // Close current switch before opening another switch.
+        TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_5);
+
+        // TCA9548A_I2CSwitch_Reset = 0;
+     */
 }
 
 void Temp_Sensor_Wake(void) {
@@ -418,6 +422,9 @@ void Temp_Sensor_Wake(void) {
     // Writing to I2C switch 0, Laser Heads 1 - 4
     TCA9548A_I2CSwitch_Open(LH_1, TCA9548A_I2CSwitch_0);
     Write_Config_TC74_Remote(NORMAL);
+    
+    //  Only working with local sensor and sensor #1 (ambient).
+    /*
 
     TCA9548A_I2CSwitch_Open(LH_2, TCA9548A_I2CSwitch_0);
     Write_Config_TC74_Remote(NORMAL);
@@ -518,7 +525,7 @@ void Temp_Sensor_Wake(void) {
     TCA9548A_I2CSwitch_Open(NULL_SENSOR, TCA9548A_I2CSwitch_5);
 
     // TCA9548A_I2CSwitch_Reset = 0;
-
+*/
 }
 
 void Write_Config_TC74_Local(int command) {
