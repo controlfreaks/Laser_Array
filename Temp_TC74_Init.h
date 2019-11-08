@@ -8,6 +8,8 @@
  *                      sensor.
  * 
  * Revision history:    
+ * Nov 8, 2019:
+ * Using only local and sensor 1 (as ambient sensor).
  * 
  */
 
