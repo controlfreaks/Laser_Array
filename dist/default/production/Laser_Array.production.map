@@ -779,9 +779,9 @@ __CONFIG1
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x23f build/default/production/Laser_Array_Main.o
 
-.debug_line       0x000000        0x7ec
+.debug_line       0x000000        0x7ed
  *(.debug_line)
- .debug_line      0x000000        0x7ec build/default/production/Laser_Array_Main.o
+ .debug_line      0x000000        0x7ed build/default/production/Laser_Array_Main.o
 
 .debug_frame      0x000000        0x8e0
  *(.debug_frame)

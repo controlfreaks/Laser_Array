@@ -31,6 +31,8 @@
  * Sensor 1 is now the ambient sensor on the lid
  * 
  * *** Nov 18, 2019 ***
+ * Changed Version no to reflect Laser Array with serial no ..002
+ * tag B002_00ii will also be created.
  */
 
 
@@ -935,7 +937,7 @@ void Version_Screen(void) {
     LineWrite_XY_ILI9341_16x25("Control Freaks", 48, Line0, ILI9341_WHITE, ILI9341_BLACK);
     LineWrite_XY_ILI9341_16x25("Version", 104, Line1, ILI9341_WHITE, ILI9341_BLACK);
     LineWrite_XY_ILI9341_16x25("Serial", 110, Line2, ILI9341_WHITE, ILI9341_BLACK);
-    LineWrite_XY_ILI9341_16x25("LA00191018 001", 0, Line3, ILI9341_WHITE, ILI9341_BLACK);
+    LineWrite_XY_ILI9341_16x25("LA00191018 002", 0, Line3, ILI9341_WHITE, ILI9341_BLACK);
     LineWrite_XY_ILI9341_16x25("Software", 96, Line4, ILI9341_WHITE, ILI9341_BLACK);
     LineWrite_XY_ILI9341_16x25("Laser Array", 0, Line5, ILI9341_WHITE, ILI9341_BLACK);
     LineWrite_XY_ILI9341_16x25("TAG B002 01", 0, Line6, ILI9341_WHITE, ILI9341_BLACK);
