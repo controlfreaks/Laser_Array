@@ -415,7 +415,7 @@ void Laser_Colour_Level(int *Driverpt, int *Headpt, int *Colourpt, int *BackColo
         HEATER_FLG = ON;
         //HeatRly = ON;
         //LineWrite_XY_ILI9341_16x25("HEATER", 0, Line7, ILI9341_RED, ILI9341_BLACK);
-    } else if (*Headpt >= 30) {
+    } else if (*Headpt >= 24 ) {
         HEATER_FLG = OFF;
         //HeatRly = OFF;
         //LineWrite_XY_ILI9341_16x25("HEATER", 0, Line7, ILI9341_BLACK, ILI9341_BLACK);
@@ -937,7 +937,7 @@ void Version_Screen(void) {
     LineWrite_XY_ILI9341_16x25("Control Freaks", 48, Line0, ILI9341_WHITE, ILI9341_BLACK);
     LineWrite_XY_ILI9341_16x25("Version", 104, Line1, ILI9341_WHITE, ILI9341_BLACK);
     LineWrite_XY_ILI9341_16x25("Serial", 110, Line2, ILI9341_WHITE, ILI9341_BLACK);
-    LineWrite_XY_ILI9341_16x25("LA00191018 002", 0, Line3, ILI9341_WHITE, ILI9341_BLACK);
+    LineWrite_XY_ILI9341_16x25("LA00191018 002q", 0, Line3, ILI9341_WHITE, ILI9341_BLACK);
     LineWrite_XY_ILI9341_16x25("Software", 96, Line4, ILI9341_WHITE, ILI9341_BLACK);
     LineWrite_XY_ILI9341_16x25("Laser Array", 0, Line5, ILI9341_WHITE, ILI9341_BLACK);
     LineWrite_XY_ILI9341_16x25("TAG B002 01", 0, Line6, ILI9341_WHITE, ILI9341_BLACK);
