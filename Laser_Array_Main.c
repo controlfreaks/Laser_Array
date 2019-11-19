@@ -29,6 +29,8 @@
  * Changed tag format to B002-01
  * This version will utilize the local temp sensor and sensor 1 only.
  * Sensor 1 is now the ambient sensor on the lid
+ * 
+ * *** Nov 18, 2019 ***
  */
 
 

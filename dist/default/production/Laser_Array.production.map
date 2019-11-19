@@ -770,9 +770,9 @@ __CONFIG1
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x4bf7
+.debug_info       0x000000       0x4bf9
  *(.debug_info)
- .debug_info      0x000000       0x4bf7 build/default/production/Laser_Array_Main.o
+ .debug_info      0x000000       0x4bf9 build/default/production/Laser_Array_Main.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x23f
